@@ -1,5 +1,10 @@
-import React from 'react';
+import * as React from 'react';
+import { NextPage } from 'next';
 
-const IndexPage = () => <div>Hello World!</div>;
+type Props = {
+  title: string;
+};
+
+const IndexPage: NextPage<Props> = ({ title }) => <div>Hello World! {title}</div>;
 
 export default IndexPage;
