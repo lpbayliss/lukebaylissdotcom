@@ -32,6 +32,8 @@
   },
   "homepage": "https://github.com/lpbayliss/lukebaylissdotcom#readme",
   "dependencies": {
+    "@emotion/core": "^10.0.28",
+    "@emotion/styled": "^10.0.27",
     "next": "^9.3.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0"
@@ -42,6 +44,7 @@
     "@types/react-dom": "^16.9.5",
     "@typescript-eslint/eslint-plugin": "^2.23.0",
     "@typescript-eslint/parser": "^2.23.0",
+    "babel-plugin-emotion": "^10.0.29",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-prettier": "^3.1.2",
