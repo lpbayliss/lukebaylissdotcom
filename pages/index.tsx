@@ -2,6 +2,7 @@ import * as React from 'react';
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
 import { Global, css, keyframes } from '@emotion/core';
+import { Button } from '../components';
 
 const bounce = keyframes`
   from, 20%, 53%, 80%, to {
@@ -43,6 +44,9 @@ const IndexPage: NextPage = () => {
         `}
       />
       <Title textColor="red">Hello World!</Title>
+      <Button id="hello-button" label="hello-button" name="hello-button">
+        Click me?
+      </Button>
     </>
   );
 };
