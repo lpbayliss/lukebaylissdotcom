@@ -1,6 +1,7 @@
 const glob = require('glob');
 
 module.exports = {
+  reactStrictMode: true,
   webpack: config => {
     config.module.rules.push({
       test: /\.md$/,

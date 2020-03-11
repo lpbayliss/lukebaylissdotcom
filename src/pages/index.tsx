@@ -30,19 +30,6 @@ const Title = styled.h1<{ textColor: string }>`
 const IndexPage: NextPage = () => {
   return (
     <>
-      <Global
-        styles={css`
-          html,
-          body {
-            padding: 3rem 1rem;
-            margin: 0;
-            background: papayawhip;
-            min-height: 100%;
-            font-family: Helvetica, Arial, sans-serif;
-            font-size: 24px;
-          }
-        `}
-      />
       <Title textColor="red">Hello World!</Title>
       <Button id="hello-button" label="hello-button" name="hello-button">
         Click me?

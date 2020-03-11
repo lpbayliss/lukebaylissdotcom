@@ -3,6 +3,7 @@ import { NextPage } from 'next';
 import matter from 'gray-matter';
 import ReactMarkdown from 'react-markdown';
 import styled from '@emotion/styled';
+import CodeBlock from '../../components/code-block/code-block.component';
 
 const Title = styled.h1<{ textColor: string }>`
   color: ${props => props.textColor};
@@ -13,7 +14,7 @@ const BlogPage: NextPage = (props: any) => {
   return (
     <>
       <Title textColor="red">{props.frontmatter.title}</Title>
-      <ReactMarkdown source={props.markdownBody} />
+      <ReactMarkdown source={props.markdownBody} renderers={{ code: CodeBlock }} />
     </>
   );
 };
