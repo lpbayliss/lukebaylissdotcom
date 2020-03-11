@@ -10,21 +10,10 @@ class MyDocument extends Document {
 
   render() {
     return (
-      <Html>
+      <Html lang="en">
         <Head>
-          <Global
-            styles={css`
-              html,
-              body {
-                padding: 3rem 1rem;
-                margin: 0;
-                background: papayawhip;
-                min-height: 100%;
-                font-family: Helvetica, Arial, sans-serif;
-                font-size: 24px;
-              }
-            `}
-          />
+          <meta charSet="UTF-8" />
+          <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
         </Head>
         <body>
           <Main />
