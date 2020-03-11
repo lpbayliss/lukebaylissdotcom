@@ -4,13 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "export": "next export",
+    "dev": "next src",
+    "build": "next build src",
+    "start": "next start src",
+    "export": "next export src",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "type-check": "tsc",
+    "type-check": "tsc -p src/tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -39,9 +39,12 @@
   "dependencies": {
     "@emotion/core": "^10.0.28",
     "@emotion/styled": "^10.0.27",
+    "gray-matter": "^4.0.2",
     "next": "^9.3.0",
+    "raw-loader": "^4.0.0",
     "react": "^16.13.0",
-    "react-dom": "^16.13.0"
+    "react-dom": "^16.13.0",
+    "react-markdown": "^4.3.1"
   },
   "devDependencies": {
     "@types/jest": "^25.1.4",
