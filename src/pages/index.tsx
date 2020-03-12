@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { NextPage } from 'next';
-import styled from '@emotion/styled';
 import { keyframes } from '@emotion/core';
+
 import { Button } from '../components';
+import styled from '../utils/styled';
 
 const bounce = keyframes`
   from, 20%, 53%, 80%, to {
@@ -22,15 +23,19 @@ const bounce = keyframes`
   }
 `;
 
-const Title = styled.h1<{ textColor: string }>`
-  color: ${props => props.textColor};
+const Title = styled.h1`
   animation: ${bounce} 1s ease infinite;
+`;
+
+const SomeText = styled.div`
+  color: ${props => props.theme.colors.primary};
 `;
 
 const IndexPage: NextPage = () => {
   return (
     <>
-      <Title textColor="red">Hello World!</Title>
+      <Title>Hello World!</Title>
+      <SomeText>This is some text</SomeText>
       <Button id="hello-button" label="hello-button" name="hello-button">
         Click me?
       </Button>
