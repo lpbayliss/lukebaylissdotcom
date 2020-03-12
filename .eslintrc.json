@@ -7,7 +7,8 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:mdx/recommended"
   ],
   "globals": {
     "Atomics": "readonly",
@@ -39,6 +40,21 @@
       "rules": {
         "react/prop-types": "off"
       }
+    },
+    {
+      "files": ["*.md"],
+      "rules": {
+        "prettier/prettier": [
+          2,
+          {
+            "parser": "markdown"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.mdx"],
+      "extends": ["plugin:mdx/overrides"]
     }
   ]
 }

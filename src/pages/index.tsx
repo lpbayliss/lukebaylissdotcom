@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import styled from '@emotion/styled';
-import { Global, css, keyframes } from '@emotion/core';
+import { keyframes } from '@emotion/core';
 import { Button } from '../components';
 
 const bounce = keyframes`
