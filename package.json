@@ -42,6 +42,7 @@
     "@mdx-js/loader": "^1.5.7",
     "@mdx-js/react": "^1.5.7",
     "@next/mdx": "^9.3.0",
+    "date-fns": "^2.11.0",
     "emotion-normalize": "^10.1.0",
     "emotion-theming": "^10.0.27",
     "next": "^9.3.0",

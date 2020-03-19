@@ -7,6 +7,7 @@ import { ThemeProvider } from 'emotion-theming';
 
 import CodeBlock from '../components/code-block/code-block.component';
 import { Theme } from '../utils/styled';
+import { ScrolledProvider } from '../components/is-scrolled/is-scrolled.component';
 
 const components = {
   code: CodeBlock,
@@ -30,8 +31,10 @@ function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <MDXProvider components={components}>
-        <StyleReset />
-        <Component {...pageProps} />
+        <ScrolledProvider offset={10}>
+          <StyleReset />
+          <Component {...pageProps} />
+        </ScrolledProvider>
       </MDXProvider>
     </ThemeProvider>
   );
