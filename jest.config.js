@@ -9,6 +9,7 @@ module.exports = {
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/.coverage/', '<rootDir>/out/', '<rootDir>/node_modules/'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   collectCoverage: true,
+  collectCoverageFrom: ['src/components/**/*.ts*'],
   coverageDirectory: '.coverage',
   coveragePathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/out/', '<rootDir>/@types/', '<rootDir>/node_modules/'],
   coverageThreshold: null,
