@@ -9,6 +9,7 @@ import { Logo } from '../logo';
 const HeaderBox = (props): JSX.Element => <Box as="header" {...props} />;
 const FlexNav = (props): JSX.Element => <Flex as="nav" {...props} />;
 const Wrapper = styled(FlexNav)<{ isScrolled: boolean }>`
+  height: ${(props): string => `${props.theme.sizes.nav}px`};
   position: fixed;
   top: 0;
   left: 0;
@@ -39,7 +40,7 @@ const Header: React.FunctionComponent<Props> = () => {
     <ScrolledConsumer>
       {(isScrolled): JSX.Element => (
         <HeaderBox>
-          <Wrapper isScrolled={isScrolled} py="3">
+          <Wrapper isScrolled={isScrolled} py="small">
             <Box width={1}>
               <Flex alignItems="center" justifyContent="center">
                 <Logo />

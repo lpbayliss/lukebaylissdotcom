@@ -5,13 +5,8 @@ import { Global, css } from '@emotion/core';
 import emotionNormalize from 'emotion-normalize';
 import { ThemeProvider } from 'emotion-theming';
 
-import CodeBlock from '../components/code-block/code-block.component';
 import { theme } from '../utils/styled';
-import { ScrolledProvider } from '../components/is-scrolled/is-scrolled.component';
-
-const components = {
-  code: CodeBlock,
-};
+import { ScrolledProvider, MDComponents } from '../components';
 
 const StyleReset = (): JSX.Element => (
   <Global
@@ -24,7 +19,7 @@ const StyleReset = (): JSX.Element => (
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
-      <MDXProvider components={components}>
+      <MDXProvider components={MDComponents}>
         <ScrolledProvider>
           <StyleReset />
           <Component {...pageProps} />
