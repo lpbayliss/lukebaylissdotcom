@@ -1,5 +1,18 @@
 import DefaultLayout from '../../layouts/default';
 
+export const meta = {
+  published: true,
+  publishedAt: '2020-01-30',
+  title: 'My Trip to Bali',
+  summary: 'Some thoughts on Bali',
+  changelog: {
+    '2020-20-20': 'Made a few grammar fixes.'
+  },
+  tags: [
+    'travel', 'asia', 'blog'
+  ]
+};
+
 export default ({ children }) => (
 <DefaultLayout>{children}</DefaultLayout>
 );

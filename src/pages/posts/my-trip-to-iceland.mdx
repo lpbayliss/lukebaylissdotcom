@@ -1,5 +1,17 @@
 import DefaultLayout from '../../layouts/default';
 
+export const meta = {
+  published: false,
+  title: 'My Trip to Iceland',
+  summary: 'Some thoughts on Iceland',
+  changelog: {
+    '2020-20-20': 'Made a few grammar fixes.'
+  },
+  tags: [
+    'travel', 'europe', 'blog'
+  ]
+};
+
 export default ({ children }) => (
   <DefaultLayout>{children}</DefaultLayout>
 );

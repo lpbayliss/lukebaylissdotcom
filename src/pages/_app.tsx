@@ -6,7 +6,7 @@ import emotionNormalize from 'emotion-normalize';
 import { ThemeProvider } from 'emotion-theming';
 
 import CodeBlock from '../components/code-block/code-block.component';
-import { Theme } from '../utils/styled';
+import { theme } from '../utils/styled';
 import { ScrolledProvider } from '../components/is-scrolled/is-scrolled.component';
 
 const components = {
@@ -21,17 +21,11 @@ const StyleReset = (): JSX.Element => (
   />
 );
 
-const theme: Theme = {
-  colors: {
-    primary: 'blue',
-  },
-};
-
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (
     <ThemeProvider theme={theme}>
       <MDXProvider components={components}>
-        <ScrolledProvider offset={10}>
+        <ScrolledProvider>
           <StyleReset />
           <Component {...pageProps} />
         </ScrolledProvider>

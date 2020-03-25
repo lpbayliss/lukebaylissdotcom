@@ -1,25 +1,40 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import { Flex, Card, Text } from 'rebass';
+import { Flex, Card, Text, Link as Anchor } from 'rebass';
 
-import DefaultLayout from '../../layouts/default';
-import { posts } from '../../utils/post-mapping';
+import BlogPostLayout from '../../layouts/blog-post';
 
-const PostsPage: NextPage = () => {
+// Posts
+import { meta as bali } from './my-trip-to-bali.mdx';
+import { meta as iceland } from './my-trip-to-iceland.mdx';
+
+const slugify = (title: string): string => title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
+
+const posts = [bali, iceland];
+
+type Props = {
+  test: string;
+};
+
+const PostsPage: NextPage<Props> = props => {
   return (
-    <DefaultLayout>
+    <BlogPostLayout>
       <Flex>
         {posts.map(post => (
           <Card key={post.title}>
             <Text>{post.title}</Text>
-            <Link href={`posts/${post.slug}`} prefetch>
-              View
+            {post.published && <Text>Published!</Text>}
+            {post.published && <Text>{post.publishedAt}</Text>}
+            <Text>{post.summary}</Text>
+            <Link href={`posts/${slugify(post.title)}`}>
+              <Anchor>View</Anchor>
             </Link>
           </Card>
         ))}
       </Flex>
-    </DefaultLayout>
+      <Flex>{props.test}</Flex>
+    </BlogPostLayout>
   );
 };
 
