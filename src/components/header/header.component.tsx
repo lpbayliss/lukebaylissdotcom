@@ -40,7 +40,7 @@ const Header: React.FunctionComponent<Props> = () => {
     <ScrolledConsumer>
       {(isScrolled): JSX.Element => (
         <HeaderBox>
-          <Wrapper isScrolled={isScrolled} py="small">
+          <Wrapper isScrolled={isScrolled} py="3">
             <Box width={1}>
               <Flex alignItems="center" justifyContent="center">
                 <Logo />

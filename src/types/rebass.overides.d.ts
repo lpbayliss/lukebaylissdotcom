@@ -13,6 +13,14 @@ declare module 'rebass' {
     as?: React.ElementType;
     css?: InterpolationWithTheme<any>;
   }
+  interface HeadingProps {
+    as?: React.ElementType;
+    css?: InterpolationWithTheme<any>;
+  }
+  interface LinkProps {
+    as?: React.ElementType;
+    css?: InterpolationWithTheme<any>;
+  }
 }
 
 declare module 'react' {

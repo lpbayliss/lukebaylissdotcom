@@ -5,7 +5,7 @@ export type Theme = {
   colors: { [key: string]: string };
   breakpoints: string[];
   fontSizes: number[];
-  space: { [key: string]: string | number };
+  space: { [key: string]: string | number } | number[];
   fonts: { [key: string]: string | string[] };
   fontWeights: { [key: string]: number };
   lineHeights: { [key: string]: number };
@@ -17,15 +17,14 @@ export type Theme = {
 export const theme: Theme = {
   colors: {
     primary: 'blue',
+    link: '#8262d9',
   },
   breakpoints: ['40em', '52em', '64em'],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],
-  space: {
-    small: 16,
-  },
+  space: [0, 4, 8, 16, 32, 64, 128, 256],
   fonts: {
-    body: 'system-ui, sans-serif',
-    heading: 'inherit',
+    heading: 'system-ui, sans-serif',
+    body: 'inherit',
     monospace: 'Menlo, monospace',
   },
   fontWeights: {
