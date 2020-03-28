@@ -23,8 +23,10 @@ const ScrolledProvider: React.FunctionComponent<Props> = ({ children, offset }) 
   };
 
   useEffect(() => {
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const isPageScrolledOnLoad = window.pageYOffset > 0;
+    setIsScrolled(isPageScrolledOnLoad);
 
+    window.addEventListener('scroll', onScroll, { passive: true });
     return (): void => {
       window.removeEventListener('scroll', onScroll);
     };

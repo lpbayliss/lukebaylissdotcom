@@ -1,15 +1,19 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { Flex, Text } from 'rebass';
+import styled from '../../utils/styled';
+
+const LogoText = styled(Text)`
+  cursor: pointer;
+`;
 
 type Props = {};
-
-const Logo: React.FunctionComponent<Props> = (_props): JSX.Element => (
-  <Flex flexDirection="column" justifyContent="center" px="3">
+const Logo: React.FunctionComponent<Props> = (): JSX.Element => (
+  <Flex flexDirection="column" justifyContent="center">
     <Link href="/" passHref>
-      <Text fontWeight="bold" fontFamily="heading" fontSize="1.5rem">
+      <LogoText fontWeight="bold" fontFamily="heading" fontSize="1.5rem">
         Luke Bayliss
-      </Text>
+      </LogoText>
     </Link>
   </Flex>
 );

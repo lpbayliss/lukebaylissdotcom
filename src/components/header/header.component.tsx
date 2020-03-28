@@ -16,19 +16,23 @@ const Wrapper = styled(FlexNav)<{ isScrolled: boolean }>`
   width: 100%;
   transition: background 250ms ease-in-out, box-shadow 250ms ease-in-out;
   will-change: background, box-shadow;
+  background: ${({ theme }): string => theme.colors.background};
 
   ${(props): SerializedStyles =>
     props.isScrolled &&
     css`
-      background: #fff;
       box-shadow: rgba(0, 0, 0, 0.15) 0px 1px 4px 0px;
     `};
+`;
+
+const NavText = styled(Text)`
+  cursor: pointer;
 `;
 
 const NavItem: React.FunctionComponent<{ path: string; title: string }> = props => (
   <Box paddingX="2">
     <Link href={props.path} passHref>
-      <Text fontFamily="heading">{props.title}</Text>
+      <NavText fontFamily="heading">{props.title}</NavText>
     </Link>
   </Box>
 );
@@ -41,13 +45,12 @@ const Header: React.FunctionComponent<Props> = () => {
       {(isScrolled): JSX.Element => (
         <HeaderBox>
           <Wrapper isScrolled={isScrolled} py="3">
-            <Box width={1}>
-              <Flex alignItems="center" justifyContent="center">
-                <Logo />
-                <NavItem path="/about" title="About" />
-                <NavItem path="/posts" title="Posts" />
-              </Flex>
-            </Box>
+            <Flex width={1} alignItems="center" justifyContent="center">
+              <Logo />
+              <Box width="50px" />
+              <NavItem path="/about" title="About" />
+              <NavItem path="/posts" title="Posts" />
+            </Flex>
           </Wrapper>
         </HeaderBox>
       )}

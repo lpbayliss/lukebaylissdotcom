@@ -16,6 +16,7 @@ export type Theme = {
 
 export const theme: Theme = {
   colors: {
+    background: '#fafaff',
     primary: 'blue',
     link: '#8262d9',
   },

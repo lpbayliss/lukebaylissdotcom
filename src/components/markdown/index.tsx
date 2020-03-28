@@ -9,7 +9,7 @@ import { Img } from './image';
 import { UnorderedList, OrderedList, ListItem } from './list';
 
 // Export individual components for explicit uses
-export { Paragraph };
+export { H1, H2, H3, H4, Paragraph, Link, UnorderedList, OrderedList, ListItem, CodeBlock, InlineCode, Em, Img };
 
 // Export a default object for use with mdx provider
 export default {
