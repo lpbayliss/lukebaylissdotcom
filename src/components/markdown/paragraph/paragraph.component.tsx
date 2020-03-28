@@ -9,7 +9,7 @@ const Wrapper = styled(Box)`
 
 const Paragraph: React.FunctionComponent = (props: TextProps) => (
   <Wrapper>
-    <Text marginBottom="3" {...props}></Text>
+    <Text marginBottom="4" lineHeight="1.8" fontFamily="body" fontSize={3} {...props} />
   </Wrapper>
 );
 

@@ -8,6 +8,7 @@ const ConditionalWrapper = ({ condition, wrapper, children }): JSX.Element =>
   condition ? wrapper(children) : children;
 
 const StyledLink = styled(RebassLink)`
+  cursor: pointer;
   text-decoration: none;
   &:hover {
     text-decoration: underline;

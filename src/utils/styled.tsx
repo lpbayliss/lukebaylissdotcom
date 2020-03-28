@@ -6,7 +6,7 @@ export type Theme = {
   breakpoints: string[];
   fontSizes: number[];
   space: { [key: string]: string | number } | number[];
-  fonts: { [key: string]: string | string[] };
+  fonts: { [key: string]: string };
   fontWeights: { [key: string]: number };
   lineHeights: { [key: string]: number };
   shadows: { [key: string]: string };

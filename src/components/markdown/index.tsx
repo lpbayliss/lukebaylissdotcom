@@ -3,12 +3,13 @@ import { Paragraph } from './paragraph';
 import { CodeBlock } from './code-block';
 import { H1, H2, H3, H4 } from './headings';
 import { Link } from './link';
+import { InlineCode } from './inline-code';
+import { Em } from './emphasis';
+import { Img } from './image';
+import { UnorderedList, OrderedList, ListItem } from './list';
 
 // Export individual components for explicit uses
 export { Paragraph };
-
-// Redefine any components that need markdown specific props
-const MDParagraph = (props): JSX.Element => <Paragraph fontFamily="body" fontSize={3} {...props} />;
 
 // Export a default object for use with mdx provider
 export default {
@@ -16,7 +17,13 @@ export default {
   h2: H2,
   h3: H3,
   h4: H4,
-  p: MDParagraph,
+  p: Paragraph,
   a: Link,
+  ul: UnorderedList,
+  ol: OrderedList,
+  li: ListItem,
   code: CodeBlock,
+  inlineCode: InlineCode,
+  em: Em,
+  img: Img,
 };

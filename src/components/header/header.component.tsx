@@ -26,9 +26,9 @@ const Wrapper = styled(FlexNav)<{ isScrolled: boolean }>`
 `;
 
 const NavItem: React.FunctionComponent<{ path: string; title: string }> = props => (
-  <Box>
+  <Box paddingX="2">
     <Link href={props.path} passHref>
-      <Text>{props.title}</Text>
+      <Text fontFamily="heading">{props.title}</Text>
     </Link>
   </Box>
 );
