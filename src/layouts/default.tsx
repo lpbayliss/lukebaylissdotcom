@@ -3,9 +3,7 @@ import { Flex } from 'rebass';
 import { Header, Footer, Main } from '../components';
 import styled from '../utils/styled';
 
-const Page = styled(Flex)`
-  background: ${({ theme }): string => theme.colors.background};
-`;
+const Page = styled(Flex)``;
 
 type Props = {
   children: React.ReactNode;
