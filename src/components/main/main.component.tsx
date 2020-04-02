@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { Box } from 'rebass';
-import styled from '../../utils/styled';
+import { Box, Flex } from 'rebass';
 
-const MainBox = (props): JSX.Element => <Box as="main" {...props} />;
-const Main = styled(MainBox)`
-  margin: 0px auto;
-  padding-top: ${({ theme }): string => `${theme.sizes.nav}px`};
-  padding-left: ${({ theme }): string => `${theme.space[3]}px`};
-  padding-right: ${({ theme }): string => `${theme.space[3]}px`};
-`;
+const Main = (props): JSX.Element => (
+  <Box paddingTop="65px" paddingX="3" marginTop="0" marginX="auto" width="100%" maxWidth="550px">
+    <Flex as="main" flexDirection="column" {...props}></Flex>
+  </Box>
+);
 
 export default Main;

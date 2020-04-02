@@ -3,18 +3,16 @@ import { Flex } from 'rebass';
 import { Header, Footer, Main } from '../components';
 import styled from '../utils/styled';
 
-const Page = styled(Flex)``;
-
 type Props = {
   children: React.ReactNode;
 };
 
 const DefaultLayout: React.FunctionComponent<Props> = ({ children }) => (
-  <Page flexDirection="column" justifyContent="space-between" height="100vh">
+  <Flex flexDirection="column" justifyContent="space-between" height="100vh">
     <Header />
     <Main>{children}</Main>
     <Footer></Footer>
-  </Page>
+  </Flex>
 );
 
 export default DefaultLayout;
