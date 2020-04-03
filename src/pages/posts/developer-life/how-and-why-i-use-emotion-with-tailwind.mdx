@@ -1,0 +1,177 @@
+import BlogPostLayout from '../../../layouts/blog-post';
+
+export const meta = {
+  published: true,
+  publishedAt: '2019-05-04',
+  title: 'How and Why I Use Emotion with Tailwind',
+  summary: 'I wanted to share my favourite approach for handling CSS in my react projects currently. I mention a little bit about how I came to use this solution and why it was needed in the first place.',
+  changelog: {
+  },
+  tags: [
+    'css', 'react', 'webdev', 'javascript'
+  ]
+};
+
+export default ({ children }) => (
+<BlogPostLayout title={meta.title}>{children}</BlogPostLayout>
+);
+
+## How and Why I Use Emotion with Tailwind
+
+*Note:* Tailwind has had a new major release which changes a lot of what is below, if you're interested in how I've adapted given the upgrade let me know!
+
+### My favourite way of doing CSS
+I wanted to share my favourite approach for handling CSS in my react projects currently. I mention a little bit about how I came to use this solution and why it was needed in the first place. I also include some code snippets to show how the different libraries and tools are used together.
+
+### The Problem
+I worked with a small team of developers; most of which are primarily .NET developers. When it was time for us to start building out our newest project we wanted to make sure we could do a few things.
+
+* Be productive as soon as possible, and for as long as possible.
+* Spend less time learning technologies and more time solving problems.
+* Keep styling as consistent as possible. 
+
+What this meant to us was that we would need to be comfortable across both sides of the stack as quickly as possible. At least comfortable enough so that we could be productive from the get go.
+
+Our biggest concern wasn’t having part of the team learning JavaScript and React while the other half learned .NET Core, but how we handled our CSS.  Because CSS is hard.
+
+### The Solution
+Our solution was CSS In JS. I won’t cover CSS in JS in great depth here. If you are new to the idea and curious about it [this](https://hackernoon.com/all-you-need-to-know-about-css-in-js-984a72d48ebc) is a great post.
+
+Specifically we narrowed it down to using [Emotion](https://emotion.sh/) and [Tailwind](https://tailwindcss.com/docs/what-is-tailwind/) along with some [Babel](https://www.npmjs.com/package/babel-plugin-tailwind) magic to make them best of friends.
+
+### Why Emotion
+
+* One less build step.
+* Felt most at home in JavaScript
+* Dynamically change styles directly with JavaScript.
+
+Setting up a build process is a pain and not much fun. Using CSS in JS meant that we didn’t need to worry about setting up a CSS preprocessor; Using Emotion meant all of our styles are built along with the rest of our JavaScript. And because the styles become part of the code, we can worry less about bundling unused CSS into our project as only the used CSS should be included.
+
+Writing our styles in JavaScript feels more at home to me. Although Emotion is practically still the same as writing plain old CSS, it’s still nice not have to be jumping between multiple files when building out a new component or view. Having everything contained in the one file, and the narrowly scoped nature of CSS in JS, meant that it was easier to focus on al logic and styling of a component at any time.
+
+In practice this:
+```css
+.button {
+  padding: 10px;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+}
+```
+
+```jsx
+import * as React from 'react';
+
+const Button = (_props) => {
+	return <button className="button">Click Me</button>;
+};
+
+export default Button;
+```
+
+Becomes:
+```jsx
+import * as React from 'react';
+import { css } from '@emotion/core';
+
+const buttonClass = css`
+  padding: 10px;
+  border-radius: 5px;
+  background-color: blue;
+  color: white;
+`;
+
+const Button = (_props) => {
+	return <button className={buttonClass}>Click Me</button>;
+};
+
+export default Button;
+```
+
+ And if we used styled component (my preferred approach), we get this:
+```jsx
+import * as React from 'react';
+import styled from '@emotion/styled';
+
+const Button = styled.button`
+	padding: 10px;
+  border-radius: 5px;
+	background-color: blue;
+  color: white;
+`;
+
+export default Button;
+```
+
+Using Emotion quickly proved to be  powerful way to build dynamic styles for our components. No longer did we have to write separate classes for different component states. We could just directly modify our styles based on our components state or props.
+
+```jsx
+import * as React from 'react';
+import styled from 'emotion/styled';
+
+const Button = styled.button`
+	background-colour: ${props => props.isPrimary ? 'blue' : 'green'};
+	color: white;
+`;
+
+export default Button;
+```
+
+### Why Tailwind
+
+* Short hand is easier to remember.
+* Save time on the easy stuff. More time for the challenging stuff.
+* Consistency.
+
+The biggest reason we decided to use Tailwind was because it made writing CSS accessible to our developers who had little to no experience building interfaces for the web. At least with modern frameworks like react.
+
+Being able to use self descriptive and easy to remember class names meant that our developers could write out styles without having to know much CSS at all. This meant they had less to think about when building out simple components, saving (albeit short) time for worrying about bigger problems.
+
+Writing this:
+```jsx
+const button = css`
+	${tw('rounded text-white bg-blue')};
+`;
+```
+
+Is the equivalent of writing this:
+```jsx
+const buttonClass = css`
+	border-radius: 0.25rem
+	color: #fefefe;
+	background-color: #7070ea;
+`;
+```
+
+While a relatively simple example, the Tailwind approach for this button class didn’t require much thought at all. If wanted the button to be rounded I would just add `rounded`.  If I wanted a blue background I would just add `bg-blue`. It proved to be an incredibly fast way to build out presentational components. It also works just as you’d expect with `::before` and `:hover` as well.
+
+```jsx
+const buttonClass = css`
+	${tw`bg-purple`}
+	:hover {
+		${tw`bg-purple-lighter`}
+	}
+`;
+```
+
+Another great bonus for having so much of our CSS basics handled by tailwind means there is a great deal of consistency on styling,  as long as we are consistent in using tailwind. All of our colours and expected spacing etc etc is managed by tailwind. If we have use tailwind as expected, this means we should have consistency across our application, as well as the ability to chance these colours and values in one place (tailwind.js) and have it immediately propagate throughout the application.
+
+### Babel Macro Magic
+I am sure at first glance you would have seen the follow use of `tw` and been a little confused. If you missed it, here it is again:
+
+```jsx
+consst Button = styled.button`
+	${tw`bg-purple`}
+`;
+```
+
+This is where some Babel magic comes into play. Using the very cool  [Babel Macros](https://babeljs.io/blog/2017/09/11/zero-config-with-babel-macros) we can use the `tailwind.macro` package to import this babel tool directly into the files we want it in. If you want to check out what macros are and how they work, you can check out [this video](https://www.youtube.com/watch?v=1queadQ0048&list=PLV5CVI1eNcJgCrPH_e6d57KRUTiDZgs0u) . This lets us use the tailwind classnames inside the emotion template literal strings and it gets compiled down into the CSS they represent.
+
+
+### Concerns
+I don’t claim to think this is perfect. I do feel that by trying to obfuscate a lot of the CSS behind shortcuts with tailwind can make it harder to debug styles and near impossible for developers unfamiliar with the tooling to know what on earth is going on.
+
+I have found that this approach can add some bloat to my component files. Declaring various styled components to be only used once tends to result in some length files. I generally make an attempt to move out styled components I find myself reimplementing across multiple components into a single module.
+
+### Final Thoughts
+It’s by no means replacement for learning CSS as more complex styles require the usual CSS to be written but it does make it more accessible. Once you get a grip on the tailwind classnames it can be ridiculously fast way to build out components and pages; I find myself blocking out everything really fast only only having to go back and tweak minor things here and there greatly improving my development speed.

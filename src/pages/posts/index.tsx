@@ -2,26 +2,41 @@ import * as React from 'react';
 import { NextPage } from 'next';
 import { Flex, Heading, Box, Text, TextProps } from 'rebass';
 import DefaultLayout from '../../layouts/default';
-
-// Posts
-import { meta as bali } from './my-trip-to-bali.mdx';
-import { meta as iceland } from './my-trip-to-iceland.mdx';
 import { H2, H3 } from '../../components/markdown';
 import Link from 'next/link';
 import styled from '../../utils/styled';
 
-const posts = [bali, iceland];
-const slugify = (title: string): string => title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
+// Posts
+import { Meta } from '../../types/meta.type';
+import { meta as tipsForStartingANewJob } from './developer-life/my-tips-for-starting-at-a-new-job.mdx';
+import { meta as howAndWhyIUseTailwindWithEmotion } from './developer-life/how-and-why-i-use-emotion-with-tailwind.mdx';
 
+/**
+ * Content
+ */
+type Topic = { heading: string; slug: string; prologue: string; posts: Meta[] };
+const topics: Topic[] = [
+  {
+    heading: 'Developer Life',
+    slug: 'developer-life',
+    prologue:
+      "Insights, thoughts, and ramblings about my day to day life as an engineer and the lessons I've learned along the way.",
+    posts: [tipsForStartingANewJob, howAndWhyIUseTailwindWithEmotion],
+  },
+];
+
+/**
+ * Utils
+ */
+const slugify = (title: string): string => title.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
 const ContentText: React.FunctionComponent<TextProps> = props => (
   <Text marginBottom="4" lineHeight="1.8" fontFamily="heading" {...props} />
 );
 
-type PostcardProps = {
-  title: string;
-  summary: string;
-  slug: string;
-};
+/**
+ * Post Card
+ */
+type PostcardProps = { title: string; summary: string; slug: string };
 const CardShadow = styled(Flex)`
   box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 8px 0px;
   border-radius: 5px;
@@ -44,11 +59,14 @@ const Postcard: React.FunctionComponent<PostcardProps> = props => (
   </Link>
 );
 
-type ShelfProps = { heading?: string; prologue?: string; children: React.ReactNode };
-const Shelf: React.FunctionComponent<ShelfProps> = ({ heading, prologue, children }) => (
+/**
+ * Shelf
+ */
+type ShelfProps = { category?: string; summary?: string; children: React.ReactNode };
+const Shelf: React.FunctionComponent<ShelfProps> = ({ category, summary, children }) => (
   <>
-    {heading && <H3>{heading}</H3>}
-    {prologue && <ContentText>{prologue}</ContentText>}
+    {category && <H3>{category}</H3>}
+    {summary && <ContentText>{summary}</ContentText>}
     <Box width={['100%', '120%', '180%']} marginLeft={['0', '-10%', '-40%']} marginBottom="4">
       <Flex flexDirection="row" flexWrap="wrap">
         {children}
@@ -57,10 +75,13 @@ const Shelf: React.FunctionComponent<ShelfProps> = ({ heading, prologue, childre
   </>
 );
 
-type Props = { test: string };
+/**
+ * Page
+ */
+type Props = {};
 const PostsPage: NextPage<Props> = () => {
   return (
-    <DefaultLayout>
+    <DefaultLayout title="Luke Bayliss | My Ramblings">
       <H2>My Thoughts and Opinions...</H2>
       <ContentText>
         A somewhat organised collection of my ramblings, thoughts, and ideas that I suddenly had the urge to put down
@@ -68,30 +89,18 @@ const PostsPage: NextPage<Props> = () => {
         of my life and hobbies.
       </ContentText>
 
-      <Shelf
-        heading="Travel"
-        prologue="Stories from my travels far and wide. From towering buildings of New York City, to the red blistering deserts of the Australian outback."
-      >
-        {posts.map(post => (
-          <Postcard key={post.title} title={post.title} summary={post.summary} slug={`posts/${slugify(post.title)}`} />
-        ))}
-      </Shelf>
-      <Shelf
-        heading="Voice Assistant"
-        prologue="My experiences and insights into working on applications and systems in the world of smart home devices and voice assistants."
-      >
-        {posts.map(post => (
-          <Postcard key={post.title} title={post.title} summary={post.summary} slug={`posts/${slugify(post.title)}`} />
-        ))}
-      </Shelf>
-      <Shelf
-        heading="Being The Best Engineer Possible"
-        prologue="Insights, thoughts, and ramblings about my day to day life as an engineer and the lessons I've learned along the way."
-      >
-        {posts.map(post => (
-          <Postcard key={post.title} title={post.title} summary={post.summary} slug={`posts/${slugify(post.title)}`} />
-        ))}
-      </Shelf>
+      {topics.map(topic => (
+        <Shelf key={topic.slug} category={topic.heading} summary={topic.prologue}>
+          {topic.posts.map(post => (
+            <Postcard
+              key={slugify(post.title)}
+              title={post.title}
+              summary={post.summary}
+              slug={`posts/${topic.slug}/${slugify(post.title)}`}
+            />
+          ))}
+        </Shelf>
+      ))}
     </DefaultLayout>
   );
 };
