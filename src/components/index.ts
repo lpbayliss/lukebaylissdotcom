@@ -4,4 +4,8 @@ export { Header } from './header';
 export { ScrolledProvider, ScrolledConsumer } from './is-scrolled';
 export { Logo } from './logo';
 export { Main } from './main';
+export { Shelf } from './shelf';
+export { Postcard } from './postcard';
+export { ContentText } from './content-text';
+export { GlobalStyles, StyleReset } from './global-styles';
 export { default as MDComponents } from './markdown';

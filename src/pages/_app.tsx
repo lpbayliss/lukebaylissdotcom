@@ -4,8 +4,7 @@ import { MDXProvider } from '@mdx-js/react';
 import { ThemeProvider } from 'emotion-theming';
 
 import { theme } from '../utils/styled';
-import { ScrolledProvider, MDComponents } from '../components';
-import { StyleReset, GlobalStyles } from '../components/global-styles';
+import { ScrolledProvider, MDComponents, StyleReset, GlobalStyles } from '../components';
 
 function MyApp({ Component, pageProps }: AppProps): JSX.Element {
   return (

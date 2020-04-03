@@ -3,6 +3,7 @@ export type Meta = {
   published: boolean;
   publishedAt?: string;
   title: string;
+  slug: string;
   summary: string;
   changelog?: Changelog;
   tags?: string[];
