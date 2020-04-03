@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { NextPage } from 'next';
 import DefaultLayout from '../../layouts/default';
-import { H2, H3 } from '../../components/markdown';
+import { H2 } from '../../components/markdown';
+import { Code } from 'react-feather';
 
 // Posts
 import { Meta } from '../../types/meta.type';
@@ -9,9 +10,10 @@ import { meta as tipsForStartingANewJob } from './developer-life/my-tips-for-sta
 import { meta as howAndWhyIUseTailwindWithEmotion } from './developer-life/how-and-why-i-use-emotion-with-tailwind.mdx';
 import { ContentText, Shelf, Postcard } from '../../components';
 
-type Topic = { heading: string; slug: string; prologue: string; posts: Meta[] };
+type Topic = { icon: React.ComponentType; heading: string; slug: string; prologue: string; posts: Meta[] };
 const topics: Topic[] = [
   {
+    icon: Code,
     heading: 'Developer Life',
     slug: 'developer-life',
     prologue:
@@ -32,7 +34,7 @@ const PostsPage: NextPage<Props> = () => {
       </ContentText>
 
       {topics.map(topic => (
-        <Shelf key={topic.slug} category={topic.heading} summary={topic.prologue}>
+        <Shelf icon={topic.icon} key={topic.slug} category={topic.heading} summary={topic.prologue}>
           {topic.posts.map(post => (
             <Postcard key={post.slug} title={post.title} summary={post.summary} slug={`posts/${post.slug}`} />
           ))}
