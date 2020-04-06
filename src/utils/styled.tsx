@@ -16,9 +16,13 @@ export type Theme = {
 
 export const theme: Theme = {
   colors: {
-    background: '#fafaff',
-    primary: 'blue',
-    link: '#8262d9',
+    background: '#F8F7FC',
+    primary: '#6F50FF',
+    primarydark: '#6145E3',
+    white: '#FFFFFF',
+    black: '#000000',
+    grey: '#333333',
+    greylight: '#9F9F9F',
   },
   breakpoints: ['40em', '64em', '80em'],
   fontSizes: [12, 14, 16, 20, 24, 32, 48, 64],

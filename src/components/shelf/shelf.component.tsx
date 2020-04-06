@@ -23,7 +23,7 @@ const Shelf: React.FunctionComponent<ShelfProps> = ({ icon, category, summary, c
   return (
     <>
       <Flex flexDirection="row">
-        {Icon && <Icon />}
+        {Icon && Icon && <Icon />}
         {category && <H3>{category}</H3>}
       </Flex>
       {summary && <ContentText>{summary}</ContentText>}

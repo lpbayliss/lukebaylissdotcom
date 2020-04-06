@@ -11,7 +11,7 @@ type Props = {};
 const Logo: React.FunctionComponent<Props> = (): JSX.Element => (
   <Flex flexDirection="column" justifyContent="center">
     <Link href="/" passHref>
-      <LogoText fontWeight="bold" fontFamily="heading" fontSize="1.5rem">
+      <LogoText fontWeight="bold" fontFamily="heading" fontSize="1.5rem" color="black">
         Luke Bayliss
       </LogoText>
     </Link>

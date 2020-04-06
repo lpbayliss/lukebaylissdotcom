@@ -33,6 +33,6 @@ const UniversalLink = (props: LinkProps) => {
   );
 };
 
-const Link = (props: LinkProps): JSX.Element => <UniversalLink color="link" {...props} />;
+const Link = (props: LinkProps): JSX.Element => <UniversalLink color="primary" {...props} />;
 
 export default Link;
