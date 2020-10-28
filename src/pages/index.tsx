@@ -111,7 +111,9 @@ const IndexPage: NextPage = () => {
           world I'll do my best to respond to any mail sent my way ✉️.
         </Text>
         <Box textAlign="center" p="10">
-          <Button color="gray.900">✉️ Message Me</Button>
+          <Button as={Link} href="mailto:lukepbayliss@gmail.com" color="gray.900">
+            ✉️ Message Me
+          </Button>
         </Box>
       </Section>
     </DefaultLayout>
