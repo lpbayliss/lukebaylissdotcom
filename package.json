@@ -4,25 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next src",
-    "build": "next build src",
-    "start": "next start src",
-    "export": "next export src",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "type-check": "tsc -p src/tsconfig.json",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "export": "next export",
+    "lint": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,jsx,json,ts,tsx,md,mdx,css,html,yml,yaml}\"",
+    "type-check": "tsc --pretty --noEmit",
+    "test": "jest"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run type-check && lint-staged",
-      "pre-push": "npm run test"
+      "pre-commit": "lint-staged"
     }
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "npm run lint"
+    "*.@(js|jsx|ts|tsx)": [
+      "npm run lint",
+      "npm run format",
+      "git add"
     ]
   },
   "repository": {
@@ -37,45 +37,41 @@
   },
   "homepage": "https://github.com/lpbayliss/lukebaylissdotcom#readme",
   "dependencies": {
-    "@emotion/core": "^10.0.28",
+    "@chakra-ui/core": "^0.8.0",
+    "@emotion/core": "^10.0.35",
     "@emotion/styled": "^10.0.27",
-    "@mdx-js/loader": "^1.5.7",
-    "@mdx-js/react": "^1.5.7",
-    "@next/mdx": "^9.3.0",
-    "date-fns": "^2.11.0",
+    "emotion": "^10.0.27",
     "emotion-normalize": "^10.1.0",
+    "emotion-server": "^10.0.27",
     "emotion-theming": "^10.0.27",
-    "next": "^9.3.2-canary.1",
-    "prism": "^4.1.2",
-    "prism-react-renderer": "^1.0.2",
-    "react": "^16.13.0",
-    "react-dom": "^16.13.0",
-    "react-feather": "^2.0.3",
-    "react-live": "^2.2.2",
-    "react-markdown": "^4.3.1",
-    "react-syntax-highlighter": "^12.2.1",
-    "rebass": "^4.0.7"
+    "next": "^9.5.5",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.4",
-    "@types/node": "^13.9.0",
-    "@types/react": "^16.9.23",
-    "@types/react-dom": "^16.9.5",
-    "@types/rebass": "^4.0.4",
-    "@typescript-eslint/eslint-plugin": "^2.23.0",
-    "@typescript-eslint/parser": "^2.23.0",
-    "babel-plugin-emotion": "^10.0.29",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-mdx": "^1.6.8",
-    "eslint-plugin-prettier": "^3.1.2",
-    "eslint-plugin-react": "^7.19.0",
-    "husky": "^4.2.3",
-    "jest": "^25.1.0",
-    "lint-staged": "^10.0.8",
-    "prettier": "^1.19.1",
-    "typescript": "^3.8.3"
+    "@babel/core": "^7.12.3",
+    "@storybook/addon-essentials": "^6.0.27",
+    "@storybook/react": "^6.0.27",
+    "@testing-library/jest-dom": "^5.11.5",
+    "@testing-library/react": "^11.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.5",
+    "@types/react": "^16.9.54",
+    "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "^4.6.0",
+    "@typescript-eslint/parser": "^4.6.0",
+    "babel-jest": "^26.6.1",
+    "babel-loader": "^8.1.0",
+    "eslint": "^7.12.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-react": "^7.21.5",
+    "husky": "^4.3.0",
+    "jest": "^26.6.1",
+    "jest-watch-typeahead": "^0.6.1",
+    "lint-staged": "^10.5.0",
+    "prettier": "^2.1.2",
+    "react-is": "^17.0.1",
+    "ts-loader": "^8.0.7",
+    "typescript": "^4.0.5"
   }
 }

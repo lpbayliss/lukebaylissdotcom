@@ -1,20 +1,25 @@
-import * as React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
+import { extractCritical } from 'emotion-server';
 
 class MyDocument extends Document {
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   static async getInitialProps(ctx) {
     const initialProps = await Document.getInitialProps(ctx);
-    return { ...initialProps };
+    const styles = extractCritical(initialProps.html);
+    return {
+      ...initialProps,
+      styles: (
+        <>
+          {initialProps.styles}
+          <style data-emotion-css={styles.ids.join(' ')} dangerouslySetInnerHTML={{ __html: styles.css }} />
+        </>
+      ),
+    };
   }
 
   render() {
     return (
       <Html lang="en">
-        <Head>
-          <meta charSet="UTF-8" />
-          <meta name="viewport" content="width=device-width, minimum-scale=1.0" />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

@@ -1,23 +1,18 @@
-import * as React from 'react';
-import { AppProps } from 'next/app';
-import { MDXProvider } from '@mdx-js/react';
-import { ThemeProvider } from 'emotion-theming';
+import NextApp from 'next/app';
+import { cache } from 'emotion';
+import { CacheProvider } from '@emotion/core';
+import { ThemeProvider, CSSReset } from '@chakra-ui/core';
 
-import { theme } from '../utils/styled';
-import { ScrolledProvider, MDComponents, StyleReset, GlobalStyles } from '../components';
-
-function MyApp({ Component, pageProps }: AppProps): JSX.Element {
-  return (
-    <ThemeProvider theme={theme}>
-      <MDXProvider components={MDComponents}>
-        <ScrolledProvider>
-          <StyleReset />
-          <GlobalStyles />
+export default class App extends NextApp {
+  render() {
+    const { Component, pageProps } = this.props;
+    return (
+      <CacheProvider value={cache}>
+        <ThemeProvider>
+          <CSSReset />
           <Component {...pageProps} />
-        </ScrolledProvider>
-      </MDXProvider>
-    </ThemeProvider>
-  );
+        </ThemeProvider>
+      </CacheProvider>
+    );
+  }
 }
-
-export default MyApp;

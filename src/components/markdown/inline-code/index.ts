@@ -1,1 +1,0 @@
-export { default as InlineCode } from './inline-code.component';
