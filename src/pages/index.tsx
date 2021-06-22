@@ -12,7 +12,7 @@ const IndexPage: NextPage = () => {
   return (
     <DefaultLayout>
       <Section>
-        <PageHeading>Luke Bayliss👈</PageHeading>
+        <PageHeading>Luke Bayliss 👈</PageHeading>
         <Text>
           Software engineer from <Link href="https://goo.gl/maps/URKckHCRdajjMQs39">Melbourne, Australia</Link>🦘
         </Text>
@@ -65,7 +65,7 @@ const IndexPage: NextPage = () => {
         <SubSection>
           <SectionSubHeading>AGL Energy</SectionSubHeading>
           <Text fontWeight="bold">Application Developer</Text>
-          <Text fontStyle="italic">December 2019 - January 2021</Text>
+          <Text fontStyle="italic">December 2019 - February 2021</Text>
           <List styleType="disc" p="2" pl="8">
             <ListItem>Principal React and Node.js developer</ListItem>
             <ListItem>Support and extend the Voice and Home automation platforms</ListItem>
@@ -82,13 +82,13 @@ const IndexPage: NextPage = () => {
         <SubSection>
           <SectionSubHeading>AGL Energy</SectionSubHeading>
           <Text fontWeight="bold">Digital Developer</Text>
-          <Text fontStyle="italic">December 2019 - Present</Text>
+          <Text fontStyle="italic">March 2019 - December 2019</Text>
           <List styleType="disc" p="2" pl="8">
             <ListItem>Led various initiatives through conception, design, and implementation phases</ListItem>
             <ListItem>Supported company wide OAuth platform</ListItem>
             <ListItem>Introduced and promoted a DevOps mentality within my team</ListItem>
-            <ListItem>Designed and built applications with Angular, RxJS and Typecript</ListItem>
-            <ListItem>Refactored and reengineered out of date core systems</ListItem>
+            <ListItem>Designed and built applications with Angular, RxJS and TypeScript</ListItem>
+            <ListItem>Refactored and re-engineered out of date core systems</ListItem>
             <ListItem>
               Promoted and led an agile practice; often leading discussions and orchestrating retrospectives
             </ListItem>
@@ -97,14 +97,14 @@ const IndexPage: NextPage = () => {
         <SubSection>
           <SectionSubHeading>YOUniverse</SectionSubHeading>
           <Text fontWeight="bold">Full Stack Developer</Text>
-          <Text fontStyle="italic">December 2019 - Present</Text>
+          <Text fontStyle="italic">July 2018 - March 2019</Text>
           <List styleType="disc" p="2" pl="8">
             <ListItem>Principal React developer; implement and support front-end frameworks and tooling</ListItem>
             <ListItem>Follow user centered design and support usability testing</ListItem>
             <ListItem>Developed a design system for React</ListItem>
             <ListItem> Developed various microservices following a domain driven design paradigm</ListItem>
             <ListItem>
-              Actively particpated in product discussions, feature discovery sessions, requirement gathering and story
+              Actively participated in product discussions, feature discovery sessions, requirement gathering and story
               mapping
             </ListItem>
           </List>
@@ -112,7 +112,7 @@ const IndexPage: NextPage = () => {
         <SubSection>
           <SectionSubHeading>Unico Computer Systems</SectionSubHeading>
           <Text fontWeight="bold">Digital Engineer</Text>
-          <Text fontStyle="italic">December 2019 - Present</Text>
+          <Text fontStyle="italic">December 2017 - July 2018</Text>
           <List styleType="disc" p="2" pl="8">
             <ListItem>Supported various .NET and .NET MVC projects</ListItem>
             <ListItem>Supported and extended AngularJS applications</ListItem>
