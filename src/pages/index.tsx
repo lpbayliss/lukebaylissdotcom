@@ -17,36 +17,55 @@ const IndexPage: NextPage = () => {
           Software engineer from <Link href="https://goo.gl/maps/URKckHCRdajjMQs39">Melbourne, Australia</Link>🦘
         </Text>
         <Text>
-          I love challenging ideas, building high quality digital products with meaningful impacts, and experimenting
-          with exciting new technologies. I also love coffee ☕️.
+          I love challenging ideas, building high quality digital products, and experimenting with exciting new
+          technologies. And I obviously also love coffee ☕️.
         </Text>
       </Section>
       <Divider />
       <Section>
         <SectionHeading>👨‍🚀 About Me</SectionHeading>
-        <Text>Hello Stranger! I'm Luke Bayliss, nice to meet you!</Text>
+        <Text>Hello Stranger! I'm Luke Bayliss!</Text>
         <Text>I am a software engineer from Melbourne, Australia and I...</Text>
         <List styleType="disc" p="2" pl="8">
           <ListItem>Greatly enjoy working on challenging projects</ListItem>
           <ListItem>Have a passion for developing products</ListItem>
-          <ListItem>Always Jump on opportunities to work with new technologies</ListItem>
-          <ListItem>Am a driven individual who puts a great deal of pride in my work</ListItem>
-          <ListItem>Believes there is always more to learn and room to improve</ListItem>
-          <ListItem>Uses far too many gifs in Slack 😅</ListItem>
+          <ListItem>Always ready to jump into interesting opportunities and work with new technologies</ListItem>
+          <ListItem>Am a driven individual who puts a great deal of pride into my work</ListItem>
+          <ListItem>Believes there is always Something more to learn and room to improve</ListItem>
+          <ListItem>Uses far too many gifs in all Slack channel's I frequent 😅</ListItem>
         </List>
         <Text>
           I've had an interesting and varied journey in my career so far. I spent time working on integration systems
-          for a telecommunication company. Worked on a workforce managment system powered by AI. Helped develop a large
-          scale identity platform. And now I work with voice assistants and home automation systems!
+          for a telecommunication company. Worked on a workforce management system powered by AI. Helped develop a large
+          scale identity platform taking advantage of event sourcing patterns. Built out voice assistants and home
+          automation integrations to help people keep on top and reduce of their energy usage! And now I am hard at work
+          at building out some exciting new features for Xero to really bolster their growth into new markets!
         </Text>
       </Section>
       <Divider />
       <Section>
         <SectionHeading>👨‍💻 Work Experience</SectionHeading>
         <SubSection>
+          <SectionSubHeading>Xero</SectionSubHeading>
+          <Text fontWeight="bold">Engineer</Text>
+          <Text fontStyle="italic">February 2021 - Present</Text>
+          <List styleType="disc" p="2" pl="8">
+            <ListItem>Developing against multiple projects alongside many different teams</ListItem>
+            <ListItem>Working with a variety of technologies new and old, both frontend and backend!</ListItem>
+            <ListItem>
+              Hard at work at building out some exciting new feature sets to help solidify Xero's growth into new
+              markets
+            </ListItem>
+            <ListItem>Facilitate many team rituals and help push a mindset of being as agile as possible</ListItem>
+            <ListItem>
+              Frequently getting answers wrong in team trivia. But my general knowledge is always improving!
+            </ListItem>
+          </List>
+        </SubSection>
+        <SubSection>
           <SectionSubHeading>AGL Energy</SectionSubHeading>
           <Text fontWeight="bold">Application Developer</Text>
-          <Text fontStyle="italic">December 2019 - Present</Text>
+          <Text fontStyle="italic">December 2019 - January 2021</Text>
           <List styleType="disc" p="2" pl="8">
             <ListItem>Principal React and Node.js developer</ListItem>
             <ListItem>Support and extend the Voice and Home automation platforms</ListItem>
