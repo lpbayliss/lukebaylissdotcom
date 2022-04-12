@@ -1,18 +1,16 @@
-import NextApp from 'next/app';
-import { cache } from 'emotion';
-import { CacheProvider } from '@emotion/core';
-import { ChakraProvider } from '@chakra-ui/core';
-import customTheme from '../utils/custom-theme';
+import { ChakraProvider, ScaleFade } from "@chakra-ui/react";
+import type { AppProps } from "next/app";
+import theme from "../lib/theme";
 
-export default class App extends NextApp {
-  render() {
-    const { Component, pageProps } = this.props;
-    return (
-      <CacheProvider value={cache}>
-        <ChakraProvider theme={customTheme}>
-          <Component {...pageProps} />
-        </ChakraProvider>
-      </CacheProvider>
-    );
-  }
+
+function MyApp({ Component, pageProps, router }: AppProps) {
+  return (
+    <ChakraProvider resetCSS theme={theme}>
+      <ScaleFade key={router.route} initialScale={0.9} in={true}>
+        <Component {...pageProps} />
+      </ScaleFade>
+    </ChakraProvider>
+  );
 }
+
+export default MyApp;

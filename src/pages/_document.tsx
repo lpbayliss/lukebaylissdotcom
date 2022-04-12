@@ -1,26 +1,21 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-import { extractCritical } from 'emotion-server';
+/* eslint-disable @next/next/no-document-import-in-page */
+import React from "react";
+import Document, { Html, Head, Main, NextScript } from "next/document";
+import { ColorModeScript } from "@chakra-ui/react";
+import theme from "../lib/theme";
 
-class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    const initialProps = await Document.getInitialProps(ctx);
-    const styles = extractCritical(initialProps.html);
-    return {
-      ...initialProps,
-      styles: (
-        <>
-          {initialProps.styles}
-          <style data-emotion-css={styles.ids.join(' ')} dangerouslySetInnerHTML={{ __html: styles.css }} />
-        </>
-      ),
-    };
-  }
+type Props = {};
 
+class MyDocument extends Document<Props> {
   render() {
     return (
-      <Html lang="en">
-        <Head />
+      <Html>
+        <Head>
+          <meta name="description" content="Luke Bayliss - Software Engineer" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <body>
+          <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
           <NextScript />
         </body>

@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Box, Button, Divider, Heading, Link, List, ListItem, Text } from '@chakra-ui/core';
+import { Box, Button, Divider, Heading, Link, List, ListItem, Text } from '@chakra-ui/react';
 import DefaultLayout from '../layouts/default.layout';
 
 const Section = (props) => <Box as="section" py="10" {...props} />;
@@ -50,16 +50,11 @@ const IndexPage: NextPage = () => {
           <Text fontWeight="bold">Engineer</Text>
           <Text fontStyle="italic">February 2021 - Present</Text>
           <List styleType="disc" p="2" pl="8">
-            <ListItem>Developing against multiple projects alongside many different teams</ListItem>
-            <ListItem>Working with a variety of technologies new and old, both frontend and backend!</ListItem>
-            <ListItem>
-              Hard at work at building out some exciting new feature sets to help solidify Xero's growth into new
-              markets
-            </ListItem>
-            <ListItem>Facilitate many team rituals and help push a mindset of being as agile as possible</ListItem>
-            <ListItem>
-              Frequently getting answers wrong in team trivia. But my general knowledge is always improving!
-            </ListItem>
+          <ListItem>Facilitates existing, and introduced new team rituals</ListItem>
+          <ListItem>Continuously promoting an agile philosophy among the team</ListItem>
+          <ListItem>Developed and implemented ways of working documentation; specifically regarding how the engineering team can coordinate, develop, test, and deliver their work effectively</ListItem>
+          <ListItem>Lead product initiatives where I have been at the core of discovery, design, and delivery</ListItem>
+          <ListItem>Designed and built new, and developed existing front-end applications and back-end systems</ListItem>
           </List>
         </SubSection>
         <SubSection>
@@ -67,16 +62,10 @@ const IndexPage: NextPage = () => {
           <Text fontWeight="bold">Application Developer</Text>
           <Text fontStyle="italic">December 2019 - February 2021</Text>
           <List styleType="disc" p="2" pl="8">
-            <ListItem>Principal React and Node.js developer</ListItem>
-            <ListItem>Support and extend the Voice and Home automation platforms</ListItem>
-            <ListItem>Developed orchestration systems involved in the Australian Governments ‘ARENA’ program</ListItem>
-            <ListItem>Designed & built services based on CQRS patterns to super power the identity platform</ListItem>
-            <ListItem>Maintain fully automated build and release pipelines</ListItem>
-            <ListItem>Mentor developers on JavaScript based technologies</ListItem>
-            <ListItem>
-              Built and pilot innovative ideas and applications; integrating new technologies and exploring their
-              possibilities
-            </ListItem>
+          <ListItem>Built and piloted innovative product ideas; with a focus on integrating new technologies and exploring new business possibilities</ListItem>
+          <ListItem>Frequently acted as a mentor for JavaScript based technologies due to my deep experience</ListItem>
+<ListItem>Developed orchestration systems involved in the Australian Government's ‘ARENA' program</ListItem>
+<ListItem>Designed & built services based on the CQRS pattern to super power the identity platform</ListItem>
           </List>
         </SubSection>
         <SubSection>
@@ -84,14 +73,11 @@ const IndexPage: NextPage = () => {
           <Text fontWeight="bold">Digital Developer</Text>
           <Text fontStyle="italic">March 2019 - December 2019</Text>
           <List styleType="disc" p="2" pl="8">
-            <ListItem>Led various initiatives through conception, design, and implementation phases</ListItem>
-            <ListItem>Supported company wide OAuth platform</ListItem>
-            <ListItem>Introduced and promoted a DevOps mentality within my team</ListItem>
-            <ListItem>Designed and built applications with Angular, RxJS and TypeScript</ListItem>
-            <ListItem>Refactored and re-engineered out of date core systems</ListItem>
-            <ListItem>
-              Promoted and led an agile practice; often leading discussions and orchestrating retrospectives
-            </ListItem>
+          <ListItem>Promoted and facilitated an agile practice; often leading discussions and orchestrating team SCRUM events</ListItem>
+            <ListItem>Took lead on a variety of initiatives through discovery, design, and implementation phases</ListItem>
+            <ListItem>Introduced and facilitated a DevOps philosophy within the engineering team</ListItem>
+            <ListItem>Supported a business wide Identity Platform, often collaborating with stake holders from across the business</ListItem>
+            <ListItem>Re-engineered a number of out of date systems within the Identity platform</ListItem>
           </List>
         </SubSection>
         <SubSection>
@@ -99,14 +85,10 @@ const IndexPage: NextPage = () => {
           <Text fontWeight="bold">Full Stack Developer</Text>
           <Text fontStyle="italic">July 2018 - March 2019</Text>
           <List styleType="disc" p="2" pl="8">
-            <ListItem>Principal React developer; implement and support front-end frameworks and tooling</ListItem>
-            <ListItem>Follow user centered design and support usability testing</ListItem>
-            <ListItem>Developed a design system for React</ListItem>
-            <ListItem> Developed various microservices following a domain driven design paradigm</ListItem>
-            <ListItem>
-              Actively participated in product discussions, feature discovery sessions, requirement gathering and story
-              mapping
-            </ListItem>
+          <ListItem>Actively participated in product discussions, feature discovery, requirement gathering and story mapping as part of a LEAN agile workplace</ListItem>
+            <ListItem>Acted as the lead developer for front-end technologies. Implementing and supporting a variety of front-end frameworks and related tooling</ListItem>
+            <ListItem>Developed an extensible design system for our React front-end</ListItem>
+            <ListItem>Re-engineered a monolith into a system of microservices with a strong focus on domain driven design</ListItem>
           </List>
         </SubSection>
         <SubSection>
@@ -114,10 +96,10 @@ const IndexPage: NextPage = () => {
           <Text fontWeight="bold">Digital Engineer</Text>
           <Text fontStyle="italic">December 2017 - July 2018</Text>
           <List styleType="disc" p="2" pl="8">
-            <ListItem>Supported various .NET and .NET MVC projects</ListItem>
-            <ListItem>Supported and extended AngularJS applications</ListItem>
-            <ListItem>Supported various telecommunication systems</ListItem>
-            <ListItem>Maintained an extensive test automation suite with Robot Framework</ListItem>
+          <ListItem>Worked on a variety of telecommunication systems using Java</ListItem>
+            <ListItem>Developed on a number of AngularJS and React applications for different clients</ListItem>
+            <ListItem>Maintained an extensive automated testing suite using Robot Framework and Python</ListItem>
+            
           </List>
         </SubSection>
       </Section>
@@ -127,10 +109,10 @@ const IndexPage: NextPage = () => {
         <Text>
           I'm always happy to discuss new opportunities so my inbox is always open! Even if you just want to say hello,
           show me a cool project, or just tell me a joke. Given you're not some automation robot trying to take over the
-          world I'll do my best to respond to any mail sent my way ✉️.
+          world I'll do my best to respond to any mail sent my way.
         </Text>
         <Box textAlign="center" p="10">
-          <Button as={Link} href="mailto:lukepbayliss@gmail.com" color="gray.900">
+          <Button as={Link} href="mailto:hello@lukebayliss.com">
             ✉️ Message Me
           </Button>
         </Box>
