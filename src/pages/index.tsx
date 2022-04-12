@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { NextPage } from 'next';
 import { Box, Button, Divider, Heading, Link, List, ListItem, Text } from '@chakra-ui/react';
 import DefaultLayout from '../layouts/default.layout';
