@@ -40,13 +40,13 @@ const IndexPage: NextPage<Props> = ({ value }) => {
               primarily focused on building out an exciting new tax product.
             </Text>
             <Text>
-              I love working building effective and high quality digital
+              I love building effective and high quality digital
               products, especially when I get to work with a great team of like
-              minded individuals. Team work and collaboration is some I relish.
+              minded individuals. Team work and collaboration is something I relish.
             </Text>
             <Text>
-              I also have a passion for improving processes. Continuos
-              improvement I believe is a core quality of a highly effective
+              I also have a passion for improving processes. Continuous
+              improvement is something I believe to be a core quality of a highly effective
               team, and I aspire to be the most supportive team member that not
               only delivers my best work, but enables my team to be their best
               also.
