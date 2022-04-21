@@ -7,7 +7,7 @@ import theme from "../lib/theme";
 
 config.autoAddCss = false;
 
-function MyApp({ Component, pageProps, router }: AppProps) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider resetCSS theme={theme}>
       <Component {...pageProps} />

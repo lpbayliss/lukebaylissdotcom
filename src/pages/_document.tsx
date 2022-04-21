@@ -9,7 +9,7 @@ type Props = {};
 class MyDocument extends Document<Props> {
   render() {
     return (
-      <Html lang="EN">
+      <Html lang="en">
         <Head>
           <meta name="description" content="Luke Bayliss | Software Engineer" />
           <link rel="icon" href="/favicon.ico" />
