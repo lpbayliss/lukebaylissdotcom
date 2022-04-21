@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { GetServerSideProps, NextPage } from "next";
-import { Container, Flex, Heading, Stack, Text, Wrap } from "@chakra-ui/react";
+import { Container, Flex, Heading, Link, Stack, Text, Wrap } from "@chakra-ui/react";
 import Section from "../components/section";
 import Card from "../components/card";
 import Experience from "../components/experience";
@@ -145,9 +145,7 @@ const IndexPage: NextPage<Props> = ({ value }) => {
               I'll do my very best to get back to you. Bonus points for a good
               joke!
             </Text>
-            <Card>
-              <ContactForm />
-            </Card>
+            <Link fontSize="xl" href="mailto:hello@lukebayliss.com">Find me at hello@lukebayliss.com</Link>
           </Stack>
         </Container>
       </Section>
