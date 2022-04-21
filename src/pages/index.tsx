@@ -1,46 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
 import { NextPage } from "next";
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  Heading,
-  IconButton,
-  Link,
-  List,
-  ListItem,
-  Stack,
-  Text,
-  useColorMode,
-  Wrap,
-} from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMoon, faSunBright } from "@fortawesome/pro-duotone-svg-icons";
+import { Container, Flex, Heading, Stack, Text, Wrap } from "@chakra-ui/react";
 import Section from "../components/section";
 import Card from "../components/card";
 import Experience from "../components/experience";
 import ContactForm from "../components/contact-form";
+import ColorModeButton from "../components/color-mode-button";
 
 const IndexPage: NextPage = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-
   return (
     <Flex flexDir="column">
       <Section>
         <Container maxW="4xl">
-          <IconButton
-            aria-label="toggle-color-mode"
-            icon={
-              colorMode === "light" ? (
-                <FontAwesomeIcon icon={faMoon} />
-              ) : (
-                <FontAwesomeIcon icon={faSunBright} />
-              )
-            }
-            onClick={toggleColorMode}
-          />
+          <ColorModeButton />
           <Heading size="4xl" pb="none">
             Hello! I'm Luke.
           </Heading>
@@ -164,7 +136,8 @@ const IndexPage: NextPage = () => {
             <Text fontSize="xl">
               My inbox is always open! If you have an exciting new opportunity,
               or you just want to say hello, feel free to drop me a message and
-              I'll do my very best to get back to you. Bonus points for a good joke!
+              I'll do my very best to get back to you. Bonus points for a good
+              joke!
             </Text>
             <Card>
               <ContactForm />
