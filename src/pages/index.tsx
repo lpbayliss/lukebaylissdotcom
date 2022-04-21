@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 import { Container, Flex, Heading, Stack, Text, Wrap } from "@chakra-ui/react";
 import Section from "../components/section";
 import Card from "../components/card";
@@ -7,7 +7,13 @@ import Experience from "../components/experience";
 import ContactForm from "../components/contact-form";
 import ColorModeButton from "../components/color-mode-button";
 
-const IndexPage: NextPage = () => {
+type Props = { value: any };
+
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => ({ props: { value: "hello" } });
+
+const IndexPage: NextPage<Props> = ({ value }) => {
   return (
     <Flex flexDir="column">
       <Section>
