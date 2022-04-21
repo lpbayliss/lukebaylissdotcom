@@ -5,14 +5,12 @@ import Section from "../components/section";
 import Card from "../components/card";
 import Experience from "../components/experience";
 import ContactForm from "../components/contact-form";
-import ColorModeButton from "../components/color-mode-button";
 
 const IndexPage: NextPage = () => {
   return (
     <Flex flexDir="column">
       <Section>
         <Container maxW="4xl">
-          <ColorModeButton />
           <Heading size="4xl" pb="none">
             Hello! I'm Luke.
           </Heading>
