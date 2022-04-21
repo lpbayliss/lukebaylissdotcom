@@ -4,7 +4,6 @@ import { Container, Flex, Heading, Link, Stack, Text, Wrap } from "@chakra-ui/re
 import Section from "../components/section";
 import Card from "../components/card";
 import Experience from "../components/experience";
-import ContactForm from "../components/contact-form";
 import ColorModeButton from "../components/color-mode-button";
 
 type Props = { value: any };
