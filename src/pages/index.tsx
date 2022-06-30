@@ -1,18 +1,20 @@
 /* eslint-disable react/no-unescaped-entities */
 import { GetServerSideProps, NextPage } from "next";
-import { Container, Flex, Heading, Link, Stack, Text, Wrap } from "@chakra-ui/react";
+import {
+  Container,
+  Flex,
+  Heading,
+  Link,
+  Stack,
+  Text,
+  Wrap,
+} from "@chakra-ui/react";
 import Section from "../components/section";
 import Card from "../components/card";
 import Experience from "../components/experience";
 import ColorModeButton from "../components/color-mode-button";
 
-type Props = { value: any };
-
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => ({ props: { value: "hello" } });
-
-const IndexPage: NextPage<Props> = ({ value }) => {
+const IndexPage: NextPage = () => {
   return (
     <Flex flexDir="column">
       <Section>
@@ -40,16 +42,16 @@ const IndexPage: NextPage<Props> = ({ value }) => {
               primarily focused on building out an exciting new tax product.
             </Text>
             <Text>
-              I love building effective and high quality digital
-              products, especially when I get to work with a great team of like
-              minded individuals. Team work and collaboration is something I relish.
+              I love building effective and high quality digital products,
+              especially when I get to work with a great team of like minded
+              individuals. Team work and collaboration is something I relish.
             </Text>
             <Text>
               I also have a passion for improving processes. Continuous
-              improvement is something I believe to be a core quality of a highly effective
-              team, and I aspire to be the most supportive team member that not
-              only delivers my best work, but enables my team to be their best
-              also.
+              improvement is something I believe to be a core quality of a
+              highly effective team, and I aspire to be the most supportive team
+              member that not only delivers my best work, but enables my team to
+              be their best also.
             </Text>
           </Stack>
         </Container>
@@ -144,7 +146,9 @@ const IndexPage: NextPage<Props> = ({ value }) => {
               I'll do my very best to get back to you. Bonus points for a good
               joke!
             </Text>
-            <Link fontSize="xl" href="mailto:hello@lukebayliss.com">Find me at hello@lukebayliss.com</Link>
+            <Link fontSize="xl" href="mailto:hello@lukebayliss.com">
+              Find me at hello@lukebayliss.com
+            </Link>
           </Stack>
         </Container>
       </Section>
