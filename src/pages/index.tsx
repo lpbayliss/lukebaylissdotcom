@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { GetServerSideProps, NextPage } from "next";
+import { NextPage } from "next";
 import {
   Container,
   Flex,
@@ -9,10 +9,10 @@ import {
   Text,
   Wrap,
 } from "@chakra-ui/react";
-import Section from "../components/section";
-import Card from "../components/card";
-import Experience from "../components/experience";
-import ColorModeButton from "../components/color-mode-button";
+import Section from "@components/section";
+import Card from "@components/card";
+import Experience from "@components/experience";
+import ColorModeButton from "@components/color-mode-button";
 
 const IndexPage: NextPage = () => {
   return (

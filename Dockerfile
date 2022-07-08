@@ -7,7 +7,7 @@ COPY package.json package-lock.json .npmrc ./
 
 ENV FONTAWESOME_NPM_AUTH_TOKEN ${FONTAWESOME_NPM_AUTH_TOKEN}
 
-RUN npm ci
+RUN yarn install --frozen-lockfile
 
 FROM node:16-alpine AS builder
 WORKDIR /app
@@ -17,7 +17,7 @@ COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run build
+RUN yarn build
 
 FROM node:16-alpine AS runner
 WORKDIR /app

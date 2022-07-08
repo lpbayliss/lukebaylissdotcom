@@ -1,8 +1,10 @@
-const Heading = {
+import { ComponentStyleConfig } from "@chakra-ui/react";
+
+const Heading: ComponentStyleConfig = {
   baseStyle: {
     pb: { base: "6", md: "12" },
   },
-  size: {},
+  sizes: {},
   variants: {},
 };
 
