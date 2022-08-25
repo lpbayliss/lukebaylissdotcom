@@ -8,12 +8,7 @@ const Section: ComponentStyleConfig = {
     py: { base: "12", md: "24" },
   },
   sizes: {},
-  variants: {
-    primary: {},
-    secondary: {
-      bg: "surface",
-    },
-  },
+  variants: {},
 };
 
 export default Section;
