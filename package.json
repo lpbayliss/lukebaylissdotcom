@@ -22,9 +22,9 @@
   },
   "homepage": "https://github.com/lpbayliss/lukebaylissdotcom#readme",
   "dependencies": {
-    "@chakra-ui/icons": "^2.0.2",
-    "@chakra-ui/react": "^2.2.1",
-    "@chakra-ui/theme-tools": "^2.0.2",
+    "@chakra-ui/icons": "2.0.11",
+    "@chakra-ui/react": "2.3.6",
+    "@chakra-ui/theme-tools": "2.0.12",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "@fortawesome/fontawesome-pro": "^6.1.1",
