@@ -1,4 +1,4 @@
-FROM node:16-alpine AS deps
+FROM node:19-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
@@ -9,7 +9,7 @@ ENV FONTAWESOME_NPM_AUTH_TOKEN ${FONTAWESOME_NPM_AUTH_TOKEN}
 
 RUN yarn install --frozen-lockfile
 
-FROM node:16-alpine AS builder
+FROM node:19-alpine AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -19,7 +19,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN yarn build
 
-FROM node:16-alpine AS runner
+FROM node:19-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
