@@ -1,17 +1,8 @@
 /** @type {import('next').NextConfig} */
-
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [],
-    rehypePlugins: [],
-    providerImportSource: "@mdx-js/react",
-  },
-});
-
-module.exports = withMDX({
-  reactStrictMode: true,
+const nextConfig = {
   swcMinify: true,
-  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
-  output: 'standalone',
-});
+  reactStrictMode: true,
+  output: 'export',
+}
+
+module.exports = nextConfig

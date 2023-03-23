@@ -1,22 +1,14 @@
-import "@fortawesome/fontawesome-svg-core/styles.css";
-import { config } from "@fortawesome/fontawesome-svg-core";
+import { Layout } from "@/components/layout";
+import theme from "@/theme/theme";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { MDXProvider } from "@mdx-js/react";
 
-import theme from "@lib/theme";
-import components from "@components/markdown";
-
-config.autoAddCss = false;
-
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MDXProvider components={components}>
-      <ChakraProvider resetCSS theme={theme}>
+    <ChakraProvider resetCSS theme={theme}>
+      <Layout>
         <Component {...pageProps} />
-      </ChakraProvider>
-    </MDXProvider>
+      </Layout>
+    </ChakraProvider>
   );
 }
-
-export default MyApp;
