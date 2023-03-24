@@ -5,15 +5,11 @@ import NextLink from "next/link";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 
 export default function Home() {
-  const [name] = useTypewriter({
-    words: ["<LukeBayliss/>"],
-    loop: true,
-  });
   const [text] = useTypewriter({
     words: [
       "a software engineer.",
       "a wizard, turning caffeine into code.",
-      "an exterminator, relentlessly ridding on pesky bugs.",
+      "an exterminator, relentlessly ridding pesky bugs.",
       "an alchemist, transmuting ideas into applications.",
       "a polyglot, a new language is no barrier.",
     ],
@@ -22,7 +18,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Welcome</title>
+        <title>{`I'm Luke Bayliss`}</title>
       </Head>
       <VStack
         margin="auto"
@@ -31,12 +27,12 @@ export default function Home() {
         alignItems="center"
         spacing={8}
       >
-        <Heading size="3xl">{"<Luke Bayliss/>"}</Heading>
+        <Heading size="3xl">{"<LukeBayliss/>"}</Heading>
         <Heading size="xl">
           {`I'm ${text}`}
           <Cursor cursorStyle={"|"} />
         </Heading>
-        <Link as={NextLink} href="/#" fontSize="xl">
+        <Link as={NextLink} href="/home" fontSize="xl">
           Learn more
         </Link>
       </VStack>
