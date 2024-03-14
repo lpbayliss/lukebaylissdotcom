@@ -51,6 +51,7 @@
       "eslint --fix"
     ],
     "content/**/*.{md,mdx}": [
+      "prettier --write --ignore-unknown",
       "node ./scripts/updateFrontmatter.mjs"
     ]
   },
