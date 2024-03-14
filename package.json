@@ -36,7 +36,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
-    "reading-time": "^1.5.0"
+    "reading-time": "^1.5.0",
+    "tsx": "^4.7.1"
   },
   "devDependencies": {
     "@types/node": "18.15.5",
@@ -53,7 +54,7 @@
     ],
     "content/**/*.{md,mdx}": [
       "prettier --write --ignore-unknown",
-      "node ./scripts/updateFrontmatter.mjs"
+      "tsx ./scripts/processStagedMDX.ts"
     ]
   },
   "packageManager": "pnpm@8.8.0"
