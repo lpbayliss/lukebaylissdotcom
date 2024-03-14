@@ -24,6 +24,7 @@ const config = {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
   },
+  ignorePatterns: ["node_modules/", "dist/", "out/", "scripts/"],
 };
 
 module.exports = config;
