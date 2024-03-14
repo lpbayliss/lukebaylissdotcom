@@ -16,3 +16,14 @@ This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-opti
 
 https://www.warpstream.com/blog
 https://www.realtimecolors.com/?colors=e7e4f1-070410-4e35c0-322173-382097&fonts=Comfortaa-Comfortaa
+
+### Checklist
+
+[] RSS Feed
+[] Landing Page Typing Effect
+[] Resume
+[] MDX Loading
+    [] Code Snippets
+    [] Front matter update hook
+[] Likes/ Reactions
+[] Hit counter, hash ip?

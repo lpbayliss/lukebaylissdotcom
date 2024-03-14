@@ -5,15 +5,12 @@ import {
   GridItem,
   Heading,
   HStack,
-  Icon,
-  IconButton,
   Text,
   VStack,
 } from "@chakra-ui/react";
 import { Link } from "@chakra-ui/react";
 import { NextPage } from "next";
 import NextLink from "next/link";
-import { FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 
 const Index: NextPage = () => {
   return (
@@ -39,7 +36,7 @@ const Index: NextPage = () => {
             </Link>
           </GridItem>
           <GridItem as={Flex} alignItems="center" justifyContent="flex-end">
-            <NextLink href="https://app.filendy.com" passHref>
+            {/* <NextLink href="https://app.filendy.com" passHref>
               <IconButton
                 as="a"
                 aria-label="LinkedIn"
@@ -59,7 +56,7 @@ const Index: NextPage = () => {
                 aria-label="Instagram"
                 icon={<Icon as={FaInstagram} boxSize={5} />}
               />
-            </NextLink>
+            </NextLink> */}
           </GridItem>
         </Grid>
       </Flex>
@@ -77,7 +74,7 @@ const Index: NextPage = () => {
         >
           <Box
             w="full"
-            bgImage="linear-gradient(transparent 30%, rgba(157, 140, 222, .9))"
+            bg="background.main"
             borderBottomLeftRadius="29px"
             borderBottomRightRadius="29px"
             shadow="0 12px 9px -9px rgba(0,0,0,.1)"
@@ -90,12 +87,35 @@ const Index: NextPage = () => {
         </Flex>
       </Box>
       <Box px="5%" pt="5rem" transition="all .5s">
-        <Heading>Hello World!</Heading>
+        <Heading as="h2">Hello World!</Heading>
         <Text>
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda ex
           eum consequuntur repudiandae natus perspiciatis veritatis. Dolore
           itaque temporibus nam doloribus? Similique, deleniti nam. Maiores
-          rerum corrupti vel quas dolorum?
+          rerum corrupti vel quas dolorum? Lorem ipsum, dolor sit amet
+          consectetur adipisicing elit. Assumenda ex eum consequuntur
+          repudiandae natus perspiciatis veritatis. Dolore itaque temporibus nam
+          doloribus? Similique, deleniti nam. Maiores rerum corrupti vel quas
+          dolorum? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          Assumenda ex eum consequuntur repudiandae natus perspiciatis
+          veritatis. Dolore itaque temporibus nam doloribus? Similique, deleniti
+          nam. Maiores rerum corrupti vel quas dolorum?
+        </Text>
+        <Heading as="h3" size="md">
+          Hello World!
+        </Heading>
+        <Text>
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda ex
+          eum consequuntur repudiandae natus perspiciatis veritatis. Dolore
+          itaque temporibus nam doloribus? Similique, deleniti nam. Maiores
+          rerum corrupti vel quas dolorum? Lorem ipsum, dolor sit amet
+          consectetur adipisicing elit. Assumenda ex eum consequuntur
+          repudiandae natus perspiciatis veritatis. Dolore itaque temporibus nam
+          doloribus? Similique, deleniti nam. Maiores rerum corrupti vel quas
+          dolorum? Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+          Assumenda ex eum consequuntur repudiandae natus perspiciatis
+          veritatis. Dolore itaque temporibus nam doloribus? Similique, deleniti
+          nam. Maiores rerum corrupti vel quas dolorum?
         </Text>
       </Box>
     </Box>
