@@ -8,7 +8,10 @@ const updateFrontMatter = () => {
     const file = matter.read(path);
     const { data: currentFrontMatter, content } = file;
 
-    if (currentFrontMatter.published === true) {
+    if (
+      currentFrontMatter.publishedAt !== undefined &&
+      currentFrontMatter.publishedAt !== ""
+    ) {
       const updatedFrontMatter = {
         ...currentFrontMatter,
         updatedAt: new Date().toISOString(),
