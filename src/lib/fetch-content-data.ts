@@ -7,6 +7,7 @@ interface ContentFrontmatter {
   abstract: string;
   updatedAt: string;
   publishedAt: string;
+  readingTime: string;
 }
 
 const fetchContentData = async <T extends object = ContentFrontmatter>(
