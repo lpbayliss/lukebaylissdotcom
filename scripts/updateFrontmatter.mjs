@@ -2,7 +2,8 @@ import fs from "fs";
 import matter from "gray-matter";
 import readingTime from "reading-time";
 
-const updateUpdatedAt = (data, content) => {
+const updateUpdatedAt = (file) => {
+  const { data, content } = file;
   if (data.publishedAt !== undefined && data.publishedAt !== "") {
     return {
       data: {
@@ -16,7 +17,8 @@ const updateUpdatedAt = (data, content) => {
   return { data, content };
 };
 
-const updateReadingTime = (data, content) => {
+const updateReadingTime = (file) => {
+  const { data, content } = file;
   const stats = readingTime(content);
 
   return {
@@ -33,10 +35,9 @@ const updateFrontMatter = () => {
 
   paths.forEach((path) => {
     const file = matter.read(path);
-    const { data, content } = file;
 
     const { data: updatedData, content: updatedContent } = updateReadingTime(
-      updateUpdatedAt(data, content),
+      updateUpdatedAt(file),
     );
 
     fs.writeFileSync(path, matter.stringify(updatedContent, updatedData));
