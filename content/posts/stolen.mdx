@@ -1,0 +1,52 @@
+---
+title: The Original Sin of Cloud Infrastructure
+abstract: >-
+  Many of today's most highly adopted open source “big data” infrastructure
+  projects – like Cassandra, Kafka, Hadoop, etc.
+updatedAt: '2024-03-15T11:31:49.888Z'
+publishedAt: '2024-03-14T23:55:33.165Z'
+id: 429b62ee-7785-482f-ad0d-67d2c869eb0a
+readingTime: 5 min read
+headings:
+  - level: 1
+    text: The origins of big data infrastructure
+    id: the-origins-of-big-data-infrastructure
+  - level: 1
+    text: 'Phase 1: selling tooling, automation, and support'
+    id: phase-1-selling-tooling-automation-and-support
+  - level: 1
+    text: Operating Kafka is hard
+    id: operating-kafka-is-hard
+hash: 8362c8a2541bfaa3d1ca8209f6b6dc36b87b3ff8f9bb112f60c8bef0fd6b8606
+---
+
+# The origins of big data infrastructure
+
+Many of today's most highly adopted open source “big data” infrastructure projects – like Cassandra, Kafka, Hadoop, etc. – follow a common story. A large company, startup or otherwise, faces a unique, high scale infrastructure challenge that's poorly supported by existing tools. They create an internal solution for their specific needs, and then later (kindly) open source it for the greater community to use. Now, even smaller startups can benefit from the work and expertise of these seasoned engineering teams. Great, right?
+
+Almost a decade later, I’d guess most developers would say that it’s complicated. Adopting big data systems created at other companies that were later open sourced did not turn out to be the time saving, efficiency boosting gift many thought it would be. Unfortunately, while the big tech companies open sourced their code, they didn’t open source their expertise or tooling. Many early adopters were burned badly when they realized just how difficult to operate and scale these “big data” infrastructure technologies are. The issue might be even more fundamental, though. When developers adopt software under a radically different set of circumstances than it was designed for, can we really blame the software when things go wrong?
+
+Early in my career at Uber, I was complaining to a new storage director (that had just joined us from Apple) about all the problems we were running into with Cassandra. “I have no idea why Uber has so much trouble with Cassandra” he told me, “we ran 100x as many Cassandra nodes at Apple and it worked great.” I was skeptical, but chalked it up to a skill issue. Maybe we really just didn’t know what we were doing.
+
+Years later I had an epiphany while talking to an engineer from the Apple Cassandra team: Apple runs a custom build of Cassandra that bears almost no resemblance to the open source Cassandra that Uber was running! The basic primitives were the same, but between the custom plugins, modules, tooling, and orchestration they had created they might as well have been running a completely different database.
+
+As these big data infrastructure projects grew in adoption, it quickly became obvious to everyone that the commercial opportunity around this infrastructure was massive. Today, there are many public companies that are built on this exact business model. You can trace 3 distinct phases to how this market played out, and in each of them, end users lose.
+
+# Phase 1: selling tooling, automation, and support
+
+The earliest infrastructure companies in this market tried to address these problems – the sheer difficulty of running the kind of open source infrastructure software we’re talking about – by selling tooling, automation, and support for the software in question. These companies had great stories – technical founders who built and open sourced something innovative, building a company and ecosystem around it.
+
+But the effect of this kind of monetization on the OSS itself wasn’t always positive. The creators of OSS trying to commercialize it themselves ended up creating a perverse set of incentives (that they probably never intended for in the first place):
+
+- In many cases the development of the original OSS was severely degraded, because good tooling was gate-kept out by the vendors who were also the primary sponsors of the projects…
+- While at the same time, these infrastructure companies were starting to make quite a bit of money off of how difficult the software was to use.
+
+These incentives put vendors in a tough spot: if you improve the OSS, you make less money off of it. In a sense, these companies had indirectly created a disease that they’d be able to profit nicely off of selling the cure to.
+
+# Operating Kafka is hard
+
+The industry-standard approach for anything streaming is to make use of a durable log like Apache Kafka.
+
+However, Apache Kafka is an extremely stateful system that co-locates compute and storage. That means that your organization will have to develop in-house expertise on how to manage the Apache Kafka clusters, including the brokers and their local disks, as well as a strongly consistent metadata store like ZooKeeper or KRaft.
+
+Until recently, people had no reason to suspect that a $1,200 sofa would be anything less than high quality; the vast majority of the stuff in stores was fairly well made, and you could sit on it to test it. Today, not so much. Instead of going to a furniture or department store, says Sami Reiss, a journalist and Dwell contributor who operates Snake, a newsletter about furniture design, modern consumers "are buying a couch online that looks four times as good, costs two times the price, and is made twenty times more poorly." A combination of factors, including world-altering shifts in labor, manufacturing, transportation logistics, and middle-class American aesthetics, has created a grim scene: a two-year-old, $1,200 Instagram sofa—busted, on the curb, waiting for the large-item trash pickup or an enterprising scavenger who doesn’t realize just how shitty this thing is.

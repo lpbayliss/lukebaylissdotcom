@@ -23,7 +23,7 @@ https://www.realtimecolors.com/?colors=e7e4f1-070410-4e35c0-322173-382097&fonts=
 [] Landing Page Typing Effect
 [] Resume
 [] MDX Loading
-    [] Code Snippets
-    [] Front matter update hook
+[] Code Snippets
+[] Front matter update hook
 [] Likes/ Reactions
 [] Hit counter, hash ip?

@@ -1,6 +1,7 @@
 import fs from "fs";
 import { serialize } from "next-mdx-remote/serialize";
 import path from "path";
+import rehypeSlug from "rehype-slug";
 
 interface ContentFrontmatter {
   title: string;
@@ -8,6 +9,9 @@ interface ContentFrontmatter {
   updatedAt: string;
   publishedAt: string;
   readingTime: string;
+  headings: { level: number; text: string; id: string }[];
+  hash: string;
+  id: string;
 }
 
 const fetchContentData = async <T extends object = ContentFrontmatter>(
@@ -19,7 +23,14 @@ const fetchContentData = async <T extends object = ContentFrontmatter>(
     "utf-8",
   );
 
-  return await serialize<unknown, T>(file, { parseFrontmatter: true });
+  const source = await serialize<unknown, T>(file, {
+    parseFrontmatter: true,
+    mdxOptions: {
+      rehypePlugins: [rehypeSlug],
+    },
+  });
+
+  return source;
 };
 
 export default fetchContentData;

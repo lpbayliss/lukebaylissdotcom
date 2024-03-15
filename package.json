@@ -10,6 +10,8 @@
     "format:fix": "prettier . --write",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
+    "process:content": "tsx ./scripts/processContent.ts ./content/**/*.mdx",
+    "gen:component": "tsx ./scripts/generate-component.ts",
     "prepare": "husky"
   },
   "dependencies": {
@@ -18,6 +20,7 @@
     "@chakra-ui/theme-tools": "^2.1.2",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@mdx-js/mdx": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "@types/eslint": "^8.56.5",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -37,6 +40,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
     "reading-time": "^1.5.0",
+    "rehype-slug": "^6.0.0",
     "tsx": "^4.7.1"
   },
   "devDependencies": {

@@ -1,7 +1,7 @@
-import { Box, Flex, Heading, Text, VStack } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Text, VStack } from "@chakra-ui/react";
 
 const Header = () => (
-  <Box w="full" px="5%">
+  <Container maxW="80rem" px="5%">
     <Flex
       as="header"
       w="full"
@@ -25,7 +25,7 @@ const Header = () => (
         </VStack>
       </Box>
     </Flex>
-  </Box>
+  </Container>
 );
 
 export default Header;

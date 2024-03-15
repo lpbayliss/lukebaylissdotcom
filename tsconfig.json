@@ -28,7 +28,9 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    "migrate.mjs"
+    "migrate.mjs",
+    "scripts/templates/index.template",
+    "scripts/templates/component.template"
   ],
   "exclude": ["node_modules", "scripts"]
 }
