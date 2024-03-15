@@ -6,7 +6,7 @@ import { PageLayout } from "~/components/page-layout";
 const Index: NextPage = () => {
   return (
     <PageLayout>
-      <MaxWidthContainer>This is the home page?</MaxWidthContainer>
+      <MaxWidthContainer>This is the blog?</MaxWidthContainer>
     </PageLayout>
   );
 };

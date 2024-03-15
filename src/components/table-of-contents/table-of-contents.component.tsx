@@ -3,11 +3,11 @@ import NextLink from "next/link";
 
 const TOCLevelIndents: Record<number, number> = {
   1: 2,
-  2: 4,
-  3: 6,
-  4: 8,
-  5: 10,
-  6: 12,
+  2: 6,
+  3: 10,
+  4: 14,
+  5: 16,
+  6: 20,
 };
 
 interface TableOfContentsProps {
@@ -17,25 +17,33 @@ interface TableOfContentsProps {
 const TableOfContents = ({ headings }: TableOfContentsProps) => (
   <Box pos="sticky" top={0} pt="10">
     <Text
-      mb={1}
+      mb={2}
       p={2}
       fontSize="xl"
       fontWeight="bold"
       borderColor="grey.900"
-      borderBottom="1px solid"
+      borderBottom="1px dashed"
     >
       Table of Contents
     </Text>
-    <VStack alignItems="flex-start">
+    <VStack alignItems="flex-start" gap={0}>
       {headings.map((heading, index) => (
         <Link
           key={`${heading.id}-${index}`}
           as={NextLink}
           w="full"
-          ml={TOCLevelIndents[heading.level] ?? 0}
-          p={2}
-          borderColor="grey.300"
+          px={2}
+          pt={3}
+          pb={2}
+          pl={TOCLevelIndents[heading.level] ?? 0}
           borderBottom="1px solid"
+          borderBottomColor="primary.100"
+          _hover={{
+            textDecoration: "none",
+            borderBottomColor: "primary.300",
+            color: "primary.500",
+          }}
+          transition={"all 0.3s ease"}
           href={`#${heading.id}`}
           onClick={(e) => {
             e.preventDefault();

@@ -1,4 +1,3 @@
-import { Container } from "@chakra-ui/react";
 import {
   GetServerSideProps,
   GetStaticPaths,
@@ -12,6 +11,7 @@ import { ArticleGridSection } from "~/components/article-grid-section";
 import { AsideGridSection } from "~/components/aside-grid-section";
 import { ContentGrid } from "~/components/content-grid";
 import { Header } from "~/components/header";
+import { MaxWidthContainer } from "~/components/max-width-container";
 import { PageLayout } from "~/components/page-layout";
 import { TableOfContents } from "~/components/table-of-contents";
 import fetchContentData from "~/lib/fetch-content-data";
@@ -25,7 +25,7 @@ const BlogPage = (({ source }) => {
         <title>{source.frontmatter.title}</title>
       </Head>
       <Header />
-      <Container maxW="80rem" px="5%" pt="5rem" transition="all .5s">
+      <MaxWidthContainer pt="5rem" transition="all .5s">
         <ContentGrid>
           <ArticleGridSection>
             <MDXRemote {...source} components={mdxComponents} />
@@ -34,7 +34,7 @@ const BlogPage = (({ source }) => {
             <TableOfContents headings={source.frontmatter.headings} />
           </AsideGridSection>
         </ContentGrid>
-      </Container>
+      </MaxWidthContainer>
     </PageLayout>
   );
 }) satisfies NextPage<InferGetStaticPropsType<typeof getStaticProps>>;

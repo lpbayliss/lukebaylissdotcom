@@ -10,7 +10,7 @@
     "format:fix": "prettier . --write",
     "lint:check": "eslint .",
     "lint:fix": "eslint . --fix",
-    "process:content": "tsx ./scripts/processContent.ts ./content/**/*.mdx",
+    "process:content": "tsx ./scripts/process-staged-mdx.ts ./content/**/*.mdx",
     "gen:component": "tsx ./scripts/generate-component.ts",
     "prepare": "husky"
   },
@@ -44,6 +44,7 @@
     "tsx": "^4.7.1"
   },
   "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.2",
     "@types/node": "18.15.5",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
@@ -58,7 +59,7 @@
     ],
     "content/**/*.{md,mdx}": [
       "prettier --write --ignore-unknown",
-      "tsx ./scripts/processStagedMDX.ts"
+      "tsx ./scripts/process-staged-mdx.ts"
     ]
   },
   "packageManager": "pnpm@8.8.0"
