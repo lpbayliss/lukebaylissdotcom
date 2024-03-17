@@ -27,3 +27,10 @@ https://www.realtimecolors.com/?colors=e7e4f1-070410-4e35c0-322173-382097&fonts=
 [] Front matter update hook
 [] Likes/ Reactions
 [] Hit counter, hash ip?
+* search
+* post tags
+related posts
+comments
+social share
+sortable view, bu date, reverse, filter down by category
+bright codehike hoghlighting
