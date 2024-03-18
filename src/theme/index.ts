@@ -1,16 +1,9 @@
 import { extendTheme, ThemeOverride } from "@chakra-ui/react";
-import { Comfortaa } from "next/font/google";
-
-const comfortaa = Comfortaa({
-  weight: "variable",
-  subsets: ["latin"],
-  adjustFontFallback: true,
-});
 
 const theme: ThemeOverride = extendTheme({
   config: {
     initialColorMode: "light",
-    useSystemColorMode: false,
+    useSystemColorMode: true,
   },
   colors: {
     text: {
@@ -71,8 +64,8 @@ const theme: ThemeOverride = extendTheme({
   },
   semanticTokens: {},
   fonts: {
-    heading: comfortaa.style.fontFamily,
-    body: comfortaa.style.fontFamily,
+    heading: "var(--font-comfortaa)",
+    body: "var(--font-comfortaa)",
   },
   styles: {
     global: {

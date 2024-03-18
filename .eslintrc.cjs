@@ -23,6 +23,7 @@ const config = {
     "unused-imports/no-unused-imports": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
+    "@next/next/no-html-link-for-pages": "off",
   },
   ignorePatterns: ["node_modules/", "dist/", "out/", "scripts/"],
 };

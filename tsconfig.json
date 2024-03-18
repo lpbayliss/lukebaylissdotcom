@@ -19,7 +19,12 @@
     "baseUrl": ".",
     "paths": {
       "~/*": ["./src/*"]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     ".eslintrc.cjs",
@@ -30,7 +35,8 @@
     "**/*.mjs",
     "migrate.mjs",
     "scripts/templates/index.template",
-    "scripts/templates/component.template"
+    "scripts/templates/component.template",
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules", "scripts"]
 }
