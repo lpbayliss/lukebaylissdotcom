@@ -62,7 +62,18 @@ const theme: ThemeOverride = extendTheme({
       900: "#10092a",
     },
   },
-  semanticTokens: {},
+  semanticTokens: {
+    colors: {
+      background: {
+        default: "background.main",
+        _dark: "background.900",
+      },
+      text: {
+        default: "text.main",
+        _dark: "#E7E4F1",
+      },
+    },
+  },
   fonts: {
     heading: "var(--font-comfortaa)",
     body: "var(--font-comfortaa)",
@@ -70,8 +81,8 @@ const theme: ThemeOverride = extendTheme({
   styles: {
     global: {
       body: {
-        bg: "background.main",
-        color: "text.main",
+        bg: "background",
+        color: "text",
       },
     },
   },

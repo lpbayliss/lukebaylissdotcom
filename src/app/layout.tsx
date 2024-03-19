@@ -1,3 +1,7 @@
+import { VStack } from "@chakra-ui/react";
+
+import Navbar from "~/components/navbar.component";
+
 import { fonts } from "./fonts";
 import { Providers } from "./providers";
 
@@ -5,7 +9,12 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={fonts.comfortaa.variable}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <VStack as="main" minW="sm">
+            {children}
+          </VStack>
+        </Providers>
       </body>
     </html>
   );
