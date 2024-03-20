@@ -1,3 +1,4 @@
+import { Container } from "@chakra-ui/react";
 import { notFound } from "next/navigation";
 
 import PostBody from "~/components/post-body.component";
@@ -12,7 +13,11 @@ const BlogPostPage = async ({
 }) => {
   const post = await getPost(params.slug);
   if (!post) return notFound();
-  return <PostBody>{post?.body}</PostBody>;
+  return (
+    <Container maxW="4xl">
+      <PostBody>{post?.body}</PostBody>
+    </Container>
+  );
 };
 
 export const generateStaticParams = async () => {

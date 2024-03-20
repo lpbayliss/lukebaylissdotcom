@@ -6,11 +6,7 @@ const theme: ThemeOverride = extendTheme({
     useSystemColorMode: true,
   },
   colors: {
-    text: {
-      main: "#110e1b",
-    },
     background: {
-      main: "#f2effb",
       50: "#eeebfa",
       100: "#ded6f5",
       200: "#bdadeb",
@@ -23,7 +19,6 @@ const theme: ThemeOverride = extendTheme({
       900: "#120a29",
     },
     primary: {
-      main: "#583fca",
       50: "#eeebfa",
       100: "#dcd7f4",
       200: "#baafe9",
@@ -36,7 +31,6 @@ const theme: ThemeOverride = extendTheme({
       900: "#100b28",
     },
     secondary: {
-      main: "#9d8cde",
       50: "#eeebf9",
       100: "#ddd7f4",
       200: "#bbb0e8",
@@ -49,7 +43,6 @@ const theme: ThemeOverride = extendTheme({
       900: "#110b28",
     },
     accent: {
-      main: "#7f68df",
       50: "#edeafb",
       100: "#dcd5f6",
       200: "#b8abed",
@@ -64,14 +57,17 @@ const theme: ThemeOverride = extendTheme({
   },
   semanticTokens: {
     colors: {
-      background: {
-        default: "background.main",
-        _dark: "background.900",
+      text: { default: "#110e1b", _dark: "#e7e4f1" },
+      background: { default: "#f2effb", _dark: "#070410" },
+      "background-hover": {
+        default: "background.100",
+        _dark: "background.800",
       },
-      text: {
-        default: "text.main",
-        _dark: "#E7E4F1",
-      },
+      primary: { default: "#583fca", _dark: "#4e35c0" },
+      "primary-hover": { default: "primary.600", _dark: "primary.300" },
+      secondary: { default: "#9d8cde", _dark: "#322173" },
+      accent: { default: "#7f68df", _dark: "#382097" },
+      link: { default: "primary.600", _dark: "primary.300" },
     },
   },
   fonts: {
