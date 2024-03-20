@@ -21,7 +21,8 @@ const PostBody = ({ children }: { children: string }) => {
               remarkToc,
               {
                 tight: true,
-                maxDepth: 5,
+                maxDepth: 2,
+                heading: "Jump to",
               },
             ],
           ],

@@ -1,6 +1,7 @@
-import { VStack } from "@chakra-ui/react";
+import { ColorModeScript, VStack } from "@chakra-ui/react";
 
 import Navbar from "~/components/navbar.component";
+import theme from "~/theme";
 
 import { fonts } from "./fonts";
 import { Providers } from "./providers";
@@ -9,6 +10,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={fonts.comfortaa.variable}>
       <body>
+        <ColorModeScript initialColorMode={theme.config?.initialColorMode} />
         <Providers>
           <Navbar />
           <VStack as="main" minW="sm">

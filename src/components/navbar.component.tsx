@@ -2,6 +2,7 @@
 
 import {
   Container,
+  Divider,
   Grid,
   GridItem,
   HStack,
@@ -86,6 +87,7 @@ const Navbar = () => {
             {...iconProps}
           />
           <IconLink href="/feed.xml" icon={FaRss} {...iconProps} />
+          <Divider h={8} mx={2} orientation="vertical" />
           <IconButton
             color={iconProps.color}
             bg={iconProps.bg}
