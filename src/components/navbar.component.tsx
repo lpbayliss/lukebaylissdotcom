@@ -31,40 +31,31 @@ const iconProps = {
   p: "2",
   bg: "background",
   rounded: "md",
-  _hover: { color: "primary-hover", bg: "background-hover" },
+  _hover: { bg: "background-hover" },
 } satisfies Partial<HTMLChakraProps<typeof IconLink>>;
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Container maxW="4xl">
+    <Container minW="sm" maxW={["2xl"]}>
       <Grid
         as="nav"
-        gap={4}
-        templateColumns={["1fr", null, null, "repeat(3, 1fr)"]}
+        gap={0}
+        templateColumns={["1fr", null, "repeat(2, 1fr)"]}
         minH={20}
         mt={12}
         mb={6}
       >
-        <GridItem
-          as={HStack}
-          justifyContent={["center", null, null, "flex-start"]}
-        >
+        <GridItem as={HStack} justifyContent={["center", null, "flex-start"]}>
           <Link
             href="/"
             fontSize="3xl"
             fontWeight="bold"
-          >{`<LukeBayliss/>`}</Link>
-        </GridItem>
-        <GridItem as={HStack} justifyContent="center">
-          <Link href="/">Home</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/projects">Projects</Link>
-          <Link href="/about">About</Link>
+          >{`Luke Bayliss`}</Link>
         </GridItem>
         <GridItem
           as={HStack}
-          justifyContent={["center", null, null, "flex-end"]}
+          justifyContent={["center", null, "flex-end"]}
           gap={1}
         >
           <IconLink
@@ -87,7 +78,7 @@ const Navbar = () => {
             {...iconProps}
           />
           <IconLink href="/feed.xml" icon={FaRss} {...iconProps} />
-          <Divider h={8} mx={2} orientation="vertical" />
+          <Divider h={8} mx={2} borderColor="primary" orientation="vertical" />
           <IconButton
             color={iconProps.color}
             bg={iconProps.bg}

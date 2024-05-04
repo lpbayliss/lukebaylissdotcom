@@ -36,7 +36,8 @@
     "migrate.mjs",
     "scripts/templates/index.template",
     "scripts/templates/component.template",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "content/posts/test-driven-development.msx"
   ],
   "exclude": ["node_modules", "scripts"]
 }
