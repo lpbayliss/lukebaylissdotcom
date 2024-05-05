@@ -15,7 +15,7 @@ const BlogPostPage = async ({
   const post = await getPost(params.slug);
   if (!post) return notFound();
   return (
-    <Container maxW="4xl">
+    <Container maxW="3xl">
       <Box mt={6} mb={16}>
         <Heading as="h1" mb={4} size="4xl">
           {post.title}

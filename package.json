@@ -37,6 +37,7 @@
     "gray-matter": "^4.0.3",
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
+    "marked": "^12.0.2",
     "next": "^14.0.1",
     "next-mdx-remote": "^4.4.1",
     "prettier": "^3.2.5",
@@ -47,7 +48,8 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-slug": "^6.0.0",
     "remark-gfm": "^4.0.0",
-    "remark-toc": "^9.0.0"
+    "remark-toc": "^9.0.0",
+    "rss": "^1.2.2"
   },
   "devDependencies": {
     "@flydotio/dockerfile": "^0.5.2",

@@ -1,17 +1,14 @@
-import { Box, Container, Heading, Text, VStack } from "@chakra-ui/react";
-import { format } from "date-fns";
+import { Container, Text, VStack } from "@chakra-ui/react";
 
 import Link from "~/components/link.component";
-import { getPosts } from "~/lib/posts";
+import PostDisplay from "~/components/post-display.component";
 
-const HomePage = async () => {
-  const posts = await getPosts();
-
+const HomePage = () => {
   return (
     <VStack>
-      <Container maxW="2xl">
-        <VStack>
-          <Text>
+      <Container maxW="3xl">
+        <VStack pb={8}>
+          <Text fontSize="lg">
             I am a software engineer from Melbourne Australia, currently working
             at{" "}
             <Link
@@ -24,20 +21,13 @@ const HomePage = async () => {
             </Link>{" "}
             as a technical lead and engineering manager. You can find more about
             my experience{" "}
-            <Link href="/experience" color="link">
+            <Link href="https://www.linkedin.com/in/lpbayliss/" color="link">
               here
             </Link>
             .
           </Text>
         </VStack>
-        <VStack alignItems="flex-start">
-          {posts.map((p) => (
-            <Box key={p.id}>
-              <Heading size="md">{p.title}</Heading>
-              <Text>{format(p.lastUpdated, "PPP")}</Text>
-            </Box>
-          ))}
-        </VStack>
+        <PostDisplay onlyRecent />
       </Container>
     </VStack>
   );

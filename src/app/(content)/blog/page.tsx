@@ -1,18 +1,12 @@
-import PostLink from "~/components/link.component";
-import { getPosts } from "~/lib/posts";
+import { Container } from "@chakra-ui/react";
 
-const BlogPage = async () => {
-  const posts = await getPosts();
+import PostDisplay from "~/components/post-display.component";
+
+const BlogPage = () => {
   return (
-    <>
-      {posts.map((post) => (
-        <div key={post?.slug}>
-          <h2>
-            <PostLink href={`/blog/${post?.slug}`}>{post?.title}</PostLink>
-          </h2>
-        </div>
-      ))}
-    </>
+    <Container maxW="3xl">
+      <PostDisplay />
+    </Container>
   );
 };
 

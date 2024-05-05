@@ -8,4 +8,6 @@ export interface Post {
   headings: { level: number; text: string; id: string }[];
   hash: string;
   body: string;
+  description: string;
+  type: "snippet" | "post" | "project" | "note";
 }

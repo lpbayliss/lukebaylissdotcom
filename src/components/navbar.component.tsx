@@ -37,7 +37,7 @@ const iconProps = {
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
   return (
-    <Container minW="sm" maxW={["2xl"]}>
+    <Container minW="sm" maxW={["3xl"]}>
       <Grid
         as="nav"
         gap={0}

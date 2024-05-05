@@ -64,6 +64,34 @@ const addContentId = ((file) => {
   };
 }) satisfies UpdateFn;
 
+const addPostType = ((file) => {
+  if (file.data.type) return file;
+  const { data, content } = file;
+  const type = "post";
+  console.log(`  - Adding type: ${type}`);
+  return {
+    data: {
+      ...data,
+      type,
+    },
+    content,
+  };
+}) satisfies UpdateFn;
+
+const addPostDescription = ((file) => {
+  if (file.data.description) return file;
+  const { data, content } = file;
+  const description = content.slice(0, 100);
+  console.log(`  - Adding description`);
+  return {
+    data: {
+      ...data,
+      description,
+    },
+    content,
+  };
+}) satisfies UpdateFn;
+
 const extractTOC = ((file) => {
   console.log(`  - Generating ToC...`);
 
@@ -123,6 +151,8 @@ const checkSlug = ((file) => {
         updateLastUpdated,
         updateReadingTime,
         extractTOC,
+        addPostType,
+        addPostDescription,
       )(file);
 
       return { data: { ...data, hash: currentHash }, content };
