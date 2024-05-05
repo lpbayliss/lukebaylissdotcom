@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+    <channel>
+        <title><![CDATA[Luke Bayliss]]></title>
+        <description><![CDATA[Luke Bayliss's blog]]></description>
+        <link>https://lukebayliss.com</link>
+        <generator>RSS for Node</generator>
+        <lastBuildDate>Sun, 05 May 2024 06:52:24 GMT</lastBuildDate>
+        <atom:link href="https://lukebayliss.com/feed.xml" rel="self" type="application/rss+xml"/>
+        <language><![CDATA[en]]></language>
+        <item>
+            <title><![CDATA[Ramblings]]></title>
+            <description><![CDATA[<h3>Jump to</h3>
+]]></description>
+            <link>https://lukebayliss.com/blog/Ramblings</link>
+            <guid isPermaLink="false">https://lukebayliss.com/blog/Ramblings</guid>
+            <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
+            <pubDate>Invalid Date</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[The Original Sin of Cloud Infrastructure]]></title>
+            <description><![CDATA[<h3>Jump to</h3>
+<h1>The origins of big data infrastructure 2</h1>
+<p>Many of today&#39;s most highly adopted open s</p>
+]]></description>
+            <link>https://lukebayliss.com/blog/original</link>
+            <guid isPermaLink="false">https://lukebayliss.com/blog/original</guid>
+            <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
+            <pubDate>Invalid Date</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Test driven development]]></title>
+            <description><![CDATA[<h3>Jump to</h3>
+]]></description>
+            <link>https://lukebayliss.com/blog/tdd</link>
+            <guid isPermaLink="false">https://lukebayliss.com/blog/tdd</guid>
+            <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
+            <pubDate>Invalid Date</pubDate>
+        </item>
+    </channel>
+</rss>
