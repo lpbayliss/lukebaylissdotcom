@@ -1,7 +1,7 @@
 ---
 title: Discriminated Unions in TypeScript
 slug: typescript-discriminated-unions
-lastUpdated: '2024-05-15T05:34:20.349Z'
+lastUpdated: '2024-05-15T05:48:00.948Z'
 isPublished: true
 readingTime: 3 min read
 type: post
@@ -17,7 +17,7 @@ headings:
   - level: 2
     text: Using Zod
     id: using-zod
-hash: 4ee391db38262e4af6b9cbc2e6edcb13ed5c5639bf00694b366b7c9ecef4a630
+hash: d2f4b7d48476ca26e815526b571088df6c0e9dc17abb35fb241421d56d0171e3
 ---
 
 # What is a Discriminated Union?
@@ -31,34 +31,34 @@ Because the discriminator is unique it allows TypeScript to infer precisely what
 
 We have a function that can calculate the area of a shape;
 
-```TypeScript
+```ts
 const calculateShapeArea = (shape: unknown): number => {
   // ... How do we know what type of shape we are dealing with?
-}
+};
 ```
 
 But they way we calculate the area of a circle is not the same as the way we calculate the area of a square. Let's create a few types to represent our shapes;
 
-```TypeScript
+```ts
 type Circle = {
   radius: number;
-}
+};
 
 type Rectangle = {
   width: number;
   height: number;
-}
+};
 
 type Square = {
   size: number;
-}
+};
 
 type Shape = Circle | Rectangle | Square;
 ```
 
 We can now update our function to use the `Shape` type. We still can't determine what type of shape we are dealing with directly, but with a few checks we can assert the type of shape.
 
-```TypeScript
+```ts
 const calculateShapeArea = (shape: Shape): number => {
   if (shape.radius) {
     return Math.PI * shape.radius ** 2;
@@ -67,44 +67,44 @@ const calculateShapeArea = (shape: Shape): number => {
   } else if (shape.size) {
     return shape.size ** 2;
   }
-}
+};
 ```
 
 This works but it's a little cumbersome. We can improve this by using a Discriminated Union. We will start by adding a `type` property to each of our shapes.
 
-```TypeScript
+```ts
 type Circle = {
-  type: 'circle';
+  type: "circle";
   radius: number;
-}
+};
 
 type Rectangle = {
-  type: 'rectangle';
+  type: "rectangle";
   width: number;
   height: number;
-}
+};
 
 type Square = {
-  type: 'square';
+  type: "square";
   size: number;
-}
+};
 
 type Shape = Circle | Rectangle | Square;
 ```
 
 Now we can use the `type` propertly to determine what type of shape we are dealing with.
 
-```TypeScript
+```ts
 const calculateShapeArea = (shape: Shape): number => {
   switch (shape.type) {
-    case 'circle':
+    case "circle":
       return Math.PI * shape.radius ** 2;
-    case 'rectangle':
+    case "rectangle":
       return shape.width * shape.height;
-    case 'square':
+    case "square":
       return shape.size ** 2;
   }
-}
+};
 ```
 
 While functionally very simmilar to the previous implementation, it's much easier to see what kinds of shapes our function can handle. A nice added benefit is that our editor can now infer the type of shape we are dealing with and provide us with helpful auto-complete suggestion.
@@ -113,22 +113,22 @@ While functionally very simmilar to the previous implementation, it's much easie
 
 If you are using Zod to validate your data, you can use Discriminated Unions to make your code even more robust.
 
-```TypeScript
-import { z } from 'zod';
+```ts
+import { z } from "zod";
 
 const CircleSchema = z.object({
-  type: z.literal('circle'),
+  type: z.literal("circle"),
   radius: z.number(),
 });
 
 const RectangleSchema = z.object({
-  type: z.literal('rectangle'),
+  type: z.literal("rectangle"),
   width: z.number(),
   height: z.number(),
 });
 
 const SquareSchema = z.object({
-  type: z.literal('square'),
+  type: z.literal("square"),
   size: z.number(),
 });
 
