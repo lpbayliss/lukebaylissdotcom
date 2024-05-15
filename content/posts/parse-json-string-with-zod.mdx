@@ -1,0 +1,41 @@
+---
+title: Using Zod to Parse a JSON String
+slug: parse-json-string-with-zod
+lastUpdated: '2024-05-15T06:04:26.585Z'
+isPublished: true
+readingTime: 1 min read
+type: snippet
+description: Using Zod to parse a JSON string in TypeScript.
+id: b2ec9b60-ab5b-45d9-b1ca-16e430a73cc6
+headings:
+  - level: 1
+    text: Using Zod to Parse a JSON String
+    id: using-zod-to-parse-a-json-string
+hash: c54f42f4e3fb0ae2a921f3086021b5f8800a5c3e0753b9b0f8511ba75af353ef
+---
+
+# Using Zod to Parse a JSON String
+
+I recently needed to parse a JSON string in TypeScript and validate the shape of the data. I discovered a [neat utility](https://github.com/JacobWeisenburger/zod_utilz/blob/4093595e5a6d95770872598ba3bc405d4e9c963b/src/stringToJSON.ts#LL4-L12C8) that allowed me to handle both steps in one go.
+
+```ts
+import { z } from "zod";
+
+const stringToJSONSchema = z.string().transform((str, ctx) => {
+  try {
+    return JSON.parse(str);
+  } catch (e) {
+    ctx.addIssue({ code: "custom", message: "Invalid JSON" });
+    return z.NEVER;
+  }
+});
+
+export const MyDataSchema = z.object({
+  foo: z.string(),
+  bar: z.number(),
+});
+
+const jsonString = '{"foo": "hello", "bar": 42}';
+
+const result = stringToJSONSchema.pipe(MyDataSchema).safeParse(jsonString);
+```
