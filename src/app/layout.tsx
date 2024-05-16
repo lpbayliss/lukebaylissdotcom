@@ -17,6 +17,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             {children}
           </VStack>
         </Providers>
+        <script
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon='{"token": "6bd435909639410bba74fe20d7ddcf61", "spa": true}'
+        />
       </body>
     </html>
   );
