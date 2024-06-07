@@ -4,9 +4,18 @@
         <description><![CDATA[Luke Bayliss's blog]]></description>
         <link>https://lukebayliss.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 15 May 2024 05:48:01 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 07 Jun 2024 10:04:22 GMT</lastBuildDate>
         <atom:link href="https://lukebayliss.com/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[en]]></language>
+        <item>
+            <title><![CDATA[Using Zod to Parse a JSON String]]></title>
+            <description><![CDATA[<p>Using Zod to parse a JSON string in TypeScript.</p>
+]]></description>
+            <link>https://lukebayliss.com/blog/parse-json-string-with-zod</link>
+            <guid isPermaLink="false">https://lukebayliss.com/blog/parse-json-string-with-zod</guid>
+            <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
+            <pubDate>Invalid Date</pubDate>
+        </item>
         <item>
             <title><![CDATA[Discriminated Unions in TypeScript]]></title>
             <description><![CDATA[<p>An brief introduction to what discriminated unions are and how to use them.</p>

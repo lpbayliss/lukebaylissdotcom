@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:rss": "tsx ./scripts/rss.ts",
     "start": "next start",
     "check:formatting": "prettier . --check",
     "fix:formatting": "prettier . --write",

@@ -38,7 +38,7 @@ export const metadata = {
     title: "Luke Bayliss",
     url: "https://lukebayliss.com",
     siteName: "Luke Bayliss's website",
-    locale: "en_US",
+    locale: "en_AU",
     type: "website",
   },
   robots: {
@@ -47,6 +47,14 @@ export const metadata = {
     googleBot: {
       index: true,
       follow: true,
+    },
+  },
+  icons: {
+    shortcut: "https://lukebayliss.com/favicon.ico",
+  },
+  alternates: {
+    types: {
+      "application/rss+xml": "https://lukebayliss.com/feed.xml",
     },
   },
 };

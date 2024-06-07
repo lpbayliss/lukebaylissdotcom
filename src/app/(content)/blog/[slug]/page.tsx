@@ -1,5 +1,6 @@
 import { Box, Container, Heading, HStack, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import PostBody from "~/components/post-body.component";
@@ -34,6 +35,23 @@ const BlogPostPage = async ({
 export const generateStaticParams = async () => {
   const posts = await getPosts();
   return posts.map((post) => ({ slug: post?.slug }));
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: {
+    slug: string;
+  };
+}): Promise<Metadata> => {
+  const post = (await getPosts()).find((p) => p?.slug === params.slug);
+  return {
+    title: post?.title,
+    description: post?.description,
+    alternates: {
+      canonical: `https://lukebayliss.com/blog/${params.slug}`,
+    },
+  };
 };
 
 export default BlogPostPage;
