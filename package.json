@@ -24,6 +24,7 @@
     "@mdx-js/mdx": "^3.0.1",
     "@mdx-js/react": "^3.0.1",
     "bright": "^0.8.5",
+    "classnames": "^2.5.1",
     "date-fns": "^3.4.0",
     "framer-motion": "^11.0.2",
     "gray-matter": "^4.0.3",

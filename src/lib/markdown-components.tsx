@@ -1,6 +1,7 @@
 import { MDXComponents } from "@mdx-js/react/lib";
 import { Code } from "bright";
 
+import CardCollection from "~/components/card-collection";
 import MDXImage from "~/components/mdx-image.component";
 
 const markdownComponents = {
@@ -16,6 +17,7 @@ const markdownComponents = {
   ),
   pre: Code,
   p: (props) => <p className="pb-6" {...props} />,
+  CardCollection,
 } satisfies MDXComponents;
 
 export default markdownComponents;
