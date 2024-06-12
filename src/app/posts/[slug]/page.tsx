@@ -1,4 +1,3 @@
-import { Box, Container, Heading, HStack, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -16,19 +15,17 @@ const BlogPostPage = async ({
   const post = await getPost(params.slug);
   if (!post) return notFound();
   return (
-    <Container maxW="3xl">
-      <Box mt={6} mb={16}>
-        <Heading as="h1" mb={4} size="4xl">
-          {post.title}
-        </Heading>
-        <HStack>
-          <Text>{format(post.lastUpdated, "PPP")}</Text>
-          <Text>·</Text>
-          <Text>{post.readingTime}</Text>
-        </HStack>
-      </Box>
+    <div>
+      <div className="mb-16 mt-6">
+        <h1 className="mb-4 text-4xl">{post.title}</h1>
+        <div className="flex flex-row">
+          <p>{format(post.lastUpdated, "PPP")}</p>
+          <p>·</p>
+          <p>{post.readingTime}</p>
+        </div>
+      </div>
       <PostBody>{post?.body}</PostBody>
-    </Container>
+    </div>
   );
 };
 

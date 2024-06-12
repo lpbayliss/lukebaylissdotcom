@@ -42,7 +42,7 @@ const main = () => {
   });
 
   posts.forEach((post) => {
-    const url = `https://lukebayliss.com/blog/${post.slug}`;
+    const url = `https://lukebayliss.com/posts/${post.slug}`;
 
     feed.item({
       title: post.title,

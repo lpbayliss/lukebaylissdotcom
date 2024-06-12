@@ -1,15 +1,12 @@
 "use client";
 
-import { Button } from "@chakra-ui/react";
-
 const ErrorPage = ({ error, reset }: { error: Error; reset: () => void }) => {
   return (
     <article>
       <h1>Something went wrong</h1>
       <p>
-        <Button onClick={reset}>Try again</Button>
+        <button onClick={reset}>Try again</button>
       </p>
-
       <pre>{error.message}</pre>
     </article>
   );

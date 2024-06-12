@@ -1,7 +1,0 @@
-interface {{name}}Props {
-  headings: { level: number; text: string; id: string }[];
-}
-
-const {{name}} = ({}: {{name}}Props) => <div>{{name}}</div>;
-
-export default {{name}};
