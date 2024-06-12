@@ -4,15 +4,24 @@
         <description><![CDATA[Luke Bayliss's blog]]></description>
         <link>https://lukebayliss.com</link>
         <generator>RSS for Node</generator>
-        <lastBuildDate>Wed, 12 Jun 2024 12:01:40 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 12 Jun 2024 15:05:34 GMT</lastBuildDate>
         <atom:link href="https://lukebayliss.com/feed.xml" rel="self" type="application/rss+xml"/>
         <language><![CDATA[en]]></language>
         <item>
             <title><![CDATA[Using Zod to Parse a JSON String]]></title>
             <description><![CDATA[<p>Using Zod to parse a JSON string in TypeScript.</p>
 ]]></description>
-            <link>https://lukebayliss.com/blog/parse-json-string-with-zod</link>
-            <guid isPermaLink="false">https://lukebayliss.com/blog/parse-json-string-with-zod</guid>
+            <link>https://lukebayliss.com/posts/parse-json-string-with-zod</link>
+            <guid isPermaLink="false">https://lukebayliss.com/posts/parse-json-string-with-zod</guid>
+            <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
+            <pubDate>Invalid Date</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[Playing Card Experiment]]></title>
+            <description><![CDATA[<p>Using CSS and Framer Motion to create interactive cards.</p>
+]]></description>
+            <link>https://lukebayliss.com/posts/paying-cards</link>
+            <guid isPermaLink="false">https://lukebayliss.com/posts/paying-cards</guid>
             <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
             <pubDate>Invalid Date</pubDate>
         </item>
@@ -20,8 +29,8 @@
             <title><![CDATA[Discriminated Unions in TypeScript]]></title>
             <description><![CDATA[<p>An brief introduction to what discriminated unions are and how to use them.</p>
 ]]></description>
-            <link>https://lukebayliss.com/blog/typescript-discriminated-unions</link>
-            <guid isPermaLink="false">https://lukebayliss.com/blog/typescript-discriminated-unions</guid>
+            <link>https://lukebayliss.com/posts/typescript-discriminated-unions</link>
+            <guid isPermaLink="false">https://lukebayliss.com/posts/typescript-discriminated-unions</guid>
             <dc:creator><![CDATA[Luke Bayliss]]></dc:creator>
             <pubDate>Invalid Date</pubDate>
         </item>

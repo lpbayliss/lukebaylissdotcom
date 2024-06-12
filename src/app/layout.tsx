@@ -1,22 +1,59 @@
-import { ColorModeScript, VStack } from "@chakra-ui/react";
+import "~/styles/globals.css";
 
-import Navbar from "~/components/navbar.component";
-import theme from "~/theme";
+import { Comfortaa } from "next/font/google";
+import NextLink from "next/link";
+import { FaEnvelope, FaGithub, FaLinkedinIn, FaRss } from "react-icons/fa6";
 
-import { fonts } from "./fonts";
-import { Providers } from "./providers";
+const comfortaa = Comfortaa({
+  weight: "variable",
+  subsets: ["latin"],
+  adjustFontFallback: true,
+  variable: "--font-comfortaa",
+});
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <html lang="en" className={fonts.comfortaa.variable}>
-      <body>
-        <ColorModeScript initialColorMode={theme.config?.initialColorMode} />
-        <Providers>
-          <Navbar />
-          <VStack as="main" minW="sm">
-            {children}
-          </VStack>
-        </Providers>
+    <html lang="en" className={`${comfortaa.variable}`}>
+      <body className="px-4 pb-14">
+        <nav className="container mx-auto grid min-h-16 min-w-80 max-w-3xl grid-cols-1 gap-4 py-4 md:grid-cols-2">
+          <div className="flex justify-center md:justify-start">
+            <NextLink
+              href="/"
+              className="flex place-content-center items-center text-4xl font-bold text-purple-800"
+            >
+              Luke Bayliss
+            </NextLink>
+          </div>
+          <div className="flex flex-row items-center justify-center gap-2 md:justify-end">
+            <NextLink
+              href="https://github.com/lpbayliss"
+              className="flex text-2xl text-purple-800"
+            >
+              <FaGithub />
+            </NextLink>
+            <NextLink
+              href="https://www.linkedin.com/in/lpbayliss/"
+              className="flex text-2xl text-purple-800"
+            >
+              <FaLinkedinIn />
+            </NextLink>
+            <NextLink
+              href="mailto:hello@lukebayliss.com"
+              className="flex text-2xl text-purple-800"
+            >
+              <FaEnvelope />
+            </NextLink>
+            <NextLink
+              href="/feed.xml"
+              className="flex text-2xl text-purple-800"
+            >
+              <FaRss />
+            </NextLink>
+          </div>
+        </nav>
+        <main className="container mx-auto flex min-w-80 max-w-3xl flex-col">
+          {children}
+        </main>
         <script
           defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
@@ -50,7 +87,8 @@ export const metadata = {
     },
   },
   icons: {
-    shortcut: "https://lukebayliss.com/favicon.ico",
+    shortcut:
+      "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧟</text></svg>",
   },
   alternates: {
     types: {

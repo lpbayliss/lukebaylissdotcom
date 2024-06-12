@@ -1,35 +1,35 @@
-import { Container, Text, VStack } from "@chakra-ui/react";
+import NextLink from "next/link";
 
-import Link from "~/components/link.component";
 import PostDisplay from "~/components/post-display.component";
 
 const HomePage = () => {
   return (
-    <VStack>
-      <Container maxW="3xl">
-        <VStack pb={8}>
-          <Text fontSize="lg">
-            I am a software engineer from Melbourne Australia, currently working
-            at{" "}
-            <Link
-              href="https://meandu.com"
-              color="link"
-              target="_blank"
-              isExternal
-            >
-              me&u
-            </Link>{" "}
-            as a technical lead and engineering manager. You can find more about
-            my experience{" "}
-            <Link href="https://www.linkedin.com/in/lpbayliss/" color="link">
-              here
-            </Link>
-            .
-          </Text>
-        </VStack>
-        <PostDisplay onlyRecent />
-      </Container>
-    </VStack>
+    <div className="flex flex-col">
+      <div className="pb-8">
+        <p>
+          I am a software engineer from Melbourne Australia, currently working
+          at{" "}
+          <NextLink
+            href="https://meandu.com"
+            target="_blank"
+            className="text-purple-800"
+          >
+            me&u
+          </NextLink>{" "}
+          as a technical lead and engineering manager. You can find more about
+          my experience{" "}
+          <NextLink
+            href="https://www.linkedin.com/in/lpbayliss/"
+            target="_blank"
+            className="text-purple-800"
+          >
+            here
+          </NextLink>
+          .
+        </p>
+      </div>
+      <PostDisplay />
+    </div>
   );
 };
 

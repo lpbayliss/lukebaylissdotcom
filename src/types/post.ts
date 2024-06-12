@@ -9,5 +9,5 @@ export interface Post {
   hash: string;
   body: string;
   description: string;
-  type: "snippet" | "post" | "project" | "note";
+  type: "snippet" | "post" | "project" | "note" | "showcase";
 }

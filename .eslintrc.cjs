@@ -6,7 +6,6 @@ const config = {
   },
   plugins: [
     "@typescript-eslint",
-    "chakra-ui",
     "unused-imports",
     "simple-import-sort",
   ],
@@ -17,9 +16,6 @@ const config = {
   ],
   rules: {
     "@typescript-eslint/no-unused-vars": ["warn", { argsIgnorePattern: "^_" }],
-    "chakra-ui/props-order": "error",
-    "chakra-ui/props-shorthand": "error",
-    "chakra-ui/require-specific-component": "error",
     "unused-imports/no-unused-imports": "error",
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
