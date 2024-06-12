@@ -15,7 +15,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en" className={`${comfortaa.variable}`}>
       <body className="px-4 pb-14">
-        <nav className="container mx-auto grid min-h-16 grid-cols-1 gap-4 py-4 md:grid-cols-2">
+        <nav className="container mx-auto grid min-h-16 max-w-3xl grid-cols-1 gap-4 py-4 md:grid-cols-2">
           <div className="flex justify-center md:justify-start">
             <NextLink
               href="/"
@@ -51,7 +51,9 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </NextLink>
           </div>
         </nav>
-        <main className="container mx-auto flex flex-col">{children}</main>
+        <main className="container mx-auto flex max-w-3xl flex-col">
+          {children}
+        </main>
         <script
           defer
           src="https://static.cloudflareinsights.com/beacon.min.js"
