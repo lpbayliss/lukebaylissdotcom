@@ -2,5 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm lint-staged 
-pnpm build:rss
 git add $(git diff --name-only --cached --diff-filter=AM)
+pnpm build:rss
+git add public/feed.xml
