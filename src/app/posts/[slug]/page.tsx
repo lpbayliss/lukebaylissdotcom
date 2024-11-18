@@ -18,7 +18,7 @@ const BlogPostPage = async ({
     <div>
       <div className="mb-16 mt-6">
         <h1 className="mb-4 text-4xl">{post.title}</h1>
-        <div className="flex flex-row">
+        <div className="flex flex-row gap-2">
           <p>{format(post.lastUpdated, "PPP")}</p>
           <p>·</p>
           <p>{post.readingTime}</p>
