@@ -5,25 +5,33 @@ import PostDisplay from "~/components/post-display.component";
 const HomePage = () => {
   return (
     <div className="flex flex-col">
-      <div className="pb-8">
+      <div className="flex flex-col gap-4 pb-8">
         <p>
-          I am a software engineer from Melbourne Australia, currently working
-          at{" "}
+          I am a software engineer and technical leader with nearly a decade of
+          experience building and scaling software systems, most recently as a
+          Senior Software Engineer & Team Lead at{" "}
           <NextLink
-            href="https://meandu.com"
+            href="https://tactiq.io/"
             target="_blank"
             className="text-purple-800"
           >
-            me&u
+            Tactiq
           </NextLink>{" "}
-          as a technical lead and engineering manager. You can find more about
-          my experience{" "}
+          where I architected AI-driven features and led system observability
+          improvements.
+        </p>
+        <p>
+          With a proven track record in both hands-on development and team
+          leadership across companies like me&u, Mr Yum, and Xero, I am
+          currently exploring new opportunities in software engineering and
+          technical leadership roles. Learn more about my experience and connect
+          with me at{" "}
           <NextLink
             href="https://www.linkedin.com/in/lpbayliss/"
             target="_blank"
             className="text-purple-800"
           >
-            here
+            https://www.linkedin.com/in/lpbayliss/
           </NextLink>
           .
         </p>
