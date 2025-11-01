@@ -1,0 +1,48 @@
+---
+import TerminalPanel from "../components/TerminalPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Contact">
+  <TerminalPanel title="Say hello" subtitle="prefer async? so do I.">
+    <p class="text-sm text-foreground-muted">
+      The quickest way to reach me is by email. I keep notifications trimmed, but I check messages
+      daily.
+    </p>
+    <ul class="mt-4 space-y-3 text-sm">
+      <li>
+        <a class="underline decoration-dashed underline-offset-2" href="mailto:hello@lukebayliss.com">
+          hello@lukebayliss.com
+        </a>
+      </li>
+      <li>
+        <a
+          class="underline decoration-dashed underline-offset-2"
+          href="https://www.linkedin.com/in/lukebayliss"
+          rel="noreferrer"
+          target="_blank"
+        >
+          LinkedIn → /in/lukebayliss
+        </a>
+      </li>
+      <li>
+        <a
+          class="underline decoration-dashed underline-offset-2"
+          href="https://github.com/lukebayliss"
+          rel="noreferrer"
+          target="_blank"
+        >
+          GitHub → @lukebayliss
+        </a>
+      </li>
+    </ul>
+  </TerminalPanel>
+
+  <TerminalPanel title="Working together" subtitle="consulting, mentoring, speaking">
+    <p class="text-sm text-foreground-muted">
+      I'm available for select consulting engagements, architecture reviews, workshops, and speaking
+      slots. Share context (goals, timeline, audience) and I'll reply with next steps and shout if I'm
+      not the right fit.
+    </p>
+  </TerminalPanel>
+</BaseLayout>

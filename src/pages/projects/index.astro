@@ -1,0 +1,62 @@
+---
+import { getCollection } from "astro:content";
+import TerminalPanel from "../../components/TerminalPanel.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const projects = (await getCollection("projects", ({ data }) => !data.draft)).sort((a, b) => {
+  const orderA = a.data.order ?? Number.POSITIVE_INFINITY;
+  const orderB = b.data.order ?? Number.POSITIVE_INFINITY;
+
+  if (orderA !== orderB) {
+    return orderA - orderB;
+  }
+
+  return b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+});
+---
+
+<BaseLayout title="Projects">
+  <TerminalPanel title="Projects" subtitle="selected builds, experiments, and case studies">
+    {projects.length === 0 ? (
+      <p class="text-sm text-foreground-muted">
+        Showcases coming soon. I'm curating a handful of projects worth sharing in depth.
+      </p>
+    ) : (
+      <ul class="space-y-6 text-sm">
+        {projects.map((project) => (
+          <li class="space-y-2 rounded border border-border bg-background/60 p-4" key={project.id}>
+            <div class="flex flex-col gap-1">
+              <a class="text-lg font-semibold text-foreground" href={`/projects/${project.slug}/`}>
+                {project.data.title}
+              </a>
+              <p class="text-foreground-muted">{project.data.summary}</p>
+            </div>
+            <dl class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+              <div class="flex items-center gap-2">
+                <dt>Year</dt>
+                <dd>{project.data.publishedAt.getFullYear()}</dd>
+              </div>
+              {project.data.role && (
+                <div class="flex items-center gap-2">
+                  <dt>Role</dt>
+                  <dd>{project.data.role}</dd>
+                </div>
+              )}
+              <div class="flex items-center gap-2">
+                <dt>Status</dt>
+                <dd>{project.data.status}</dd>
+              </div>
+            </dl>
+            {project.data.tech.length > 0 && (
+              <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+                {project.data.tech.map((tech) => (
+                  <li class="rounded border border-border px-2 py-1" key={tech}>{tech}</li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+  </TerminalPanel>
+</BaseLayout>

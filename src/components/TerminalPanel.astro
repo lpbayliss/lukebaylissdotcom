@@ -1,0 +1,19 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+
+const { title, subtitle } = Astro.props as Props;
+---
+
+<section class="mb-8 rounded-lg border border-border bg-background p-0 shadow-terminal">
+  <header class="border-b border-border bg-background-muted px-4 py-2 text-xs uppercase tracking-[0.3em] text-foreground-muted sm:px-6">
+    <span aria-hidden="true">┌─┤ {title} ├─┐</span>
+    <span class="sr-only">{title}</span>
+    {subtitle && <p class="mt-2 text-[0.7rem] normal-case tracking-normal text-foreground">{subtitle}</p>}
+  </header>
+  <div class="px-4 py-5 sm:px-6">
+    <slot />
+  </div>
+</section>

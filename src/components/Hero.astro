@@ -1,0 +1,23 @@
+---
+const {
+  tagline = "Software engineer, platform tinkerer, and writer.",
+  location = "Sydney, Australia",
+} = Astro.props as {
+  tagline?: string;
+  location?: string;
+};
+---
+
+<section class="mb-10 space-y-4">
+  <h1 class="text-3xl font-semibold text-foreground sm:text-4xl">
+    <span aria-hidden="true" class="block text-sm uppercase tracking-[0.3em] text-foreground-muted">
+      &gt;&gt; hello
+    </span>
+    I'm Luke Bayliss.
+  </h1>
+  <p class="text-lg leading-relaxed text-foreground-muted sm:text-xl">{tagline}</p>
+  <p class="flex items-center gap-2 text-sm text-foreground-muted">
+    <span aria-hidden="true">📍</span>
+    {location}
+  </p>
+</section>
