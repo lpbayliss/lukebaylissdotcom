@@ -1,0 +1,90 @@
+---
+import { getCollection } from "astro:content";
+import Hero from "../components/Hero.astro";
+import TerminalPanel from "../components/TerminalPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
+
+const activeProjects = (await getCollection("projects", ({ data }) => !data.draft))
+  .sort((a, b) => {
+    const orderDiff =
+      (a.data.order ?? Number.POSITIVE_INFINITY) - (b.data.order ?? Number.POSITIVE_INFINITY);
+
+    if (orderDiff !== 0) {
+      return orderDiff;
+    }
+
+    return b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+  })
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <Hero />
+
+  <TerminalPanel title="Latest logs" subtitle="fresh entries from the workbench">
+    {posts.length === 0 ? (
+      <p class="text-sm text-foreground-muted">No posts just yet. New writing will land here soon.</p>
+    ) : (
+      <ul class="space-y-3 text-sm">
+        {posts.map((post) => (
+          <li class="flex flex-col gap-1 rounded border border-border bg-background/60 p-3 hover:border-border-accent hover:text-foreground">
+            <a class="font-medium text-foreground" href={`/blog/${post.slug}/`}>
+              {post.data.title}
+            </a>
+            <p class="text-foreground-muted">{post.data.description}</p>
+            <time
+              class="text-xs uppercase tracking-[0.25em] text-foreground-muted"
+              datetime={post.data.publishedAt.toISOString()}
+            >
+              {post.data.publishedAt.toLocaleDateString('en-AU', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit'
+              })}
+            </time>
+          </li>
+        ))}
+      </ul>
+    )}
+  </TerminalPanel>
+
+  <TerminalPanel title="Active projects" subtitle="selected work, experiments, and collaborations">
+    {activeProjects.length === 0 ? (
+      <p class="text-sm text-foreground-muted">Projects will be listed here once the lab doors open.</p>
+    ) : (
+      <ul class="space-y-4 text-sm">
+        {activeProjects.map((project) => (
+          <li class="space-y-2 rounded border border-border bg-background/60 p-3 hover:border-border-accent">
+            <div class="flex flex-col gap-1">
+              <a class="font-medium text-foreground" href={`/projects/${project.slug}/`}>
+                {project.data.title}
+              </a>
+              <p class="text-foreground-muted">{project.data.summary}</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-foreground-muted">
+              <time datetime={project.data.publishedAt.toISOString()}>
+                {project.data.publishedAt.getFullYear()}
+              </time>
+              {project.data.role && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{project.data.role}</span>
+                </>
+              )}
+              {project.data.tech.length > 0 && (
+                <>
+                  <span aria-hidden="true">·</span>
+                  <span>{project.data.tech.join(', ')}</span>
+                </>
+              )}
+            </div>
+          </li>
+        ))}
+      </ul>
+    )}
+  </TerminalPanel>
+</BaseLayout>

@@ -1,0 +1,77 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"projects">;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+---
+
+<BaseLayout title={data.title} description={data.summary}>
+  <article class="space-y-6 text-sm text-foreground">
+    <header class="space-y-3 border-b border-border pb-6">
+      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/projects/{entry.slug}</p>
+      <h1 class="text-3xl font-semibold text-foreground">{data.title}</h1>
+      <p class="text-base text-foreground-muted">{data.summary}</p>
+      <dl class="grid gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted sm:grid-cols-2">
+        <div class="flex items-center gap-2">
+          <dt>Started</dt>
+          <dd>
+            {data.publishedAt.toLocaleDateString('en-AU', {
+              year: 'numeric',
+              month: 'short'
+            })}
+          </dd>
+        </div>
+        {data.updatedAt && (
+          <div class="flex items-center gap-2">
+            <dt>Updated</dt>
+            <dd>
+              {data.updatedAt.toLocaleDateString('en-AU', {
+                year: 'numeric',
+                month: 'short'
+              })}
+            </dd>
+          </div>
+        )}
+        {data.role && (
+          <div class="flex items-center gap-2">
+            <dt>Role</dt>
+            <dd>{data.role}</dd>
+          </div>
+        )}
+        {data.status && (
+          <div class="flex items-center gap-2">
+            <dt>Status</dt>
+            <dd>{data.status}</dd>
+          </div>
+        )}
+      </dl>
+      <div class="flex flex-wrap gap-3 text-xs uppercase tracking-[0.25em]">
+        {data.externalUrl && (
+          <a class="underline decoration-dashed underline-offset-2" href={data.externalUrl} rel="noreferrer" target="_blank">
+            Visit project ↗
+          </a>
+        )}
+        {data.sourceUrl && (
+          <a class="underline decoration-dashed underline-offset-2" href={data.sourceUrl} rel="noreferrer" target="_blank">
+            View source ↗
+          </a>
+        )}
+      </div>
+      {data.tech.length > 0 && (
+        <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+          {data.tech.map((item) => (
+            <li class="rounded border border-border px-2 py-1">{item}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+    <div class="space-y-4 text-base leading-relaxed text-foreground">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>

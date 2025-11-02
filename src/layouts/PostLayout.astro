@@ -1,0 +1,57 @@
+---
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"blog">;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+---
+
+<BaseLayout title={data.title} description={data.description} ogImage={data.heroImage}>
+  <article class="space-y-6 text-base leading-relaxed text-foreground">
+    <header class="mb-8 space-y-2 border-b border-border pb-6">
+      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/blog/{entry.slug}</p>
+      <h1 class="text-3xl font-semibold">{data.title}</h1>
+      <p class="text-sm text-foreground-muted">{data.description}</p>
+      <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+        <time datetime={data.publishedAt.toISOString()}>
+          {data.publishedAt.toLocaleDateString('en-AU', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit'
+          })}
+        </time>
+        {data.updatedAt && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>
+              updated{' '}
+              {data.updatedAt.toLocaleDateString('en-AU', {
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit'
+              })}
+            </span>
+          </>
+        )}
+        {typeof data.readingTimeMinutes === 'number' && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{Math.round(data.readingTimeMinutes)} min read</span>
+          </>
+        )}
+      </div>
+      {data.tags.length > 0 && (
+        <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+          {data.tags.map((tag) => (
+            <li class="rounded border border-border px-2 py-1">{tag}</li>
+          ))}
+        </ul>
+      )}
+    </header>
+    <slot />
+  </article>
+</BaseLayout>

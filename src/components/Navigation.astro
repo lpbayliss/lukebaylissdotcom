@@ -1,0 +1,43 @@
+---
+interface Props {
+  activePath: string;
+}
+
+const links = [
+  { href: "/", label: "home" },
+  { href: "/about", label: "about" },
+  { href: "/blog", label: "blog" },
+  { href: "/projects", label: "projects" },
+  { href: "/contact", label: "contact" },
+];
+
+const { activePath } = Astro.props as Props;
+const normalizedPath =
+  activePath !== "/" && activePath.endsWith("/") ? activePath.slice(0, -1) : activePath;
+---
+
+<nav class="border-b border-border bg-background px-4 py-2 text-sm sm:px-6">
+  <ul class="flex flex-wrap items-center gap-4">
+    {links.map((link) => {
+      const isActive =
+        normalizedPath === link.href ||
+        (link.href !== '/' && normalizedPath.startsWith(link.href));
+
+      return (
+        <li key={link.href}>
+          <a
+            href={link.href}
+            aria-current={isActive ? 'page' : undefined}
+            class:list={[
+              'inline-flex items-center gap-2 rounded px-2 py-1 transition-colors',
+              isActive ? 'bg-background-muted text-foreground' : 'text-foreground-muted hover:text-foreground'
+            ]}
+          >
+            <span aria-hidden="true">{isActive ? '▶' : '▹'}</span>
+            {link.label}
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

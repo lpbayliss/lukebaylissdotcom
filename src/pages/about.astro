@@ -1,0 +1,48 @@
+---
+import TerminalPanel from "../components/TerminalPanel.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="About">
+  <TerminalPanel title="Whoami" subtitle="the short version">
+    <p class="text-sm leading-relaxed text-foreground-muted">
+      I'm Luke Bayliss, a software engineer focused on dependable platforms, developer tooling,
+      and crafting delightful technical documentation. I thrive where infrastructure, design, and
+      product strategy intersect.
+    </p>
+  </TerminalPanel>
+
+  <TerminalPanel title="Experience" subtitle="recent missions">
+    <ul class="space-y-4 text-sm text-foreground-muted">
+      <li>
+        <div class="flex flex-col gap-1">
+          <p class="text-foreground">Principal Engineer · Somewhere Tech</p>
+          <p>Leading platform initiatives, accessibility upgrades, and cross-team developer experience.</p>
+          <p class="text-xs uppercase tracking-[0.25em]">2022 — present</p>
+        </div>
+      </li>
+      <li>
+        <div class="flex flex-col gap-1">
+          <p class="text-foreground">Staff Engineer · Creative Cloud Co.</p>
+          <p>Shipped resilient design systems and improved build times by >40% across the frontend fleet.</p>
+          <p class="text-xs uppercase tracking-[0.25em]">2019 — 2022</p>
+        </div>
+      </li>
+      <li>
+        <div class="flex flex-col gap-1">
+          <p class="text-foreground">Senior Engineer · Productive Labs</p>
+          <p>Scaled analytics pipelines and mentored engineers across web and cloud practices.</p>
+          <p class="text-xs uppercase tracking-[0.25em]">2016 — 2019</p>
+        </div>
+      </li>
+    </ul>
+  </TerminalPanel>
+
+  <TerminalPanel title="Values" subtitle="principles that guide the build">
+    <ul class="list-disc space-y-2 pl-6 text-sm text-foreground-muted">
+      <li>Ship accessible experiences by default; great interfaces respect every visitor.</li>
+      <li>Automate the boring parts so curiosity can focus on the interesting questions.</li>
+      <li>Prefer clarity over cleverness—humans read code more often than compilers do.</li>
+    </ul>
+  </TerminalPanel>
+</BaseLayout>

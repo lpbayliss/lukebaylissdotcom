@@ -1,37 +1,39 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# lukebaylissdotcom
 
-## Getting Started
+Astro + React + Tailwind v4 implementation of the lukebayliss.com personal site.
 
-First, run the development server:
+Refer to `DEVELOPMENT.md` for architectural decisions and future tasks.
 
-```bash
-pnpm dev
+## Project structure
+
+```text
+├── astro.config.mjs        # Astro configuration & integrations
+├── biome.json              # Biome formatter + linter rules
+├── public/                 # Static assets served as-is
+├── src/
+│   ├── components/         # Astro + React components
+│   ├── content/            # MDX collections (blog, projects, snippets)
+│   ├── layouts/            # Page + entry layouts
+│   └── pages/              # Route definitions
+├── tailwind.config.ts      # Tailwind v4 customization
+└── tsconfig.json           # TypeScript configuration
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Command | Description |
+| --- | --- |
+| `pnpm install` | Install dependencies |
+| `pnpm dev` | Start the Astro dev server on http://localhost:4321 |
+| `pnpm build` | Generate a production-ready static build |
+| `pnpm preview` | Preview the production build locally |
+| `pnpm lint` | Run Biome linting |
+| `pnpm format` | Apply Biome formatting in-place |
+| `pnpm check` | Run Biome's combined lint + format diagnostics |
 
-### Reference
+## Notes
 
-https://www.warpstream.com/blog
-https://www.realtimecolors.com/?colors=e7e4f1-070410-4e35c0-322173-382097&fonts=Comfortaa-Comfortaa
-
-### Checklist
-
-[] RSS Feed
-[] Landing Page Typing Effect
-[] Resume
-[] MDX Loading
-[] Code Snippets
-[] Front matter update hook
-[] Likes/ Reactions
-[] Hit counter, hash ip?
-
-- search
-- post tags
-  related posts
-  comments
-  social share
-  sortable view, bu date, reverse, filter down by category
-  bright codehike hoghlighting
+- Tailwind v4 is wired via the official `@tailwindcss/vite` plugin.
+- Content collections (blog, projects, snippets) are typed through `src/content/config.ts`.
+- Update `astro.config.mjs` with the final production domain when ready to deploy.
+- Analytics will be added via an external Umami Fly deployment — see `DEVELOPMENT.md` for the provisioning checklist.
