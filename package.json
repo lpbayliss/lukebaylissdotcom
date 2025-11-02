@@ -15,6 +15,7 @@
     "docker:run": "docker run --rm -p 8080:8080 lukebaylissdotcom:local"
   },
   "dependencies": {
+    "@astrojs/node": "^9.5.0",
     "@astrojs/mdx": "^4.3.9",
     "@astrojs/react": "^4.4.1",
     "@tailwindcss/vite": "^4.1.16",
