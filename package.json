@@ -10,7 +10,9 @@
     "astro": "astro",
     "lint": "biome lint .",
     "format": "biome format --write .",
-    "check": "biome check ."
+    "check": "biome check .",
+    "docker:build": "docker build --tag lukebaylissdotcom:local .",
+    "docker:run": "docker run --rm -p 8080:8080 lukebaylissdotcom:local"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.9",

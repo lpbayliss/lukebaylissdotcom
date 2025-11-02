@@ -1,49 +1,20 @@
 # syntax = docker/dockerfile:1
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=21.6.2
-FROM node:${NODE_VERSION}-slim as base
+ARG NODE_VERSION=20
 
-LABEL fly_launch_runtime="Next.js"
-
-# Next.js app lives here
+FROM node:${NODE_VERSION}-slim AS base
 WORKDIR /app
+ENV NODE_ENV=production
+RUN corepack enable
 
-# Set production environment
-ENV NODE_ENV="production"
-
-# Install pnpm
-ARG PNPM_VERSION=8.15.4
-RUN npm install -g pnpm@$PNPM_VERSION
-
-
-# Throw-away build stage to reduce size of final image
-FROM base as build
-
-# Install packages needed to build node modules
-RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential node-gyp pkg-config python-is-python3
-
-# Install node modules
-COPY --link package.json pnpm-lock.yaml ./
+FROM base AS build
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
+COPY . .
+RUN pnpm build
 
-# Copy application code
-COPY --link . .
-
-# Build application
-RUN pnpm run build
-
-# Remove development dependencies
-RUN pnpm prune --prod
-
-
-# Final stage for app image
-FROM base
-
-# Copy built application
-COPY --from=build /app /app
-
-# Start the server by default, this can be overwritten at runtime
-EXPOSE 3000
-CMD [ "pnpm", "run", "start" ]
+FROM nginx:1.27-alpine AS runtime
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]

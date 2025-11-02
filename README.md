@@ -30,6 +30,8 @@ Refer to `DEVELOPMENT.md` for architectural decisions and future tasks.
 | `pnpm lint` | Run Biome linting |
 | `pnpm format` | Apply Biome formatting in-place |
 | `pnpm check` | Run Biome's combined lint + format diagnostics |
+| `pnpm docker:build` | Build the production Docker image locally |
+| `pnpm docker:run` | Run the Docker image on http://localhost:8080 |
 
 ## Notes
 
