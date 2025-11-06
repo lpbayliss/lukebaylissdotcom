@@ -132,15 +132,3 @@ jobs:
                 body: comment
               });
             }
-
-      - name: Quality checks summary
-        if: success()
-        run: |
-          echo "✅ All quality checks passed!"
-          echo ""
-          echo "✅ Biome linting and formatting"
-          echo "✅ TypeScript type checking"
-          echo "✅ Build verification"
-          echo "✅ Security audit"
-          echo "✅ Lock file validation"
-          echo "📦 Bundle size analysis completed"
