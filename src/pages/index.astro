@@ -29,26 +29,37 @@ const activeProjects = (await getCollection("projects", ({ data }) => !data.draf
     {posts.length === 0 ? (
       <p class="text-sm text-foreground-muted">No posts just yet. New writing will land here soon.</p>
     ) : (
-      <ul class="space-y-3 text-sm">
-        {posts.map((post) => (
-          <li class="flex flex-col gap-1 rounded border border-border bg-background/60 p-3 hover:border-border-accent hover:text-foreground">
-            <a class="font-medium text-foreground" href={`/blog/${post.slug}/`}>
-              {post.data.title}
-            </a>
-            <p class="text-foreground-muted">{post.data.description}</p>
-            <time
-              class="text-xs uppercase tracking-[0.25em] text-foreground-muted"
-              datetime={post.data.publishedAt.toISOString()}
-            >
-              {post.data.publishedAt.toLocaleDateString('en-AU', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit'
-              })}
-            </time>
-          </li>
-        ))}
-      </ul>
+      <div class="space-y-4">
+        <ul class="space-y-3 text-sm">
+          {posts.map((post) => (
+            <li class="flex flex-col gap-1 rounded border border-border bg-background/60 p-3 hover:border-border-accent hover:text-foreground">
+              <a class="font-medium text-foreground" href={`/blog/${post.slug}/`}>
+                {post.data.title}
+              </a>
+              <p class="text-foreground-muted">{post.data.description}</p>
+              <time
+                class="text-xs uppercase tracking-[0.25em] text-foreground-muted"
+                datetime={post.data.publishedAt.toISOString()}
+              >
+                {post.data.publishedAt.toLocaleDateString('en-AU', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: '2-digit'
+                })}
+              </time>
+            </li>
+          ))}
+        </ul>
+        <div class="flex justify-end gap-3 pt-2">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 rounded border border-border bg-background-subtle px-4 py-2 text-sm font-mono text-foreground-accent hover:border-border-accent hover:bg-background-muted transition-colors"
+          >
+            <span>search posts</span>
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
     )}
   </TerminalPanel>
 
