@@ -1,0 +1,19 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import TerminalPanel from "@components/TerminalPanel.astro";
+import SearchComponent from "@components/Search";
+import { generateSearchIndex } from "../lib/search-index";
+
+const searchIndex = await generateSearchIndex();
+---
+
+<BaseLayout
+	title="Search"
+	description="Search through blog posts, projects, and code snippets"
+>
+	<div class="container mx-auto px-4 py-8 max-w-4xl">
+		<TerminalPanel title="search">
+			<SearchComponent client:load searchIndex={searchIndex} />
+		</TerminalPanel>
+	</div>
+</BaseLayout>
