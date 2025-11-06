@@ -34,6 +34,12 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
+      # Configure git to use HTTPS instead of SSH for dependencies
+      - name: Configure git to use HTTPS
+        run: |
+          git config --global url."https://github.com/".insteadOf git@github.com:
+          git config --global url."https://".insteadOf git://
+
       # Check 5: Lock file validation (blocking)
       - name: Install dependencies (with frozen lockfile)
         run: pnpm install --frozen-lockfile
