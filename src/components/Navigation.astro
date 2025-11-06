@@ -24,7 +24,7 @@ const normalizedPath =
         (link.href !== '/' && normalizedPath.startsWith(link.href));
 
       return (
-        <li key={link.href}>
+        <li>
           <a
             href={link.href}
             aria-current={isActive ? 'page' : undefined}

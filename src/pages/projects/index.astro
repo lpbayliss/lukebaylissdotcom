@@ -24,7 +24,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft)).so
     ) : (
       <ul class="space-y-6 text-sm">
         {projects.map((project) => (
-          <li class="space-y-2 rounded border border-border bg-background/60 p-4" key={project.id}>
+          <li class="space-y-2 rounded border border-border bg-background/60 p-4">
             <div class="flex flex-col gap-1">
               <a class="text-lg font-semibold text-foreground" href={`/projects/${project.slug}/`}>
                 {project.data.title}
@@ -50,7 +50,7 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft)).so
             {project.data.tech.length > 0 && (
               <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground-muted">
                 {project.data.tech.map((tech) => (
-                  <li class="rounded border border-border px-2 py-1" key={tech}>{tech}</li>
+                  <li class="rounded border border-border px-2 py-1">{tech}</li>
                 ))}
               </ul>
             )}

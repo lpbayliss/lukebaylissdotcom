@@ -1,0 +1,140 @@
+name: PR Quality Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+# Cancel in-progress runs when a new push is made to the same PR
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality-checks:
+    name: Quality Checks
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8.8.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+
+      # Configure git to use HTTPS instead of SSH for dependencies
+      - name: Configure git to use HTTPS
+        run: |
+          git config --global url."https://github.com/".insteadOf git@github.com:
+          git config --global url."https://".insteadOf git://
+
+      # Check 5: Lock file validation (blocking)
+      - name: Install dependencies (with frozen lockfile)
+        run: pnpm install --frozen-lockfile
+
+      # Check 1: Biome linting and formatting (blocking)
+      - name: Run Biome checks
+        run: pnpm biome check .
+
+      # Check 2: TypeScript/Astro type checking (blocking)
+      - name: Run Astro type checking
+        run: pnpm astro check
+
+      # Check 3: Build verification (blocking)
+      - name: Build project
+        run: pnpm build
+
+      # Check 4: Dependency security audit (blocking)
+      - name: Run security audit
+        run: pnpm audit --audit-level=moderate
+
+      # Check 6: Bundle size analysis (non-blocking, with PR comment)
+      - name: Analyze bundle size
+        if: success() || failure()
+        id: bundle-size
+        run: |
+          # Calculate dist folder size
+          if [ -d "dist" ]; then
+            TOTAL_SIZE=$(du -sb dist | cut -f1)
+            HUMAN_SIZE=$(du -sh dist | cut -f1)
+
+            # Get individual file sizes (top 10 largest)
+            echo "## 📦 Bundle Size Analysis" > bundle-report.md
+            echo "" >> bundle-report.md
+            echo "**Total Build Size:** \`${HUMAN_SIZE}\` (${TOTAL_SIZE} bytes)" >> bundle-report.md
+            echo "" >> bundle-report.md
+            echo "### Largest Files" >> bundle-report.md
+            echo "" >> bundle-report.md
+            echo "| File | Size |" >> bundle-report.md
+            echo "|------|------|" >> bundle-report.md
+
+            find dist -type f -exec du -h {} + | sort -rh | head -10 | while read size file; do
+              relative_path=${file#dist/}
+              echo "| \`${relative_path}\` | ${size} |" >> bundle-report.md
+            done
+
+            # Save for later step
+            echo "TOTAL_SIZE=${TOTAL_SIZE}" >> $GITHUB_OUTPUT
+            echo "HUMAN_SIZE=${HUMAN_SIZE}" >> $GITHUB_OUTPUT
+          else
+            echo "⚠️ No dist folder found" > bundle-report.md
+          fi
+
+      - name: Comment bundle size on PR
+        if: success() || failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+
+            // Read the bundle report
+            let comment = '';
+            try {
+              comment = fs.readFileSync('bundle-report.md', 'utf8');
+            } catch (error) {
+              comment = '⚠️ Unable to generate bundle size report';
+            }
+
+            // Add footer
+            comment += '\n\n---\n*Bundle size analysis for commit ' + context.sha.substring(0, 7) + '*';
+
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('📦 Bundle Size Analysis')
+            );
+
+            // Update or create comment
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
