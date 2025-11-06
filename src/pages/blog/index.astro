@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
+import SearchComponent from "../../components/Search";
 import TerminalPanel from "../../components/TerminalPanel.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import SearchComponent from "../../components/Search";
 import { generateSearchIndex } from "../../lib/search-index";
 
 const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
