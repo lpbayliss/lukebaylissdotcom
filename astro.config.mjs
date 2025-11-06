@@ -11,10 +11,8 @@ export default defineConfig({
   output: "server",
   adapter: node({ mode: "standalone" }),
   integrations: [react(), mdx()],
-  markdown: {
-    drafts: true,
-  },
   vite: {
+    // @ts-expect-error - Tailwind CSS plugin type incompatibility with Vite
     plugins: [tailwindcss()],
   },
 });

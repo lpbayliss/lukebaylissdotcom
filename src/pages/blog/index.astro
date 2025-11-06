@@ -17,7 +17,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
     ) : (
       <ul class="space-y-6 text-sm">
         {posts.map((post) => (
-          <li class="space-y-2 border-b border-border pb-4 last:border-b-0 last:pb-0" key={post.id}>
+          <li class="space-y-2 border-b border-border pb-4 last:border-b-0 last:pb-0">
             <div>
               <a class="text-lg font-semibold text-foreground" href={`/blog/${post.slug}/`}>
                 {post.data.title}
@@ -33,7 +33,7 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
                 })}
               </time>
               {post.data.tags.map((tag) => (
-                <span class="rounded border border-border px-2 py-1" data-tag={tag} key={tag}>{tag}</span>
+                <span class="rounded border border-border px-2 py-1" data-tag={tag}>{tag}</span>
               ))}
             </div>
           </li>
