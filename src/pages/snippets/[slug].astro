@@ -1,0 +1,22 @@
+---
+import { getEntry } from "astro:content";
+import SnippetLayout from "../../layouts/SnippetLayout.astro";
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect("/snippets");
+}
+
+const entry = await getEntry("snippets", slug);
+
+if (!entry || entry.data.draft) {
+  return Astro.redirect("/snippets");
+}
+
+const { Content } = await entry.render();
+---
+
+<SnippetLayout entry={entry}>
+  <Content />
+</SnippetLayout>
