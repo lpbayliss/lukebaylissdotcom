@@ -22,7 +22,7 @@ dependencies:
     version: 3.6.0
   '@tailwindcss/vite':
     specifier: ^4.1.16
-    version: 4.1.17(vite@7.2.1)
+    version: 4.1.17(vite@7.2.2)
   '@types/react':
     specifier: ^19.2.2
     version: 19.2.2
@@ -1521,7 +1521,7 @@ packages:
       '@tailwindcss/oxide-win32-x64-msvc': 4.1.17
     dev: false
 
-  /@tailwindcss/vite@4.1.17(vite@7.2.1):
+  /@tailwindcss/vite@4.1.17(vite@7.2.2):
     resolution: {integrity: sha512-4+9w8ZHOiGnpcGI6z1TVVfWaX/koK7fKeSYF3qlYg2xpBtbteP2ddBxiarL+HVgfSJGeK5RIxRQmKm4rTJJAwA==}
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7
@@ -1529,7 +1529,7 @@ packages:
       '@tailwindcss/node': 4.1.17
       '@tailwindcss/oxide': 4.1.17
       tailwindcss: 4.1.17
-      vite: 7.2.1
+      vite: 7.2.2
     dev: false
 
   /@types/babel__core@7.20.5:
@@ -1636,7 +1636,7 @@ packages:
   /@types/sax@1.2.7:
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
     dependencies:
-      '@types/node': 24.10.0
+      '@types/node': 17.0.45
     dev: false
 
   /@types/unist@2.0.11:
@@ -2001,7 +2001,7 @@ packages:
     dependencies:
       baseline-browser-mapping: 2.8.25
       caniuse-lite: 1.0.30001754
-      electron-to-chromium: 1.5.245
+      electron-to-chromium: 1.5.248
       node-releases: 2.0.27
       update-browserslist-db: 1.1.4(browserslist@4.27.0)
     dev: false
@@ -2244,8 +2244,8 @@ packages:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
     dev: false
 
-  /electron-to-chromium@1.5.245:
-    resolution: {integrity: sha512-rdmGfW47ZhL/oWEJAY4qxRtdly2B98ooTJ0pdEI4jhVLZ6tNf8fPtov2wS1IRKwFJT92le3x4Knxiwzl7cPPpQ==}
+  /electron-to-chromium@1.5.248:
+    resolution: {integrity: sha512-zsur2yunphlyAO4gIubdJEXCK6KOVvtpiuDfCIqbM9FjcnMYiyn0ICa3hWfPr0nc41zcLWobgy1iL7VvoOyA2Q==}
     dev: false
 
   /emmet@2.4.11:
@@ -4660,8 +4660,8 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /vite@7.2.1:
-    resolution: {integrity: sha512-qTl3VF7BvOupTR85Zc561sPEgxyUSNSvTQ9fit7DEMP7yPgvvIGm5Zfa1dOM+kOwWGNviK9uFM9ra77+OjK7lQ==}
+  /vite@7.2.2:
+    resolution: {integrity: sha512-BxAKBWmIbrDgrokdGZH1IgkIk/5mMHDreLDmCJ0qpyJaAteP8NvMhkwr/ZCQNqNH97bw/dANTE9PDzqwJghfMQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     hasBin: true
     peerDependencies:
