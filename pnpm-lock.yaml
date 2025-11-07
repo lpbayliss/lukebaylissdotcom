@@ -4846,7 +4846,7 @@ packages:
     dev: false
 
   github.com/ramya-rao-a/css-parser/370c480ac103bd17c7bcfb34bf5d577dc40d3660:
-    resolution: {commit: 370c480ac103bd17c7bcfb34bf5d577dc40d3660, repo: git+ssh://git@github.com/ramya-rao-a/css-parser.git, type: git}
+    resolution: {commit: 370c480ac103bd17c7bcfb34bf5d577dc40d3660, repo: https://github.com/ramya-rao-a/css-parser.git, type: git}
     name: '@emmetio/css-parser'
     version: 0.4.0
     dependencies:
