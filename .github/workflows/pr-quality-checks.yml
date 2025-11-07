@@ -39,6 +39,7 @@ jobs:
           git config --global url."https://github.com/".insteadOf "git@github.com:"
           git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
           git config --global url."https://github.com/".insteadOf "git+ssh://git@github.com/"
+          git config --global url."https://".insteadOf "git://"
 
       # Check 5: Lock file validation (blocking)
       - name: Install dependencies (with frozen lockfile)
