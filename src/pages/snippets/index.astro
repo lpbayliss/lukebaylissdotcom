@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import TerminalPanel from "../../components/TerminalPanel.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const snippets = (await getCollection("snippets", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+---
+
+<BaseLayout title="Code Snippets" description="Useful code snippets, scripts, and quick references">
+  <TerminalPanel title="Snippets" subtitle="code fragments, scripts, and quick references">
+    <div class="space-y-6">
+      {snippets.length === 0 ? (
+        <p class="text-sm text-foreground-muted">
+          No snippets yet. Check back soon for useful code fragments and scripts.
+        </p>
+      ) : (
+        <ul class="space-y-6 text-sm">
+          {snippets.map((snippet) => (
+            <li class="space-y-2 rounded border border-border bg-background/60 p-4 hover:border-border-accent transition-colors">
+              <div>
+                <a
+                  class="text-lg font-semibold text-foreground hover:text-foreground-accent transition-colors"
+                  href={`/snippets/${snippet.slug}/`}
+                >
+                  {snippet.data.title}
+                </a>
+                <p class="text-foreground-muted mt-1">{snippet.data.description}</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+                <time datetime={snippet.data.publishedAt.toISOString()}>
+                  {snippet.data.publishedAt.toLocaleDateString('en-AU', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit'
+                  })}
+                </time>
+                {snippet.data.updatedAt && (
+                  <>
+                    <span aria-hidden="true">·</span>
+                    <span>
+                      updated{' '}
+                      {snippet.data.updatedAt.toLocaleDateString('en-AU', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit'
+                      })}
+                    </span>
+                  </>
+                )}
+                {snippet.data.tags.length > 0 && (
+                  <>
+                    {snippet.data.tags.map((tag) => (
+                      <>
+                        <span aria-hidden="true">·</span>
+                        <span class="rounded border border-border px-2 py-1">{tag}</span>
+                      </>
+                    ))}
+                  </>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </TerminalPanel>
+</BaseLayout>
