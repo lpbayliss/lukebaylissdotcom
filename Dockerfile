@@ -8,6 +8,12 @@ RUN corepack enable
 
 FROM base AS build
 ENV NODE_ENV=development
+# Install git for pnpm dependencies that use git repositories
+RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
+# Configure git to use HTTPS instead of SSH (no SSH keys available in build)
+RUN git config --global url."https://github.com/".insteadOf "git@github.com:" && \
+    git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" && \
+    git config --global url."https://github.com/".insteadOf "git+ssh://git@github.com/"
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 COPY . .
