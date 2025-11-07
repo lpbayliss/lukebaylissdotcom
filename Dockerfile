@@ -7,12 +7,11 @@ WORKDIR /app
 RUN corepack enable
 
 FROM base AS build
-ENV NODE_ENV=development
+ENV NODE_ENV=production
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile --prod=false
+RUN pnpm install --frozen-lockfile --prod
 COPY . .
 RUN pnpm build
-RUN pnpm prune --prod
 
 FROM node:${NODE_VERSION}-slim AS runtime
 WORKDIR /app

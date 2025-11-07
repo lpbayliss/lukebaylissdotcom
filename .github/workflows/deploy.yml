@@ -26,7 +26,7 @@ jobs:
           node-version: 20
           cache: "pnpm"
 
-      - name: Configure Git to use HTTPS instead of SSH
+      - name: Configure git to use HTTPS instead of SSH
         run: |
           git config --global url."https://github.com/".insteadOf "git@github.com:"
           git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
