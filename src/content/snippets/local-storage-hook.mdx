@@ -1,0 +1,217 @@
+---
+title: "Type-Safe useLocalStorage Hook"
+description: "A React hook for managing localStorage with TypeScript type safety, automatic JSON parsing, and sync across tabs."
+publishedAt: 2024-08-20
+tags:
+  - react
+  - hooks
+  - storage
+---
+
+A production-ready `useLocalStorage` hook that handles JSON serialization, type safety, and cross-tab synchronization.
+
+```typescript
+import { useState, useEffect, useCallback, Dispatch, SetStateAction } from 'react';
+
+type SetValue<T> = Dispatch<SetStateAction<T>>;
+
+function useLocalStorage<T>(
+  key: string,
+  initialValue: T
+): [T, SetValue<T>, () => void] {
+  // State to store our value
+  const [storedValue, setStoredValue] = useState<T>(() => {
+    if (typeof window === 'undefined') {
+      return initialValue;
+    }
+
+    try {
+      const item = window.localStorage.getItem(key);
+      return item ? JSON.parse(item) : initialValue;
+    } catch (error) {
+      console.error(`Error reading localStorage key "${key}":`, error);
+      return initialValue;
+    }
+  });
+
+  // Return a wrapped version of useState's setter function that persists to localStorage
+  const setValue: SetValue<T> = useCallback((value) => {
+    try {
+      // Allow value to be a function (same API as useState)
+      const valueToStore = value instanceof Function ? value(storedValue) : value;
+
+      setStoredValue(valueToStore);
+
+      if (typeof window !== 'undefined') {
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+
+        // Dispatch custom event for cross-tab sync
+        window.dispatchEvent(new CustomEvent('local-storage', {
+          detail: { key, value: valueToStore }
+        }));
+      }
+    } catch (error) {
+      console.error(`Error setting localStorage key "${key}":`, error);
+    }
+  }, [key, storedValue]);
+
+  // Remove item from localStorage
+  const removeValue = useCallback(() => {
+    try {
+      setStoredValue(initialValue);
+
+      if (typeof window !== 'undefined') {
+        window.localStorage.removeItem(key);
+        window.dispatchEvent(new CustomEvent('local-storage', {
+          detail: { key, value: undefined }
+        }));
+      }
+    } catch (error) {
+      console.error(`Error removing localStorage key "${key}":`, error);
+    }
+  }, [key, initialValue]);
+
+  // Sync state across tabs
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent | CustomEvent) => {
+      if (e instanceof StorageEvent) {
+        // Handle native storage event (from other tabs)
+        if (e.key === key && e.newValue !== null) {
+          try {
+            setStoredValue(JSON.parse(e.newValue));
+          } catch (error) {
+            console.error(`Error parsing localStorage value for key "${key}":`, error);
+          }
+        } else if (e.key === key && e.newValue === null) {
+          setStoredValue(initialValue);
+        }
+      } else {
+        // Handle custom event (from same tab)
+        const detail = (e as CustomEvent).detail;
+        if (detail.key === key) {
+          setStoredValue(detail.value !== undefined ? detail.value : initialValue);
+        }
+      }
+    };
+
+    // Listen for native storage events (cross-tab)
+    window.addEventListener('storage', handleStorageChange as EventListener);
+
+    // Listen for custom events (same tab)
+    window.addEventListener('local-storage', handleStorageChange as EventListener);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange as EventListener);
+      window.removeEventListener('local-storage', handleStorageChange as EventListener);
+    };
+  }, [key, initialValue]);
+
+  return [storedValue, setValue, removeValue];
+}
+
+// Usage Examples:
+
+// Basic string storage
+function ThemeToggle() {
+  const [theme, setTheme, removeTheme] = useLocalStorage('theme', 'light');
+
+  return (
+    <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+      Current theme: {theme}
+    </button>
+  );
+}
+
+// Complex object storage
+interface UserPreferences {
+  notifications: boolean;
+  language: string;
+  fontSize: number;
+}
+
+function Settings() {
+  const [prefs, setPrefs] = useLocalStorage<UserPreferences>('user-prefs', {
+    notifications: true,
+    language: 'en',
+    fontSize: 16
+  });
+
+  const toggleNotifications = () => {
+    setPrefs(prev => ({
+      ...prev,
+      notifications: !prev.notifications
+    }));
+  };
+
+  return (
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={prefs.notifications}
+          onChange={toggleNotifications}
+        />
+        Enable notifications
+      </label>
+
+      <select
+        value={prefs.language}
+        onChange={(e) => setPrefs({ ...prefs, language: e.target.value })}
+      >
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+      </select>
+    </div>
+  );
+}
+
+// Array storage with type safety
+function TodoList() {
+  const [todos, setTodos] = useLocalStorage<string[]>('todos', []);
+
+  const addTodo = (text: string) => {
+    setTodos(prev => [...prev, text]);
+  };
+
+  const removeTodo = (index: number) => {
+    setTodos(prev => prev.filter((_, i) => i !== index));
+  };
+
+  return (
+    <ul>
+      {todos.map((todo, index) => (
+        <li key={index}>
+          {todo}
+          <button onClick={() => removeTodo(index)}>Remove</button>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// Server-side rendering safe
+function SafeComponent() {
+  const [count, setCount] = useLocalStorage('count', 0);
+
+  // SSR: returns initialValue (0)
+  // Client: returns stored value or initialValue
+  return <button onClick={() => setCount(c => c + 1)}>Count: {count}</button>;
+}
+```
+
+## Features
+
+- **Type Safety**: Full TypeScript support for stored values
+- **SSR Compatible**: Works with Next.js and other SSR frameworks
+- **Cross-Tab Sync**: Changes in one tab reflect in other tabs
+- **useState API**: Familiar API with functional updates support
+- **Error Handling**: Graceful fallback when localStorage is unavailable
+- **Cleanup Function**: Remove stored values when needed
+- **JSON Serialization**: Automatic serialization/deserialization
+
+## Gotchas
+
+- **Storage Quota**: Most browsers limit localStorage to 5-10MB. Store large data elsewhere.
+- **Synchronous API**: localStorage blocks the main thread. For large data, consider IndexedDB.
+- **Same-Origin Only**: localStorage is scoped to the origin. Different subdomains can't share data.
+- **String Only**: Non-serializable values (functions, symbols) will be lost during JSON.stringify.

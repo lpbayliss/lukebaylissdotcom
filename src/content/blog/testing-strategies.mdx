@@ -1,0 +1,118 @@
+---
+title: "Testing Strategies That Actually Work"
+description: "How to build a test suite that catches bugs without slowing you down."
+publishedAt: 2024-08-05
+tags:
+  - testing
+  - quality
+  - development
+readingTimeMinutes: 7
+---
+
+Testing is one of those topics where everyone has an opinion and nobody agrees. Should you aim for 100% coverage? Write tests first? Mock everything?
+
+Here's what I've learned after years of building (and maintaining) test suites.
+
+## The Testing Pyramid
+
+You've probably seen the testing pyramid: lots of unit tests at the bottom, fewer integration tests in the middle, and a handful of end-to-end tests at the top.
+
+This model works because:
+- **Unit tests are fast and pinpoint failures.** They run in milliseconds and tell you exactly which function broke.
+- **Integration tests verify interactions.** They catch issues that unit tests miss, like mismatched interfaces between modules.
+- **E2E tests validate the user experience.** They're slow and brittle, but they ensure the critical paths actually work.
+
+The ratio varies by project, but a good starting point is 70% unit, 20% integration, 10% E2E.
+
+## Write Tests for Behavior, Not Implementation
+
+This is the single most important principle.
+
+Bad test:
+```typescript
+test("fetchUser calls API with correct endpoint", () => {
+  const spy = jest.spyOn(api, "get");
+  fetchUser("123");
+  expect(spy).toHaveBeenCalledWith("/users/123");
+});
+```
+
+Good test:
+```typescript
+test("fetchUser returns user data for valid ID", async () => {
+  const user = await fetchUser("123");
+  expect(user).toEqual({ id: "123", name: "Alice" });
+});
+```
+
+The first test breaks if you refactor the implementation. The second test only cares about the outcome. Refactor freely.
+
+## Test Edge Cases and Errors
+
+Happy path tests are easy to write but low value. Most bugs live in edge cases:
+- Empty inputs
+- Null or undefined values
+- Maximum/minimum boundaries
+- Network failures
+- Rate limits
+- Concurrent operations
+
+Error handling is especially important. Does your code fail gracefully? Do error messages help users recover?
+
+## Keep Tests Fast
+
+Slow tests don't get run. If your test suite takes 10 minutes, developers will skip it. Aim for sub-second unit tests and sub-minute integration tests.
+
+Strategies:
+- **Mock external dependencies.** Don't hit real APIs or databases in unit tests.
+- **Run tests in parallel.** Most test runners support this out of the box.
+- **Use in-memory databases.** SQLite or an in-memory Postgres instance is faster than a real DB.
+- **Lazy-load test data.** Don't set up massive fixtures if you only need a few records.
+
+## Don't Obsess Over Coverage
+
+100% coverage doesn't mean zero bugs. It means you tested every line, not every scenario.
+
+Coverage is a useful metric for finding untested code, but it's a terrible goal. Focus on:
+- Testing critical paths (authentication, payments, data loss scenarios)
+- Testing complex logic (algorithms, state machines)
+- Testing code that's changed recently
+
+Skip testing trivial getters, setters, and framework boilerplate unless they contain logic.
+
+## Integration Tests for the Messy Parts
+
+Some systems are hard to unit test: async workflows, third-party integrations, complex UI interactions. That's where integration tests shine.
+
+Example: testing a job queue. You could mock the queue and test the enqueueing logic, but does the job actually run? An integration test that enqueues a job and verifies the side effect is more valuable.
+
+## E2E Tests for Confidence
+
+E2E tests are expensive. Use them sparingly for:
+- Critical user journeys (signup, checkout, core workflows)
+- Cross-browser compatibility
+- Visual regression testing
+
+Tools like Playwright and Cypress make E2E testing easier, but keep the suite small. One or two smoke tests per feature is often enough.
+
+## Test-Driven Development (TDD)
+
+TDD—writing tests before code—has passionate advocates and detractors. I'm somewhere in the middle.
+
+TDD works well for:
+- Well-defined problems with clear inputs and outputs
+- Refactoring existing code
+- Bug fixes (write a failing test that reproduces the bug, then fix it)
+
+TDD is awkward for:
+- Exploratory coding (prototyping, spike solutions)
+- UI work where you're iterating on design
+- Problems where you're not sure what the API should look like
+
+Use TDD when it helps. Don't force it.
+
+## Conclusion
+
+Good testing is about balance. Write enough tests to catch regressions and build confidence, but not so many that maintenance becomes a burden.
+
+Test behavior, not implementation. Focus on critical paths and edge cases. Keep tests fast. And remember: tests are code too. They need refactoring, documentation, and care.
