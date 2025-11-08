@@ -84,13 +84,22 @@ export default function Terminal() {
             id: historyIdRef.current++,
             command: "",
             output: [
-              "╔═══════════════════════════════════════════════════════════════╗",
-              "║           Welcome to lukebayliss.com - TUI Mode              ║",
-              "╚═══════════════════════════════════════════════════════════════╝",
+              "[ASCII_ART]",
+              "    ██╗     ██╗   ██╗██╗  ██╗███████╗    ██████╗  █████╗ ██╗   ██╗██╗     ██╗███████╗███████╗",
+              "    ██║     ██║   ██║██║ ██╔╝██╔════╝    ██╔══██╗██╔══██╗╚██╗ ██╔╝██║     ██║██╔════╝██╔════╝",
+              "    ██║     ██║   ██║█████╔╝ █████╗      ██████╔╝███████║ ╚████╔╝ ██║     ██║███████╗███████╗",
+              "    ██║     ██║   ██║██╔═██╗ ██╔══╝      ██╔══██╗██╔══██║  ╚██╔╝  ██║     ██║╚════██║╚════██║",
+              "    ███████╗╚██████╔╝██║  ██╗███████╗    ██████╔╝██║  ██║   ██║   ███████╗██║███████║███████║",
+              "    ╚══════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝    ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝╚══════╝╚══════╝",
+              "[/ASCII_ART]",
               "",
-              "A terminal user interface for exploring my portfolio.",
+              "╔═══════════════════════════════════════════════════════════════════════════════════════════════╗",
+              "║                               [ACCENT]✦ TERMINAL USER INTERFACE ✦[/ACCENT]                                  ║",
+              "╚═══════════════════════════════════════════════════════════════════════════════════════════════╝",
               "",
-              "Type 'help' for available commands.",
+              "[SUCCESS]Welcome to my portfolio terminal![/SUCCESS] Navigate using Unix-like commands.",
+              "",
+              "Type [COMMAND]help[/COMMAND] for available commands, or try [COMMAND]tree[/COMMAND] to see the site structure.",
               "",
             ],
           },
@@ -145,23 +154,26 @@ export default function Terminal() {
 
       case "help":
         output = [
-          "Available commands:",
+          "╔════════════════════════ [ACCENT]Available Commands[/ACCENT] ═══════════════════════════╗",
           "",
-          "  help              Show this help message",
-          "  ls [path]         List files and directories",
-          "  cd <path>         Change directory",
-          "  pwd               Print working directory",
-          "  cat <file>        Display file contents",
-          "  clear             Clear the terminal",
-          "  tree              Show directory tree",
-          "  whoami            Display user information",
-          "  date              Show current date and time",
-          "  echo <text>       Print text to terminal",
-          "  open <file>       Open file in browser",
+          "  [COMMAND]help[/COMMAND]              Show this help message",
+          "  [COMMAND]ls[/COMMAND] [path]         List files and directories",
+          "  [COMMAND]cd[/COMMAND] <path>         Change directory",
+          "  [COMMAND]pwd[/COMMAND]               Print working directory",
+          "  [COMMAND]cat[/COMMAND] <file>        Display file contents",
+          "  [COMMAND]clear[/COMMAND]             Clear the terminal",
+          "  [COMMAND]tree[/COMMAND]              Show directory tree",
+          "  [COMMAND]whoami[/COMMAND]            Display user information",
+          "  [COMMAND]date[/COMMAND]              Show current date and time",
+          "  [COMMAND]echo[/COMMAND] <text>       Print text to terminal",
+          "  [COMMAND]open[/COMMAND] <file>       Open file in browser",
           "",
-          "Navigation shortcuts:",
-          "  cd ..             Go to parent directory",
-          "  cd ~   or  cd /   Go to root directory",
+          "╠════════════════════════ [ACCENT]Navigation Shortcuts[/ACCENT] ═════════════════════════╣",
+          "",
+          "  [COMMAND]cd ..[/COMMAND]             Go to parent directory",
+          "  [COMMAND]cd ~[/COMMAND]   or  [COMMAND]cd /[/COMMAND]   Go to root directory",
+          "",
+          "╚═════════════════════════════════════════════════════════════════════╝",
           "",
         ];
         break;
@@ -172,7 +184,9 @@ export default function Terminal() {
           const items = fileSystem[path];
 
           if (!items) {
-            output = [`ls: cannot access '${args[0] || path}': No such file or directory`];
+            output = [
+              `[ERROR]ls: cannot access '${args[0] || path}': No such file or directory[/ERROR]`,
+            ];
           } else {
             output = [""];
             const dirs = items.filter((i) => i.type === "dir");
@@ -201,7 +215,7 @@ export default function Terminal() {
           }
 
           if (!fileSystem[newPath]) {
-            output = [`cd: no such file or directory: ${args[0]}`];
+            output = [`[ERROR]cd: no such file or directory: ${args[0]}[/ERROR]`];
           } else {
             setCurrentPath(newPath);
           }
@@ -215,7 +229,7 @@ export default function Terminal() {
       case "cat":
         {
           if (!args[0]) {
-            output = ["cat: missing operand", "Usage: cat <file>"];
+            output = ["[ERROR]cat: missing operand[/ERROR]", "Usage: cat <file>"];
           } else {
             const fileName = args.join(" ");
             const items = fileSystem[currentPath];
@@ -224,7 +238,7 @@ export default function Terminal() {
             );
 
             if (!file) {
-              output = [`cat: ${args[0]}: No such file or directory`];
+              output = [`[ERROR]cat: ${args[0]}: No such file or directory[/ERROR]`];
             } else if (file.content) {
               // Limit content length for display
               const lines = file.content.split("\n");
@@ -266,43 +280,45 @@ export default function Terminal() {
         return;
 
       case "tree":
-        output = ["", "lukebayliss.com/", "├── blog/"];
+        output = ["", "[ACCENT]lukebayliss.com/[/ACCENT]", "├── [DIR]blog/[/DIR]"];
 
         if (fileSystem["/blog"]) {
           fileSystem["/blog"].forEach((item, idx, arr) => {
             const isLast = idx === arr.length - 1;
-            output.push(`│   ${isLast ? "└──" : "├──"} ${item.name}`);
+            output.push(`│   ${isLast ? "└──" : "├──"} [FILE]${item.name}[/FILE]`);
           });
         }
 
-        output.push("├── projects/");
+        output.push("├── [DIR]projects/[/DIR]");
         if (fileSystem["/projects"]) {
           fileSystem["/projects"].forEach((item, idx, arr) => {
             const isLast = idx === arr.length - 1;
-            output.push(`│   ${isLast ? "└──" : "├──"} ${item.name}`);
+            output.push(`│   ${isLast ? "└──" : "├──"} [FILE]${item.name}[/FILE]`);
           });
         }
 
-        output.push("├── snippets/");
+        output.push("├── [DIR]snippets/[/DIR]");
         if (fileSystem["/snippets"]) {
           fileSystem["/snippets"].forEach((item, idx, arr) => {
             const isLast = idx === arr.length - 1;
-            output.push(`│   ${isLast ? "└──" : "├──"} ${item.name}`);
+            output.push(`│   ${isLast ? "└──" : "├──"} [FILE]${item.name}[/FILE]`);
           });
         }
 
-        output.push("├── about", "└── contact", "");
+        output.push("├── [FILE]about[/FILE]", "└── [FILE]contact[/FILE]", "");
         break;
 
       case "whoami":
         output = [
           "",
-          "Luke Bayliss",
-          "Software Engineer",
-          "",
-          "Location: Melbourne, Australia",
-          "",
-          "Type 'cat about' for more information.",
+          "┌─────────────────────────────────────┐",
+          "│  [ACCENT]Luke Bayliss[/ACCENT]                      │",
+          "│  [SUCCESS]Software Engineer[/SUCCESS]                │",
+          "│                                     │",
+          "│  📍 Location: Melbourne, Australia  │",
+          "│                                     │",
+          "│  Type [COMMAND]cat about[/COMMAND] for more info    │",
+          "└─────────────────────────────────────┘",
           "",
         ];
         break;
@@ -318,7 +334,7 @@ export default function Terminal() {
       case "open":
         {
           if (!args[0]) {
-            output = ["open: missing operand", "Usage: open <file>"];
+            output = ["[ERROR]open: missing operand[/ERROR]", "Usage: open <file>"];
           } else {
             const fileName = args.join(" ");
             const items = fileSystem[currentPath];
@@ -327,19 +343,22 @@ export default function Terminal() {
             );
 
             if (!file) {
-              output = [`open: ${args[0]}: No such file or directory`];
+              output = [`[ERROR]open: ${args[0]}: No such file or directory[/ERROR]`];
             } else if (file.url) {
               window.location.href = file.url;
-              output = [`Opening ${file.name}...`];
+              output = [`[SUCCESS]Opening ${file.name}...[/SUCCESS]`];
             } else {
-              output = [`open: ${args[0]}: Cannot open file (no URL available)`];
+              output = [`[ERROR]open: ${args[0]}: Cannot open file (no URL available)[/ERROR]`];
             }
           }
         }
         break;
 
       default:
-        output = [`${command}: command not found`, "Type 'help' for available commands."];
+        output = [
+          `[ERROR]${command}: command not found[/ERROR]`,
+          "Type [COMMAND]help[/COMMAND] for available commands.",
+        ];
         break;
     }
 
@@ -381,17 +400,88 @@ export default function Terminal() {
 
   const renderLine = (line: string) => {
     // Parse custom color markers
-    const parts = line.split(/(\[DIR\].*?\[\/DIR\])/);
+    const regex =
+      /(\[(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\].*?\[\/(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\])/g;
+    const parts = line.split(regex);
+
     return parts.map((part, index) => {
-      if (part.startsWith("[DIR]") && part.endsWith("[/DIR]")) {
-        const content = part.slice(5, -6); // Remove [DIR] and [/DIR]
+      // ASCII Art - cyan color
+      if (part.startsWith("[ASCII_ART]") && part.endsWith("[/ASCII_ART]")) {
+        const content = part.slice(11, -12);
         return (
           // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
-          <span key={index} className="text-blue-400">
+          <span key={index} className="text-cyan-400 font-bold">
             {content}
           </span>
         );
       }
+
+      // Directory - blue
+      if (part.startsWith("[DIR]") && part.endsWith("[/DIR]")) {
+        const content = part.slice(5, -6);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-blue-400 font-semibold">
+            {content}
+          </span>
+        );
+      }
+
+      // File - lighter gray
+      if (part.startsWith("[FILE]") && part.endsWith("[/FILE]")) {
+        const content = part.slice(6, -7);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-gray-300">
+            {content}
+          </span>
+        );
+      }
+
+      // Accent/highlight - yellow
+      if (part.startsWith("[ACCENT]") && part.endsWith("[/ACCENT]")) {
+        const content = part.slice(8, -9);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-yellow-400 font-semibold">
+            {content}
+          </span>
+        );
+      }
+
+      // Success - green
+      if (part.startsWith("[SUCCESS]") && part.endsWith("[/SUCCESS]")) {
+        const content = part.slice(9, -10);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-green-400">
+            {content}
+          </span>
+        );
+      }
+
+      // Error - red
+      if (part.startsWith("[ERROR]") && part.endsWith("[/ERROR]")) {
+        const content = part.slice(7, -8);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-red-400">
+            {content}
+          </span>
+        );
+      }
+
+      // Command - magenta/purple
+      if (part.startsWith("[COMMAND]") && part.endsWith("[/COMMAND]")) {
+        const content = part.slice(9, -10);
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-purple-400 font-semibold">
+            {content}
+          </span>
+        );
+      }
+
       // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
       return <span key={index}>{part}</span>;
     });
@@ -401,8 +491,23 @@ export default function Terminal() {
     <div
       ref={terminalRef}
       className="h-screen bg-[#030712] text-[#E5E7EB] font-mono overflow-y-auto p-4"
-      style={{ caretColor: "#34D399" }}
     >
+      <style>
+        {`
+          @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+          }
+          .terminal-cursor {
+            animation: blink 1s step-end infinite;
+          }
+          .terminal-input-hidden {
+            position: absolute;
+            left: -9999px;
+            opacity: 0;
+          }
+        `}
+      </style>
       <div className="max-w-6xl mx-auto">
         {/* History */}
         {history.map((entry) => (
@@ -421,21 +526,28 @@ export default function Terminal() {
           </div>
         ))}
 
-        {/* Input */}
-        <div className="flex gap-2">
-          <span className="text-[#34D399]">{getPrompt()}</span>
-          <input
-            ref={inputRef}
-            type="text"
-            value={currentCommand}
-            onChange={(e) => setCurrentCommand(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="flex-1 bg-transparent outline-none border-none text-[#E5E7EB]"
-            // biome-ignore lint/a11y/noAutofocus: Terminal should auto-focus for better UX
-            autoFocus
-            spellCheck={false}
-          />
+        {/* Custom styled input */}
+        <div className="flex gap-2 items-center">
+          <span className="text-[#34D399] font-semibold">{getPrompt()}</span>
+          <div className="flex-1 relative">
+            <span className="text-[#E5E7EB]">{currentCommand}</span>
+            <span className="terminal-cursor bg-[#34D399] inline-block w-2 h-4 ml-0.5 align-middle"></span>
+          </div>
         </div>
+
+        {/* Hidden actual input for keyboard handling */}
+        <input
+          ref={inputRef}
+          type="text"
+          value={currentCommand}
+          onChange={(e) => setCurrentCommand(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="terminal-input-hidden"
+          // biome-ignore lint/a11y/noAutofocus: Terminal should auto-focus for better UX
+          autoFocus
+          spellCheck={false}
+          autoComplete="off"
+        />
       </div>
     </div>
   );
