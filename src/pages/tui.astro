@@ -1,0 +1,42 @@
+---
+import Terminal from "../components/Terminal";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Terminal User Interface for lukebayliss.com - Navigate the site using command-line interface" />
+    <title>TUI - lukebayliss.com</title>
+
+    <!-- Prevent indexing of TUI page -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <!-- Preload fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+        background: #030712;
+        color: #E5E7EB;
+      }
+    </style>
+  </head>
+  <body>
+    <Terminal client:only="react" />
+  </body>
+</html>
