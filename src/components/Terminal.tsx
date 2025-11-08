@@ -184,7 +184,9 @@ export default function Terminal() {
           const items = fileSystem[path];
 
           if (!items) {
-            output = [`[ERROR]ls: cannot access '${args[0] || path}': No such file or directory[/ERROR]`];
+            output = [
+              `[ERROR]ls: cannot access '${args[0] || path}': No such file or directory[/ERROR]`,
+            ];
           } else {
             output = [""];
             const dirs = items.filter((i) => i.type === "dir");
@@ -353,7 +355,10 @@ export default function Terminal() {
         break;
 
       default:
-        output = [`[ERROR]${command}: command not found[/ERROR]`, "Type [COMMAND]help[/COMMAND] for available commands."];
+        output = [
+          `[ERROR]${command}: command not found[/ERROR]`,
+          "Type [COMMAND]help[/COMMAND] for available commands.",
+        ];
         break;
     }
 
@@ -395,7 +400,8 @@ export default function Terminal() {
 
   const renderLine = (line: string) => {
     // Parse custom color markers
-    const regex = /(\[(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\].*?\[\/(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\])/g;
+    const regex =
+      /(\[(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\].*?\[\/(?:DIR|ASCII_ART|ACCENT|SUCCESS|ERROR|COMMAND|FILE)\])/g;
     const parts = line.split(regex);
 
     return parts.map((part, index) => {
