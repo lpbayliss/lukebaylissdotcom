@@ -1,0 +1,177 @@
+---
+title: "Type-Safe Event Emitter"
+description: "A strongly-typed event emitter pattern for TypeScript that provides autocomplete and type checking for event names and payloads."
+publishedAt: 2024-11-01
+tags:
+  - patterns
+  - type-safety
+  - events
+---
+
+This event emitter provides full type safety for event names and their associated payloads, catching errors at compile time instead of runtime.
+
+```typescript
+type EventMap = Record<string, any>;
+
+type EventKey<T extends EventMap> = string & keyof T;
+type EventCallback<T> = (params: T) => void;
+
+class TypedEventEmitter<T extends EventMap> {
+  private events: {
+    [K in keyof T]?: EventCallback<T[K]>[];
+  } = {};
+
+  on<K extends EventKey<T>>(eventName: K, callback: EventCallback<T[K]>): () => void {
+    if (!this.events[eventName]) {
+      this.events[eventName] = [];
+    }
+
+    this.events[eventName]!.push(callback);
+
+    // Return unsubscribe function
+    return () => {
+      this.off(eventName, callback);
+    };
+  }
+
+  off<K extends EventKey<T>>(eventName: K, callback: EventCallback<T[K]>): void {
+    const callbacks = this.events[eventName];
+    if (!callbacks) return;
+
+    const index = callbacks.indexOf(callback);
+    if (index > -1) {
+      callbacks.splice(index, 1);
+    }
+  }
+
+  emit<K extends EventKey<T>>(eventName: K, params: T[K]): void {
+    const callbacks = this.events[eventName];
+    if (!callbacks) return;
+
+    callbacks.forEach(callback => {
+      try {
+        callback(params);
+      } catch (error) {
+        console.error(`Error in event listener for "${String(eventName)}":`, error);
+      }
+    });
+  }
+
+  once<K extends EventKey<T>>(eventName: K, callback: EventCallback<T[K]>): () => void {
+    const onceCallback: EventCallback<T[K]> = (params) => {
+      this.off(eventName, onceCallback);
+      callback(params);
+    };
+
+    return this.on(eventName, onceCallback);
+  }
+
+  removeAllListeners<K extends EventKey<T>>(eventName?: K): void {
+    if (eventName) {
+      delete this.events[eventName];
+    } else {
+      this.events = {};
+    }
+  }
+}
+
+// Usage with typed events:
+
+interface AppEvents {
+  'user:login': { userId: string; timestamp: Date };
+  'user:logout': { userId: string };
+  'data:updated': { entityId: string; changes: Record<string, any> };
+  'error': { message: string; code: number };
+}
+
+const emitter = new TypedEventEmitter<AppEvents>();
+
+// Type-safe subscription with autocomplete
+const unsubscribe = emitter.on('user:login', (data) => {
+  // TypeScript knows data has { userId: string; timestamp: Date }
+  console.log(`User ${data.userId} logged in at ${data.timestamp}`);
+});
+
+// Type-safe emission
+emitter.emit('user:login', {
+  userId: '123',
+  timestamp: new Date()
+});
+
+// TypeScript error: wrong payload type
+// emitter.emit('user:login', { userId: 123 }); // Error: number not assignable to string
+
+// TypeScript error: unknown event
+// emitter.on('unknown:event', () => {}); // Error: "unknown:event" not in AppEvents
+
+// Once listener - executes only on first occurrence
+emitter.once('error', (error) => {
+  console.error(`Error occurred: ${error.message}`);
+});
+
+// Cleanup
+unsubscribe(); // Removes specific listener
+emitter.removeAllListeners('user:login'); // Removes all listeners for event
+emitter.removeAllListeners(); // Removes all listeners for all events
+
+// Real-world example: WebSocket wrapper
+interface WebSocketEvents {
+  'open': { timestamp: Date };
+  'message': { data: unknown };
+  'close': { code: number; reason: string };
+  'error': { error: Error };
+}
+
+class TypedWebSocket extends TypedEventEmitter<WebSocketEvents> {
+  private ws: WebSocket;
+
+  constructor(url: string) {
+    super();
+    this.ws = new WebSocket(url);
+
+    this.ws.onopen = () => {
+      this.emit('open', { timestamp: new Date() });
+    };
+
+    this.ws.onmessage = (event) => {
+      this.emit('message', { data: JSON.parse(event.data) });
+    };
+
+    this.ws.onclose = (event) => {
+      this.emit('close', { code: event.code, reason: event.reason });
+    };
+
+    this.ws.onerror = () => {
+      this.emit('error', { error: new Error('WebSocket error') });
+    };
+  }
+
+  send(data: unknown): void {
+    this.ws.send(JSON.stringify(data));
+  }
+
+  close(): void {
+    this.ws.close();
+  }
+}
+
+// Usage
+const socket = new TypedWebSocket('wss://example.com');
+
+socket.on('message', ({ data }) => {
+  // Fully typed data handling
+  console.log('Received:', data);
+});
+
+socket.on('error', ({ error }) => {
+  console.error('Socket error:', error);
+});
+```
+
+## Benefits
+
+- **Autocomplete**: IDEs suggest available event names
+- **Type Safety**: Payloads are validated at compile time
+- **Refactoring**: Renaming events updates all usages
+- **Documentation**: Event types serve as inline documentation
+- **Error Prevention**: Typos in event names are caught immediately

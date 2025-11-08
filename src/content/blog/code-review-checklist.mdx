@@ -1,0 +1,70 @@
+---
+title: "A Practical Code Review Checklist"
+description: "What to look for when reviewing code, from syntax to system design."
+publishedAt: 2024-09-10
+tags:
+  - code-review
+  - team
+  - best-practices
+readingTimeMinutes: 5.5
+---
+
+Code reviews are one of the highest-leverage activities in software development. Done well, they catch bugs, share knowledge, and improve code quality. Done poorly, they're a bottleneck that breeds resentment.
+
+Here's the checklist I use to keep reviews focused and effective.
+
+## Before You Start
+
+**Understand the context.** Read the PR description and linked issues. If the goal isn't clear, ask the author to clarify before diving into the code.
+
+**Check the scope.** Large PRs are hard to review thoroughly. If it's over 400 lines, suggest breaking it up. Smaller PRs get faster, better feedback.
+
+## Correctness
+
+**Does the code do what it claims?** Trace the logic. Look for edge cases: null values, empty arrays, off-by-one errors.
+
+**Are error paths handled?** Check that errors propagate correctly and that resources (files, connections, locks) are cleaned up.
+
+**Do the tests cover the changes?** New code should have new tests. Don't just check if tests exist—check if they actually validate the behavior.
+
+## Readability and Maintainability
+
+**Can you understand it without asking?** Variable names, function names, and comments should make intent obvious. If you have to guess, it needs improvement.
+
+**Is it DRY?** Repeated logic is a maintenance burden. Extract common patterns into reusable functions.
+
+**Are side effects obvious?** Functions that mutate state or make network calls should be named accordingly. `getUserData()` shouldn't modify global state.
+
+## Design and Architecture
+
+**Does it fit the existing patterns?** Consistency matters. If the codebase uses a certain structure for API calls, the new code should too—unless there's a good reason to diverge.
+
+**Is it over-engineered?** Abstractions are great until they're not. Three layers of indirection for a five-line function is a red flag.
+
+**Are dependencies reasonable?** Adding a 50MB library to format a date is overkill. Evaluate trade-offs.
+
+## Performance and Security
+
+**Are there obvious performance issues?** N+1 queries, unnecessary re-renders, blocking I/O in hot paths—these should be flagged.
+
+**Is user input validated?** Anything from users, APIs, or configuration files should be sanitized. SQL injection, XSS, and command injection are still real threats.
+
+**Are secrets managed properly?** No hardcoded keys. Check environment variables and secret management practices.
+
+## Nitpicks and Style
+
+Keep style feedback separate from functional concerns. Use automated linters for formatting. Reserve human attention for logic and design.
+
+## Giving Feedback
+
+**Be specific.** "This is confusing" isn't helpful. "The variable name `data` doesn't indicate that it's a list of user IDs" is.
+
+**Explain why.** Don't just say "change this." Say "Using a Set here would improve lookup performance from O(n) to O(1)."
+
+**Approve with comments.** If the PR is good but has minor suggestions, approve it and mark suggestions as non-blocking. Don't gate shipping on formatting tweaks.
+
+**Be kind.** Code reviews are public. Assume good intent. Phrase feedback as questions when appropriate: "Could we extract this into a helper function?"
+
+## Wrapping Up
+
+Code review is a skill. The goal isn't to find every flaw—it's to make the codebase better while respecting everyone's time. Focus on correctness, clarity, and kindness. The rest is details.

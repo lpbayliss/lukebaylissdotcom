@@ -1,0 +1,56 @@
+---
+title: "Distributed API Gateway"
+summary: "High-performance API gateway built with Node.js, handling rate limiting, auth, and request routing across microservices."
+publishedAt: 2023-06-01
+updatedAt: 2024-11-01
+role: "Lead Engineer"
+tech:
+  - Node.js
+  - Redis
+  - Docker
+  - Kubernetes
+  - PostgreSQL
+status: maintenance
+order: 2
+---
+
+An API gateway serving as the single entry point for a microservices architecture, handling approximately 50,000 requests per minute at peak load.
+
+## Key Features
+
+**Rate Limiting and Throttling**
+- Distributed rate limiting using Redis with sliding window counters
+- Per-client quotas based on subscription tier
+- Automatic backoff and retry logic with exponential delays
+
+**Authentication and Authorization**
+- JWT-based authentication with RSA-256 signing
+- Role-based access control (RBAC) with fine-grained permissions
+- API key management for third-party integrations
+
+**Request Routing**
+- Dynamic service discovery via Kubernetes DNS
+- Circuit breaker pattern to prevent cascade failures
+- Health checking and automatic failover
+
+## Architecture Decisions
+
+The gateway is stateless, allowing horizontal scaling based on CPU metrics. All rate limit counters and session data live in Redis clusters for sub-millisecond lookup times.
+
+Circuit breakers prevent downstream service failures from cascading. If a service returns 50% error rates over 10 seconds, the circuit opens and requests fail fast rather than timing out.
+
+Request logging happens asynchronously to avoid blocking the main path. Logs are buffered and flushed to Elasticsearch in batches.
+
+## Operational Highlights
+
+Deployed on Kubernetes with auto-scaling policies. During traffic spikes, the gateway scales from 3 to 15 pods within 60 seconds.
+
+Monitoring includes Prometheus metrics for request rates, latency percentiles, and error rates. Grafana dashboards provide real-time visibility into system health.
+
+The gateway reduced average response time by 40% compared to direct microservice calls by implementing connection pooling and keep-alive.
+
+## Lessons Learned
+
+- Circuit breakers are essential. Without them, one slow service can bring down the entire stack.
+- Rate limiting must account for clock skew in distributed systems. We learned this the hard way when clients could bypass limits by hitting different gateway instances.
+- Observability is not optional. Without detailed metrics and tracing, debugging production issues is nearly impossible.

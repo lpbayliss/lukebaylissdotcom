@@ -35,7 +35,7 @@ export default function BackToTop() {
     <button
       type="button"
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-40 flex h-12 w-12 items-center justify-center rounded border border-border bg-background-subtle text-foreground-accent shadow-terminal transition-all hover:border-border-accent hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-border-accent focus:ring-offset-2 focus:ring-offset-background"
+      className="fixed bottom-8 right-8 z-40 flex h-12 w-12 items-center justify-center rounded border border-border bg-background text-foreground-accent shadow-terminal transition-all hover:border-border-accent hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-border-accent focus:ring-offset-2 focus:ring-offset-background"
       aria-label="Back to top"
       title="Back to top"
     >

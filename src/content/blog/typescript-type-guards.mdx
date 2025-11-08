@@ -1,0 +1,127 @@
+---
+title: "TypeScript Type Guards and Narrowing"
+description: "Practical techniques for writing safer TypeScript with user-defined type guards and type narrowing."
+publishedAt: 2024-10-20
+tags:
+  - typescript
+  - code-quality
+  - patterns
+readingTimeMinutes: 5
+---
+
+TypeScript's type system is powerful, but it can't always infer the exact type you're working with. Type guards bridge that gap, letting you narrow types at runtime while maintaining compile-time safety.
+
+## What is Type Narrowing?
+
+Type narrowing is when TypeScript refines a broader type into a more specific one based on runtime checks.
+
+```typescript
+function process(value: string | number) {
+  if (typeof value === "string") {
+    // TypeScript knows value is a string here
+    console.log(value.toUpperCase());
+  } else {
+    // TypeScript knows value is a number here
+    console.log(value.toFixed(2));
+  }
+}
+```
+
+The `typeof` check is a built-in type guard. TypeScript understands common guards like `typeof`, `instanceof`, and truthiness checks.
+
+## User-Defined Type Guards
+
+Sometimes built-in guards aren't enough. User-defined type guards use predicates to teach TypeScript about your custom types.
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+}
+
+interface Admin extends User {
+  permissions: string[];
+}
+
+function isAdmin(user: User): user is Admin {
+  return "permissions" in user;
+}
+
+function greet(user: User) {
+  if (isAdmin(user)) {
+    // TypeScript knows user is Admin here
+    console.log(`Admin ${user.name} with ${user.permissions.length} permissions`);
+  } else {
+    console.log(`User ${user.name}`);
+  }
+}
+```
+
+The `user is Admin` return type is a type predicate. It tells TypeScript that if the function returns `true`, the parameter is of type `Admin`.
+
+## Discriminated Unions
+
+For complex types, discriminated unions with literal type properties make narrowing elegant.
+
+```typescript
+interface LoadingState {
+  status: "loading";
+}
+
+interface SuccessState {
+  status: "success";
+  data: string[];
+}
+
+interface ErrorState {
+  status: "error";
+  error: Error;
+}
+
+type State = LoadingState | SuccessState | ErrorState;
+
+function render(state: State) {
+  switch (state.status) {
+    case "loading":
+      return "Loading...";
+    case "success":
+      return state.data.join(", ");
+    case "error":
+      return state.error.message;
+  }
+}
+```
+
+The `status` field acts as a discriminant. TypeScript uses it to narrow the union type in each case branch.
+
+## Assertion Functions
+
+Assertion functions let you throw errors while narrowing types—useful for validation.
+
+```typescript
+function assertIsString(value: unknown): asserts value is string {
+  if (typeof value !== "string") {
+    throw new Error("Value must be a string");
+  }
+}
+
+function processInput(input: unknown) {
+  assertIsString(input);
+  // TypeScript knows input is a string after this point
+  console.log(input.toUpperCase());
+}
+```
+
+## When to Use Type Guards
+
+Type guards shine when:
+- Working with union types
+- Handling API responses with unknown shapes
+- Migrating JavaScript to TypeScript incrementally
+- Building type-safe event handlers
+
+Don't overuse them. If you're constantly narrowing the same types, your data model might need refactoring.
+
+## Wrapping Up
+
+Type guards are essential for type-safe TypeScript. They let you work confidently with dynamic data while keeping the compiler happy. Master `typeof`, `instanceof`, type predicates, and discriminated unions, and you'll write clearer, safer code.

@@ -1,0 +1,76 @@
+---
+title: "Event Sourcing System"
+summary: "Event-driven architecture for financial transactions with full audit trails and point-in-time state reconstruction."
+publishedAt: 2022-08-01
+updatedAt: 2023-12-15
+role: "Backend Architect"
+tech:
+  - Kotlin
+  - Kafka
+  - PostgreSQL
+  - Redis
+  - Docker
+status: archived
+order: 5
+---
+
+A transaction processing system where every state change is stored as an immutable event. Built for financial compliance requirements that demand complete audit trails.
+
+## Event Sourcing Basics
+
+Traditional CRUD systems store current state. Event sourcing stores the sequence of events that led to that state.
+
+Instead of:
+```sql
+UPDATE accounts SET balance = 1000 WHERE id = 123
+```
+
+We store:
+```json
+{
+  "eventType": "MoneyDeposited",
+  "accountId": 123,
+  "amount": 500,
+  "timestamp": "2024-11-08T10:00:00Z"
+}
+```
+
+To get the current balance, replay all events for that account.
+
+## Why Event Sourcing?
+
+**Complete Audit Trail**: Every change is recorded. Regulators can see exactly how an account reached its current state.
+
+**Time Travel**: Reconstruct state at any point in history. "What was this account's balance at 3pm yesterday?" is a simple query.
+
+**Event Replay**: Bugs in business logic? Fix the code and replay events to correct state.
+
+**Event-Driven Integration**: Other services subscribe to events and react. No tight coupling.
+
+## Architecture
+
+**Event Store**: PostgreSQL stores events in append-only tables. Each event has a sequence number for ordering.
+
+**Event Bus**: Kafka distributes events to consumers. Partitioned by account ID for ordered processing.
+
+**Projections**: Materialized views (current account balances, transaction summaries) are built from events. Stored in Redis for fast reads.
+
+**Command Handlers**: Validate commands (deposit, withdraw, transfer) and emit events if valid.
+
+## Challenges
+
+**Performance**: Replaying thousands of events per account is slow. We use snapshots—periodic full state dumps—so replays start from the last snapshot instead of the beginning.
+
+**Schema Evolution**: Event schemas change over time. We version events and use upcasters to convert old events to new schemas during replay.
+
+**Eventual Consistency**: Projections lag behind events by milliseconds. The UI shows "processing" states until projections catch up.
+
+## Outcomes
+
+The system processed over 10 million transactions per day with zero data loss. Audit trails satisfied regulatory requirements in three jurisdictions.
+
+The most valuable feature? Time travel. When users reported incorrect balances, we could replay events to pinpoint exactly when and why the error occurred.
+
+## Why Archived?
+
+The company migrated to a vendor solution that better fit their long-term strategy. The architecture principles live on in other systems.

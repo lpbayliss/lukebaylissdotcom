@@ -1,0 +1,130 @@
+---
+title: "Debounce and Throttle Utilities"
+description: "Type-safe debounce and throttle functions for controlling the rate of function execution in TypeScript."
+publishedAt: 2024-09-15
+tags:
+  - performance
+  - utilities
+  - react
+---
+
+Essential utilities for rate-limiting function calls in event handlers, search inputs, and resize/scroll listeners.
+
+```typescript
+/**
+ * Debounce delays execution until after a pause in calls.
+ * Useful for search inputs, form validation, window resize.
+ */
+function debounce<T extends (...args: any[]) => any>(
+  func: T,
+  waitMs: number
+): (...args: Parameters<T>) => void {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  return function(this: any, ...args: Parameters<T>) {
+    const context = this;
+
+    clearTimeout(timeoutId);
+
+    timeoutId = setTimeout(() => {
+      func.apply(context, args);
+    }, waitMs);
+  };
+}
+
+/**
+ * Throttle limits execution to once per time period.
+ * Useful for scroll handlers, mouse move, API rate limiting.
+ */
+function throttle<T extends (...args: any[]) => any>(
+  func: T,
+  limitMs: number
+): (...args: Parameters<T>) => void {
+  let lastRan: number | undefined;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  return function(this: any, ...args: Parameters<T>) {
+    const context = this;
+
+    if (!lastRan) {
+      // First call - execute immediately
+      func.apply(context, args);
+      lastRan = Date.now();
+    } else {
+      // Clear pending timeout
+      clearTimeout(timeoutId);
+
+      // Schedule execution
+      timeoutId = setTimeout(() => {
+        if (Date.now() - (lastRan || 0) >= limitMs) {
+          func.apply(context, args);
+          lastRan = Date.now();
+        }
+      }, limitMs - (Date.now() - lastRan));
+    }
+  };
+}
+
+// Usage Examples:
+
+// Debounce search input
+const handleSearch = debounce((query: string) => {
+  console.log('Searching for:', query);
+  // API call happens only after user stops typing for 300ms
+}, 300);
+
+// In React:
+const SearchInput = () => {
+  const debouncedSearch = useMemo(
+    () => debounce((value: string) => {
+      // Perform search
+      fetchResults(value);
+    }, 300),
+    []
+  );
+
+  return (
+    <input
+      type="text"
+      onChange={(e) => debouncedSearch(e.target.value)}
+      placeholder="Search..."
+    />
+  );
+};
+
+// Throttle scroll handler
+const handleScroll = throttle(() => {
+  console.log('Scroll position:', window.scrollY);
+  // Executes at most once every 100ms
+}, 100);
+
+window.addEventListener('scroll', handleScroll);
+
+// Throttle API calls
+const trackAnalytics = throttle((event: string, data: object) => {
+  // Send analytics event at most once per second
+  fetch('/api/analytics', {
+    method: 'POST',
+    body: JSON.stringify({ event, data })
+  });
+}, 1000);
+
+// Button click tracking
+button.addEventListener('click', () => {
+  trackAnalytics('button_click', { buttonId: 'submit' });
+});
+```
+
+## When to Use Each
+
+**Debounce**: Use when you want to wait for a pause in activity.
+- Search inputs (wait for user to stop typing)
+- Form validation (validate after user stops editing)
+- Window resize (recalculate layout after resize ends)
+
+**Throttle**: Use when you want to sample activity at regular intervals.
+- Scroll handlers (update parallax effects periodically)
+- Mouse move tracking (update cursor position display)
+- Rate-limited API calls (analytics, telemetry)
+
+Both prevent performance issues from too-frequent function calls, but they handle timing differently. Debounce resets the timer on each call; throttle guarantees execution at fixed intervals.

@@ -1,0 +1,65 @@
+---
+title: "API Design Principles"
+description: "Essential guidelines for building clean, maintainable, and user-friendly APIs."
+publishedAt: 2024-11-15
+tags:
+  - api
+  - architecture
+  - best-practices
+featured: true
+readingTimeMinutes: 6
+---
+
+Good API design is one of those things that seems simple until you're knee-deep in versioning conflicts and breaking changes. Here are the principles I keep coming back to.
+
+## Consistency is King
+
+The fastest way to frustrate API consumers is inconsistency. If one endpoint returns errors as `{ error: "message" }` and another uses `{ message: "error" }`, you've just created cognitive overhead.
+
+Pick conventions and stick to them:
+- Error response structure
+- Date formatting (ISO 8601, always)
+- Pagination patterns
+- Naming schemes for endpoints
+
+## Design for the Consumer
+
+Your API isn't for you—it's for the developers who will integrate with it. This means:
+
+**Use intuitive resource names.** `/users` not `/get-all-users-from-database`. REST endpoints should represent resources, not actions.
+
+**Return what they need.** If most consumers only need a subset of fields, consider partial responses via field selection (`?fields=id,name,email`).
+
+**Think about the happy path and the error path.** A 500 error with no context is a dead end. Return actionable error messages with enough detail to debug but not so much that you leak internals.
+
+## Versioning from Day One
+
+You will make breaking changes. Accept it and plan for it.
+
+The common approaches:
+- **URL versioning**: `/v1/users`, `/v2/users`
+- **Header versioning**: `Accept: application/vnd.api+json;version=1`
+- **Query parameter**: `/users?version=1`
+
+I prefer URL versioning because it's explicit and easy to cache. Whatever you choose, document your deprecation policy upfront.
+
+## Pagination and Rate Limiting
+
+If your endpoint can return more than 100 items, it needs pagination. Cursor-based pagination is generally better than offset-based for large datasets, but offset is simpler for smaller ones.
+
+Rate limiting protects your infrastructure and sets expectations. Return rate limit info in headers:
+```
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1640995200
+```
+
+## Document with Examples
+
+Nobody reads reference docs cover-to-cover. They scan for examples.
+
+Show request bodies, response bodies, and common error scenarios. Tools like OpenAPI/Swagger help, but don't let generated docs replace human-written guides.
+
+## Final Thoughts
+
+APIs are contracts. Breaking them destroys trust. Design with empathy, version ruthlessly, and document relentlessly. Your future self (and your users) will thank you.

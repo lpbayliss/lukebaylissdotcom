@@ -1,0 +1,61 @@
+---
+title: "Real-time Analytics Dashboard"
+summary: "WebSocket-powered dashboard for live data visualization, built with React and D3.js for financial trading metrics."
+publishedAt: 2024-03-15
+updatedAt: 2024-10-20
+role: "Frontend Lead"
+tech:
+  - React
+  - TypeScript
+  - D3.js
+  - WebSocket
+  - Tailwind CSS
+status: active
+order: 3
+externalUrl: "https://example.com/dashboard"
+---
+
+A real-time analytics dashboard that visualizes trading data with sub-second latency. Built for traders who need instant insight into market movements.
+
+## Technical Overview
+
+**Real-time Data Streaming**
+- WebSocket connection with automatic reconnection and backoff
+- Message queuing to handle bursts without overwhelming the UI
+- Binary protocol (MessagePack) for efficient data transfer
+
+**Visualization**
+- Custom D3.js charts optimized for frequent updates
+- Canvas rendering for high-frequency data (10+ updates/second)
+- SVG for interactive elements and annotations
+
+**State Management**
+- Zustand for lightweight global state
+- Immer for immutable updates without boilerplate
+- React Query for server state caching
+
+## Performance Optimizations
+
+The dashboard needed to handle thousands of data points updating multiple times per second without freezing the UI.
+
+**Virtual Scrolling**: Only render visible rows in tables. For a 10,000-row dataset, render ~50 rows at a time based on scroll position.
+
+**Canvas over SVG**: D3 typically uses SVG, but for rapidly updating charts, canvas is 10x faster. We use canvas for the core visualization and SVG for legends and axes.
+
+**Web Workers**: Heavy calculations (moving averages, standard deviations) run in background threads to keep the main thread responsive.
+
+**Memoization**: React.memo and useMemo prevent unnecessary re-renders. Critical when components receive new props on every data tick.
+
+## Challenges
+
+**Time Synchronization**: Client clocks drift. We sync with server time on connect and adjust all timestamps accordingly.
+
+**Memory Leaks**: Real-time apps accumulate data fast. We cap history at 5 minutes of data and prune old entries aggressively.
+
+**Connection Drops**: Networks fail. The dashboard detects disconnections, shows a warning banner, and replays missed data after reconnection.
+
+## Results
+
+The dashboard cut decision-making time for traders by 60%. Previously, they refreshed pages manually every few seconds. Now, data updates live, and they react instantly to market changes.
+
+Chart rendering performance improved from ~200ms per update to ~16ms (60 FPS) after switching to canvas and optimizing re-renders.

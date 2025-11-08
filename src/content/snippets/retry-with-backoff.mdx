@@ -1,0 +1,101 @@
+---
+title: "Retry with Exponential Backoff"
+description: "A generic retry utility with exponential backoff for handling transient failures in API calls and async operations."
+publishedAt: 2024-10-01
+tags:
+  - async
+  - error-handling
+  - utilities
+---
+
+This snippet provides a robust retry mechanism with exponential backoff, useful for handling transient failures in network requests, database operations, or any async function.
+
+```typescript
+interface RetryOptions {
+  maxRetries?: number;
+  initialDelayMs?: number;
+  maxDelayMs?: number;
+  backoffMultiplier?: number;
+  shouldRetry?: (error: unknown) => boolean;
+}
+
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  options: RetryOptions = {}
+): Promise<T> {
+  const {
+    maxRetries = 3,
+    initialDelayMs = 1000,
+    maxDelayMs = 30000,
+    backoffMultiplier = 2,
+    shouldRetry = () => true,
+  } = options;
+
+  let lastError: unknown;
+
+  for (let attempt = 0; attempt <= maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+
+      // Don't retry if we've exhausted attempts or if error shouldn't trigger retry
+      if (attempt === maxRetries || !shouldRetry(error)) {
+        throw error;
+      }
+
+      // Calculate delay with exponential backoff
+      const delay = Math.min(
+        initialDelayMs * Math.pow(backoffMultiplier, attempt),
+        maxDelayMs
+      );
+
+      console.log(`Attempt ${attempt + 1} failed, retrying in ${delay}ms...`);
+      await new Promise(resolve => setTimeout(resolve, delay));
+    }
+  }
+
+  throw lastError;
+}
+
+// Usage examples:
+
+// Basic retry
+const data = await retryWithBackoff(() => fetchUserData(userId));
+
+// Custom retry logic for specific HTTP errors
+const response = await retryWithBackoff(
+  () => fetch('/api/data'),
+  {
+    maxRetries: 5,
+    shouldRetry: (error) => {
+      // Only retry on 5xx server errors or network failures
+      if (error instanceof Response) {
+        return error.status >= 500;
+      }
+      return true;
+    }
+  }
+);
+
+// With all options
+const result = await retryWithBackoff(
+  () => database.query('SELECT * FROM users'),
+  {
+    maxRetries: 3,
+    initialDelayMs: 500,
+    maxDelayMs: 10000,
+    backoffMultiplier: 2,
+    shouldRetry: (error) => {
+      // Retry on connection errors, but not on validation errors
+      return error instanceof ConnectionError;
+    }
+  }
+);
+```
+
+## Why This Pattern?
+
+Exponential backoff prevents overwhelming a failing service with retry attempts. The delay doubles with each retry, giving the service time to recover.
+
+The `shouldRetry` callback lets you customize retry logic based on error type—essential for avoiding retries on permanent failures like 404s or validation errors.

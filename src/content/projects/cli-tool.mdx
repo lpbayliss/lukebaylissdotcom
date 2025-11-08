@@ -1,0 +1,74 @@
+---
+title: "DevOps CLI Tool"
+summary: "Command-line tool for managing cloud infrastructure, deployments, and environment configuration across AWS and GCP."
+publishedAt: 2024-01-10
+updatedAt: 2024-11-05
+role: "Solo Developer"
+tech:
+  - Go
+  - Cobra
+  - AWS SDK
+  - GCP SDK
+status: active
+order: 4
+sourceUrl: "https://github.com/example/devops-cli"
+---
+
+A unified CLI for managing multi-cloud infrastructure, replacing a patchwork of bash scripts and manual processes.
+
+## Why Go?
+
+The previous tooling was a mess of bash scripts, Python utilities, and manual AWS console clicking. We needed something:
+- **Fast**: Developers wait for nothing. Sub-second startup time was non-negotiable.
+- **Portable**: A single binary that works on Linux, macOS, and Windows without dependencies.
+- **Maintainable**: Bash is great until it's not. Go's type system prevents entire classes of bugs.
+
+## Core Features
+
+**Infrastructure Provisioning**
+```bash
+devops infra create --env staging --region us-west-2
+```
+Spins up VPC, subnets, load balancers, and ECS clusters using Terraform modules under the hood.
+
+**Deployment Management**
+```bash
+devops deploy --service api --env production --version v2.3.1
+```
+Blue-green deployments with automatic rollback on health check failures.
+
+**Environment Configuration**
+```bash
+devops config set DATABASE_URL postgres://... --env staging
+```
+Encrypted secret storage in AWS Secrets Manager with local caching for faster access.
+
+**Logs and Debugging**
+```bash
+devops logs --service api --env production --tail
+```
+Streams CloudWatch logs with filtering and colorized output.
+
+## Design Principles
+
+**Idempotent Commands**: Running the same command twice produces the same result. No "already exists" errors.
+
+**Fail Fast with Clear Errors**: If AWS credentials are missing, say so immediately. No cryptic stack traces.
+
+**Progress Feedback**: Long-running operations show progress bars and estimated time remaining.
+
+**Offline Mode**: Common commands (listing resources, viewing configs) use cached data when the network is unavailable.
+
+## Adoption
+
+Within three months of release:
+- 40+ developers use it daily
+- Deployment time reduced from 15 minutes to 3 minutes
+- Configuration drift eliminated (everything is version-controlled and applied via CLI)
+- Onboarding time for new engineers cut in half (clear commands vs. tribal knowledge)
+
+## Future Plans
+
+- Add drift detection to alert when manual AWS console changes bypass the CLI
+- Integrate with CI/CD pipelines for automated deployments
+- Add a TUI (text-based UI) for interactive workflows
