@@ -27,17 +27,16 @@ export default function BackToTop() {
     });
   };
 
-  if (!isVisible) {
-    return null;
-  }
-
   return (
     <button
       type="button"
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-40 flex h-12 w-12 items-center justify-center rounded border border-border bg-background text-foreground-accent shadow-terminal transition-all hover:border-border-accent hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-border-accent focus:ring-offset-2 focus:ring-offset-background"
+      className={`fixed bottom-8 right-8 z-40 flex h-12 w-12 items-center justify-center rounded border border-border bg-background text-foreground-accent shadow-terminal transition-all duration-300 hover:border-border-accent hover:bg-background-muted focus:outline-none focus:ring-2 focus:ring-border-accent focus:ring-offset-2 focus:ring-offset-background ${
+        isVisible ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+      }`}
       aria-label="Back to top"
       title="Back to top"
+      aria-hidden={!isVisible}
     >
       <svg
         className="h-6 w-6"

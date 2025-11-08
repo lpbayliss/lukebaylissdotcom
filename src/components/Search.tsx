@@ -11,6 +11,13 @@ export default function Search({ searchIndex }: SearchProps) {
 
   useEffect(() => {
     setMounted(true);
+
+    // Read query parameter from URL
+    const params = new URLSearchParams(window.location.search);
+    const urlQuery = params.get('q');
+    if (urlQuery) {
+      setQuery(urlQuery);
+    }
   }, []);
 
   // Simple client-side search implementation

@@ -66,9 +66,16 @@ const ogImageUrl =
         <span>{formatReadingTime(readingTime)}</span>
       </div>
       {data.tags.length > 0 && (
-        <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em] text-foreground-muted">
+        <ul class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.25em]">
           {data.tags.map((tag) => (
-            <li class="rounded border border-border px-2 py-1">{tag}</li>
+            <li>
+              <a
+                href={`/blog/?q=${encodeURIComponent(tag)}`}
+                class="inline-block rounded border border-border px-2 py-1 text-foreground-muted hover:border-border-accent hover:text-foreground-accent transition-colors"
+              >
+                {tag}
+              </a>
+            </li>
           ))}
         </ul>
       )}
