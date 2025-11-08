@@ -11,6 +11,13 @@ export default function Search({ searchIndex }: SearchProps) {
 
   useEffect(() => {
     setMounted(true);
+
+    // Read query parameter from URL
+    const params = new URLSearchParams(window.location.search);
+    const urlQuery = params.get("q");
+    if (urlQuery) {
+      setQuery(urlQuery);
+    }
   }, []);
 
   // Simple client-side search implementation
@@ -81,7 +88,6 @@ export default function Search({ searchIndex }: SearchProps) {
           onChange={(e) => setQuery(e.target.value)}
           className="w-full bg-background-subtle border border-border px-3 py-2 rounded text-foreground font-mono focus:outline-none focus:border-border-accent transition-colors"
           placeholder="Type to search posts, projects, and snippets..."
-          autoFocus
         />
       </div>
 

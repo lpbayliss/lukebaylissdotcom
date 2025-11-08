@@ -42,7 +42,13 @@ const searchIndex = await generateSearchIndex();
                     })}
                   </time>
                   {post.data.tags.map((tag) => (
-                    <span class="rounded border border-border px-2 py-1" data-tag={tag}>{tag}</span>
+                    <a
+                      href={`/blog/?q=${encodeURIComponent(tag)}`}
+                      class="inline-block rounded border border-border px-2 py-1 hover:border-border-accent hover:text-foreground-accent transition-colors"
+                      data-tag={tag}
+                    >
+                      {tag}
+                    </a>
                   ))}
                 </div>
               </li>
