@@ -6,7 +6,8 @@
     "defaultBranch": "main"
   },
   "files": {
-    "ignoreUnknown": true
+    "ignoreUnknown": true,
+    "includes": ["src/**"]
   },
   "formatter": {
     "enabled": true,
