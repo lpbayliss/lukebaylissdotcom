@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { SearchItem } from "../lib/search-index";
 
 interface HistoryEntry {
+  id: number;
   command: string;
   output: string[];
 }
@@ -25,6 +26,7 @@ export default function Terminal() {
   const [fileSystem, setFileSystem] = useState<FileSystem>({});
   const inputRef = useRef<HTMLInputElement>(null);
   const terminalRef = useRef<HTMLDivElement>(null);
+  const historyIdRef = useRef(0);
 
   // Initialize file system from content
   useEffect(() => {
@@ -38,8 +40,18 @@ export default function Terminal() {
             { type: "dir", name: "blog" },
             { type: "dir", name: "projects" },
             { type: "dir", name: "snippets" },
-            { type: "file", name: "about", content: "About Luke Bayliss\n\nSoftware engineer and builder.\n\nUse 'cat about' to read more, or visit /about in your browser." },
-            { type: "file", name: "contact", content: "Contact Information\n\nGitHub: github.com/lpbayliss\nLinkedIn: linkedin.com/in/lukebayliss\nEmail: Use the contact form at /contact" },
+            {
+              type: "file",
+              name: "about",
+              content:
+                "About Luke Bayliss\n\nSoftware engineer and builder.\n\nUse 'cat about' to read more, or visit /about in your browser.",
+            },
+            {
+              type: "file",
+              name: "contact",
+              content:
+                "Contact Information\n\nGitHub: github.com/lpbayliss\nLinkedIn: linkedin.com/in/lukebayliss\nEmail: Use the contact form at /contact",
+            },
           ],
           "/blog": [],
           "/projects": [],
@@ -69,6 +81,7 @@ export default function Terminal() {
         // Show welcome message
         setHistory([
           {
+            id: historyIdRef.current++,
             command: "",
             output: [
               "╔═══════════════════════════════════════════════════════════════╗",
@@ -86,10 +99,9 @@ export default function Terminal() {
         console.error("Failed to load content:", error);
         setHistory([
           {
+            id: historyIdRef.current++,
             command: "",
-            output: [
-              "Error: Failed to load content. Please refresh the page.",
-            ],
+            output: ["Error: Failed to load content. Please refresh the page."],
           },
         ]);
       }
@@ -117,7 +129,7 @@ export default function Terminal() {
     if (terminalRef.current) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
-  }, [history]);
+  });
 
   const executeCommand = (cmd: string) => {
     const trimmedCmd = cmd.trim();
@@ -168,7 +180,7 @@ export default function Terminal() {
 
             if (dirs.length > 0) {
               for (const dir of dirs) {
-                output.push(`  \x1b[34m${dir.name}/\x1b[0m`);
+                output.push(`  [DIR]${dir.name}/[/DIR]`);
               }
             }
             if (files.length > 0) {
@@ -208,7 +220,7 @@ export default function Terminal() {
             const fileName = args.join(" ");
             const items = fileSystem[currentPath];
             const file = items?.find(
-              (i) => i.type === "file" && i.name.toLowerCase() === fileName.toLowerCase()
+              (i) => i.type === "file" && i.name.toLowerCase() === fileName.toLowerCase(),
             );
 
             if (!file) {
@@ -235,7 +247,12 @@ export default function Terminal() {
               }
 
               if (file.url) {
-                output.push("", `→ Full content: ${file.url}`, "  Use 'open ${fileName}' to view in browser", "");
+                output.push(
+                  "",
+                  `→ Full content: ${file.url}`,
+                  `  Use 'open ${fileName}' to view in browser`,
+                  "",
+                );
               }
 
               output.push(`╚${"═".repeat(63)}`, "");
@@ -249,11 +266,7 @@ export default function Terminal() {
         return;
 
       case "tree":
-        output = [
-          "",
-          "lukebayliss.com/",
-          "├── blog/",
-        ];
+        output = ["", "lukebayliss.com/", "├── blog/"];
 
         if (fileSystem["/blog"]) {
           fileSystem["/blog"].forEach((item, idx, arr) => {
@@ -310,7 +323,7 @@ export default function Terminal() {
             const fileName = args.join(" ");
             const items = fileSystem[currentPath];
             const file = items?.find(
-              (i) => i.type === "file" && i.name.toLowerCase() === fileName.toLowerCase()
+              (i) => i.type === "file" && i.name.toLowerCase() === fileName.toLowerCase(),
             );
 
             if (!file) {
@@ -326,14 +339,11 @@ export default function Terminal() {
         break;
 
       default:
-        output = [
-          `${command}: command not found`,
-          "Type 'help' for available commands.",
-        ];
+        output = [`${command}: command not found`, "Type 'help' for available commands."];
         break;
     }
 
-    setHistory((prev) => [...prev, { command: trimmedCmd, output }]);
+    setHistory((prev) => [...prev, { id: historyIdRef.current++, command: trimmedCmd, output }]);
     setCurrentCommand("");
   };
 
@@ -369,6 +379,24 @@ export default function Terminal() {
     return `visitor@lukebayliss.com:${path}$ `;
   };
 
+  const renderLine = (line: string) => {
+    // Parse custom color markers
+    const parts = line.split(/(\[DIR\].*?\[\/DIR\])/);
+    return parts.map((part, index) => {
+      if (part.startsWith("[DIR]") && part.endsWith("[/DIR]")) {
+        const content = part.slice(5, -6); // Remove [DIR] and [/DIR]
+        return (
+          // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+          <span key={index} className="text-blue-400">
+            {content}
+          </span>
+        );
+      }
+      // biome-ignore lint/suspicious/noArrayIndexKey: Static string parts won't reorder
+      return <span key={index}>{part}</span>;
+    });
+  };
+
   return (
     <div
       ref={terminalRef}
@@ -377,8 +405,8 @@ export default function Terminal() {
     >
       <div className="max-w-6xl mx-auto">
         {/* History */}
-        {history.map((entry, idx) => (
-          <div key={idx} className="mb-2">
+        {history.map((entry) => (
+          <div key={entry.id} className="mb-2">
             {entry.command && (
               <div className="flex gap-2">
                 <span className="text-[#34D399]">{getPrompt()}</span>
@@ -386,15 +414,9 @@ export default function Terminal() {
               </div>
             )}
             {entry.output.map((line, lineIdx) => (
-              <div
-                key={lineIdx}
-                className="whitespace-pre-wrap"
-                dangerouslySetInnerHTML={{
-                  __html: line
-                    .replace(/\x1b\[34m/g, '<span class="text-blue-400">')
-                    .replace(/\x1b\[0m/g, "</span>"),
-                }}
-              />
+              <div key={`${entry.id}-${lineIdx}`} className="whitespace-pre-wrap">
+                {renderLine(line)}
+              </div>
             ))}
           </div>
         ))}
@@ -409,6 +431,7 @@ export default function Terminal() {
             onChange={(e) => setCurrentCommand(e.target.value)}
             onKeyDown={handleKeyDown}
             className="flex-1 bg-transparent outline-none border-none text-[#E5E7EB]"
+            // biome-ignore lint/a11y/noAutofocus: Terminal should auto-focus for better UX
             autoFocus
             spellCheck={false}
           />
