@@ -1,44 +1,156 @@
 ---
+import ThemeToggle from "./ThemeToggle.astro";
+
 interface Props {
   activePath: string;
 }
 
 const links = [
-  { href: "/", label: "home" },
-  { href: "/about", label: "about" },
-  { href: "/blog", label: "blog" },
-  { href: "/snippets", label: "snippets" },
-  { href: "/projects", label: "projects" },
-  { href: "/contact", label: "contact" },
+  { href: "/writing/", label: "Writing" },
+  { href: "/work/", label: "Work" },
+  { href: "/about/", label: "About" },
 ];
 
 const { activePath } = Astro.props as Props;
-const normalizedPath =
-  activePath !== "/" && activePath.endsWith("/") ? activePath.slice(0, -1) : activePath;
+const isActive = (href: string) =>
+  href === "/" ? activePath === "/" : activePath === href || activePath.startsWith(href);
 ---
 
-<nav class="border-b border-border bg-background px-4 py-2 text-sm sm:px-6">
-  <ul class="flex flex-wrap items-center gap-4">
-    {links.map((link) => {
-      const isActive =
-        normalizedPath === link.href ||
-        (link.href !== '/' && normalizedPath.startsWith(link.href));
+<header class="site-header">
+  <div class="site-container site-header__inner">
+    <a class="site-mark" href="/" aria-label="Luke Bayliss, home">
+      <span class="site-mark__name">Luke Bayliss</span>
+      <span class="site-mark__note">Software engineer · Melbourne</span>
+    </a>
 
-      return (
-        <li>
-          <a
-            href={link.href}
-            aria-current={isActive ? 'page' : undefined}
-            class:list={[
-              'inline-flex items-center gap-2 rounded px-2 py-1 transition-colors',
-              isActive ? 'bg-background-muted text-foreground' : 'text-foreground-muted hover:text-foreground'
-            ]}
-          >
-            <span aria-hidden="true">{isActive ? '▶' : '▹'}</span>
-            {link.label}
-          </a>
-        </li>
-      );
-    })}
-  </ul>
-</nav>
+    <div class="site-header__actions">
+      <nav aria-label="Primary navigation">
+        <ul class="site-nav">
+          {links.map((link) => (
+            <li>
+              <a
+                class="site-nav__link"
+                href={link.href}
+                aria-current={isActive(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+          <li class="site-nav__external">
+            <a class="site-nav__link" href="https://github.com/lpbayliss" rel="me noreferrer">
+              GitHub<span class="sr-only"> (external)</span>
+            </a>
+          </li>
+          <li class="site-nav__external">
+            <a class="site-nav__link" href="mailto:hello@lukebayliss.com">Email</a>
+          </li>
+        </ul>
+      </nav>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    border-bottom: 1px solid var(--site-border);
+    background: color-mix(in srgb, var(--site-background) 92%, transparent);
+  }
+
+  .site-header__inner {
+    display: flex;
+    min-height: 5rem;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 0.9rem;
+  }
+
+  .site-mark {
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    color: var(--site-foreground);
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .site-mark__name {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .site-mark__note {
+    margin-top: 0.22rem;
+    color: var(--site-foreground-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    letter-spacing: 0.02em;
+  }
+
+  .site-header__actions,
+  .site-nav {
+    display: flex;
+    align-items: center;
+  }
+
+  .site-header__actions {
+    justify-content: flex-end;
+    gap: 0.85rem;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.25rem;
+    list-style: none;
+  }
+
+  .site-nav__link {
+    display: inline-flex;
+    min-height: 2.5rem;
+    align-items: center;
+    border-radius: 0.35rem;
+    color: var(--site-foreground-muted);
+    font-size: 0.82rem;
+    font-weight: 650;
+    padding: 0.45rem 0.6rem;
+    text-decoration: none;
+    transition: color 140ms ease, background-color 140ms ease;
+  }
+
+  .site-nav__link:hover {
+    color: var(--site-foreground);
+    background: var(--site-surface-muted);
+  }
+
+  .site-nav__link[aria-current="page"] {
+    color: var(--site-accent-strong);
+    background: color-mix(in srgb, var(--site-accent) 10%, transparent);
+  }
+
+  @media (max-width: 48rem) {
+    .site-header__inner {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .site-header__actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .site-nav {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (max-width: 34rem) {
+    .site-nav__external {
+      display: none;
+    }
+  }
+</style>
