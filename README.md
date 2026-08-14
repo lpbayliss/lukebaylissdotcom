@@ -1,41 +1,54 @@
-# lukebaylissdotcom
+# lukebayliss.com
 
-Astro + React + Tailwind v4 implementation of the lukebayliss.com personal site.
+Luke Bayliss' personal technical space: writing, interactive labs, curated work, and contact context.
 
-Refer to `DEVELOPMENT.md` for architectural decisions and future tasks.
+Built with Astro 7, MDX, selectively hydrated React 19 islands, Tailwind CSS 4, and TypeScript.
 
-## Project structure
+## Start
 
-```text
-├── astro.config.mjs        # Astro configuration & integrations
-├── biome.json              # Biome formatter + linter rules
-├── public/                 # Static assets served as-is
-├── src/
-│   ├── components/         # Astro + React components
-│   ├── content/            # MDX collections (blog, projects, snippets)
-│   ├── layouts/            # Page + entry layouts
-│   └── pages/              # Route definitions
-├── tailwind.config.ts      # Tailwind v4 customization
-└── tsconfig.json           # TypeScript configuration
+```bash
+corepack pnpm install --frozen-lockfile
+corepack pnpm dev
 ```
 
-## Commands
+Local site: <http://localhost:4321>
 
-| Command | Description |
-| --- | --- |
-| `pnpm install` | Install dependencies |
-| `pnpm dev` | Start the Astro dev server on http://localhost:4321 |
-| `pnpm build` | Generate a production-ready static build |
-| `pnpm preview` | Preview the production build locally |
-| `pnpm lint` | Run Biome linting |
-| `pnpm format` | Apply Biome formatting in-place |
-| `pnpm check` | Run Biome's combined lint + format diagnostics |
-| `pnpm docker:build` | Build the production Docker image locally |
-| `pnpm docker:run` | Run the Docker image on http://localhost:8080 |
+## Verify
 
-## Notes
+```bash
+corepack pnpm check
+corepack pnpm typecheck
+corepack pnpm build
+corepack pnpm test:links
+corepack pnpm test:e2e
+```
 
-- Tailwind v4 is wired via the official `@tailwindcss/vite` plugin.
-- Content collections (blog, projects, snippets) are typed through `src/content/config.ts`.
-- Update `astro.config.mjs` with the final production domain when ready to deploy.
-- Analytics will be added via an external Umami Fly deployment — see `DEVELOPMENT.md` for the provisioning checklist.
+Run all release checks with `corepack pnpm verify`.
+
+## Structure
+
+```text
+src/content/writing/        Notes, essays, labs, build logs, case studies
+src/content/work/           Curated professional/open-source/independent work
+src/components/             Shared Astro components
+src/components/interactive/ Selectively hydrated React islands
+src/layouts/                Site and entry composition
+src/pages/                  Routes and redirects
+src/styles/                 Semantic tokens and shared styling
+tests/                      Playwright and accessibility checks
+scripts/                    Deterministic build/content checks
+docs/                       Product, architecture, content and testing guidance
+```
+
+## Governing references
+
+- [`AGENTS.md`](./AGENTS.md) — coding-agent contract
+- [`docs/REDESIGN-SPEC.md`](./docs/REDESIGN-SPEC.md) — accepted requirements and done state
+- [`DESIGN.md`](./DESIGN.md) — visual and interaction contract
+- [`docs/ARCHITECTURE.md`](./docs/ARCHITECTURE.md) — system boundaries
+- [`docs/CONTENT-GUIDE.md`](./docs/CONTENT-GUIDE.md) — authoring and authenticity
+- [`docs/TESTING.md`](./docs/TESTING.md) — required release evidence
+
+## Deployment
+
+Pushes to `master` run verification and deploy the standalone Node build to Fly.io. The Docker runtime listens on port 8080.

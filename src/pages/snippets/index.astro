@@ -22,7 +22,7 @@ const snippets = (await getCollection("snippets", ({ data }) => !data.draft)).so
               <div>
                 <a
                   class="text-lg font-semibold text-foreground hover:text-foreground-accent transition-colors"
-                  href={`/snippets/${snippet.slug}/`}
+                  href={`/snippets/${snippet.id}/`}
                 >
                   {snippet.data.title}
                 </a>

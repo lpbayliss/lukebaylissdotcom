@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.astro";
 import "../styles/global.css";
@@ -77,8 +76,6 @@ const finalOgImage = ogImage || defaultOgImage;
     <!-- Sitemap -->
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
-    <!-- View Transitions -->
-    <ViewTransitions />
   </head>
   <body class="flex min-h-screen flex-col bg-background text-foreground antialiased">
     <a

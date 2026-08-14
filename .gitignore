@@ -1,9 +1,12 @@
 # Dependencies
 node_modules/
 
-# Build outputs
+# Build and test outputs
 dist/
 .astro/
+playwright-report/
+test-results/
+.lighthouseci/
 
 # Editor files
 .DS_Store

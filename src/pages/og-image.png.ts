@@ -1,118 +1,65 @@
 import { ImageResponse } from "@vercel/og";
 import type { APIRoute } from "astro";
+import type { ReactNode } from "react";
+import { createElement } from "react";
+
+const element = (type: string, style: Record<string, string | number>, children: unknown) =>
+  createElement(type, { style }, children as ReactNode);
 
 export const GET: APIRoute = async ({ url }) => {
   const title = url.searchParams.get("title") || "Luke Bayliss";
   const description =
-    url.searchParams.get("description") || "Engineer and builder focused on dependable software";
-  const type = url.searchParams.get("type") || "website";
+    url.searchParams.get("description") ||
+    "Software engineering, systems, and things worth exploring.";
+  const type = url.searchParams.get("type") || "Personal technical space";
 
-  // Create the OG image with terminal aesthetic
-  return new ImageResponse(
+  const image = element(
+    "div",
     {
-      type: "div",
-      props: {
-        style: {
-          height: "100%",
-          width: "100%",
+      height: "100%",
+      width: "100%",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      backgroundColor: "#f6f3ec",
+      color: "#1e272e",
+      padding: "72px 80px",
+      fontFamily: "sans-serif",
+    },
+    [
+      element(
+        "div",
+        {
           display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
+          alignItems: "center",
           justifyContent: "space-between",
-          backgroundColor: "#030712",
-          padding: "60px 80px",
-          fontFamily: "monospace",
+          width: "100%",
+          fontSize: 24,
+          color: "#5e6970",
         },
-        children: [
-          // Top border decoration
-          {
-            type: "div",
-            props: {
-              style: {
-                fontSize: 24,
-                color: "#34D399",
-                marginBottom: 40,
-              },
-              children: "┌─< lukebayliss.com >─┐",
-            },
-          },
-          // Content
-          {
-            type: "div",
-            props: {
-              style: {
-                display: "flex",
-                flexDirection: "column",
-                gap: "20px",
-                flex: 1,
-              },
-              children: [
-                // Type badge
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      fontSize: 28,
-                      color: "#9CA3AF",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.1em",
-                    },
-                    children: `[${type}]`,
-                  },
-                },
-                // Title
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      fontSize: 64,
-                      fontWeight: "bold",
-                      color: "#E5E7EB",
-                      lineHeight: 1.2,
-                      maxWidth: "90%",
-                      overflow: "hidden",
-                      textOverflow: "ellipsis",
-                      display: "-webkit-box",
-                      WebkitLineClamp: 2,
-                      WebkitBoxOrient: "vertical",
-                    },
-                    children: title,
-                  },
-                },
-                // Description
-                {
-                  type: "div",
-                  props: {
-                    style: {
-                      fontSize: 32,
-                      color: "#9CA3AF",
-                      lineHeight: 1.4,
-                      maxWidth: "90%",
-                    },
-                    children: description,
-                  },
-                },
-              ],
-            },
-          },
-          // Bottom decoration
-          {
-            type: "div",
-            props: {
-              style: {
-                fontSize: 24,
-                color: "#10B981",
-                marginTop: 40,
-              },
-              children: "└─────────────────────┘",
-            },
-          },
+        [
+          element("div", { fontWeight: 700, color: "#3159d9" }, "Luke Bayliss"),
+          element("div", {}, type),
         ],
-      },
-    },
-    {
-      width: 1200,
-      height: 630,
-    },
+      ),
+      element("div", { display: "flex", flexDirection: "column", gap: 24, maxWidth: "1000px" }, [
+        element(
+          "div",
+          { fontSize: 68, fontWeight: 700, lineHeight: 1.08, letterSpacing: "-0.035em" },
+          title,
+        ),
+        element("div", { fontSize: 30, color: "#5e6970", lineHeight: 1.4 }, description),
+      ]),
+      element(
+        "div",
+        { display: "flex", alignItems: "center", gap: 16, fontSize: 22, color: "#5e6970" },
+        [
+          element("div", { width: 56, height: 5, backgroundColor: "#3159d9" }, ""),
+          element("div", {}, "lukebayliss.com"),
+        ],
+      ),
+    ],
   );
+
+  return new ImageResponse(image, { width: 1200, height: 630 });
 };

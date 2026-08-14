@@ -24,10 +24,10 @@ export async function generateSearchIndex(): Promise<SearchItem[]> {
       type: "blog",
       title: post.data.title,
       description: post.data.description,
-      url: `/blog/${post.slug}/`,
+      url: `/blog/${post.id}/`,
       tags: post.data.tags,
       publishedAt: post.data.publishedAt.toISOString(),
-      content: post.body,
+      content: post.body ?? "",
     });
   }
 
@@ -38,10 +38,10 @@ export async function generateSearchIndex(): Promise<SearchItem[]> {
       type: "project",
       title: project.data.title,
       description: project.data.summary,
-      url: `/projects/${project.slug}/`,
+      url: `/projects/${project.id}/`,
       tags: project.data.tech,
       publishedAt: project.data.publishedAt.toISOString(),
-      content: project.body,
+      content: project.body ?? "",
     });
   }
 
@@ -52,10 +52,10 @@ export async function generateSearchIndex(): Promise<SearchItem[]> {
       type: "snippet",
       title: snippet.data.title,
       description: snippet.data.description,
-      url: `/snippets/${snippet.slug}/`,
+      url: `/snippets/${snippet.id}/`,
       tags: snippet.data.tags,
       publishedAt: snippet.data.publishedAt.toISOString(),
-      content: snippet.body,
+      content: snippet.body ?? "",
     });
   }
 

@@ -33,7 +33,7 @@ const activeProjects = (await getCollection("projects", ({ data }) => !data.draf
         <ul class="space-y-3 text-sm">
           {posts.map((post) => (
             <li class="flex flex-col gap-1 rounded border border-border bg-background/60 p-3 hover:border-border-accent hover:text-foreground">
-              <a class="font-medium text-foreground" href={`/blog/${post.slug}/`}>
+              <a class="font-medium text-foreground" href={`/blog/${post.id}/`}>
                 {post.data.title}
               </a>
               <p class="text-foreground-muted">{post.data.description}</p>
@@ -71,7 +71,7 @@ const activeProjects = (await getCollection("projects", ({ data }) => !data.draf
         {activeProjects.map((project) => (
           <li class="space-y-2 rounded border border-border bg-background/60 p-3 hover:border-border-accent">
             <div class="flex flex-col gap-1">
-              <a class="font-medium text-foreground" href={`/projects/${project.slug}/`}>
+              <a class="font-medium text-foreground" href={`/projects/${project.id}/`}>
                 {project.data.title}
               </a>
               <p class="text-foreground-muted">{project.data.summary}</p>

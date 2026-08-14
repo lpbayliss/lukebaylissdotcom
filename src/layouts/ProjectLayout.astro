@@ -29,7 +29,7 @@ const ogImageUrl = `${Astro.site}og-image.png?title=${encodeURIComponent(data.ti
 
   <article class="space-y-6 text-sm text-foreground">
     <header class="space-y-3 border-b border-border pb-6">
-      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/projects/{entry.slug}</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/projects/{entry.id}</p>
       <h1 class="text-3xl font-semibold text-foreground">{data.title}</h1>
       <p class="text-base text-foreground-muted">{data.summary}</p>
       <dl class="grid gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted sm:grid-cols-2">

@@ -519,6 +519,7 @@ export default function Terminal() {
               </div>
             )}
             {entry.output.map((line, lineIdx) => (
+              // biome-ignore lint/suspicious/noArrayIndexKey: terminal history output has no stable line identifier
               <div key={`${entry.id}-${lineIdx}`} className="whitespace-pre-wrap">
                 {renderLine(line)}
               </div>

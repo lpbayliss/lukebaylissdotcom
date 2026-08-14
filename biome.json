@@ -1,13 +1,13 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.8/schema.json",
   "vcs": {
     "clientKind": "git",
     "useIgnoreFile": true,
-    "defaultBranch": "main"
+    "defaultBranch": "master"
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["src/**"]
+    "includes": ["src/**", "tests/**", "scripts/**", "*.ts", "*.json"]
   },
   "formatter": {
     "enabled": true,
@@ -18,7 +18,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "a11y": {
         "noAutofocus": "warn",
         "noRedundantRoles": "warn"

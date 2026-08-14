@@ -13,8 +13,7 @@ const { entry } = Astro.props as Props;
 const { data } = entry;
 
 // Calculate reading time from content if not provided in frontmatter
-const { Content } = await entry.render();
-const contentBody = entry.body;
+const contentBody = entry.body ?? "";
 const calculatedReadingTime = calculateReadingTime(contentBody);
 const readingTime = data.readingTimeMinutes || calculatedReadingTime;
 
@@ -38,7 +37,7 @@ const ogImageUrl =
 
   <article class="space-y-6 text-base leading-relaxed text-foreground">
     <header class="mb-8 space-y-2 border-b border-border pb-6">
-      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/blog/{entry.slug}</p>
+      <p class="text-xs uppercase tracking-[0.3em] text-foreground-muted">/blog/{entry.id}</p>
       <h1 class="text-3xl font-semibold">{data.title}</h1>
       <p class="text-sm text-foreground-muted">{data.description}</p>
       <div class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.25em] text-foreground-muted">

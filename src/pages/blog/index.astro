@@ -28,7 +28,7 @@ const searchIndex = await generateSearchIndex();
             {posts.map((post) => (
               <li class="space-y-2 border-b border-border pb-4 last:border-b-0 last:pb-0">
                 <div>
-                  <a class="text-lg font-semibold text-foreground" href={`/blog/${post.slug}/`}>
+                  <a class="text-lg font-semibold text-foreground" href={`/blog/${post.id}/`}>
                     {post.data.title}
                   </a>
                   <p class="text-foreground-muted">{post.data.description}</p>

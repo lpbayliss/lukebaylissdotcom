@@ -1,9 +1,11 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const dateField = z.coerce.date();
 
 const blog = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }),
   schema: z.object({
     title: z.string(),
     description: z.string().max(160),
@@ -13,13 +15,13 @@ const blog = defineCollection({
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     featured: z.boolean().default(false),
-    canonicalUrl: z.string().url().optional(),
+    canonicalUrl: z.url().optional(),
     readingTimeMinutes: z.number().positive().optional(),
   }),
 });
 
 const projects = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: z.object({
     title: z.string(),
     summary: z.string().max(160),
@@ -27,8 +29,8 @@ const projects = defineCollection({
     updatedAt: dateField.optional(),
     role: z.string().optional(),
     tech: z.array(z.string()).default([]),
-    externalUrl: z.string().url().optional(),
-    sourceUrl: z.string().url().optional(),
+    externalUrl: z.url().optional(),
+    sourceUrl: z.url().optional(),
     status: z.enum(["planning", "active", "maintenance", "archived"]).default("active"),
     draft: z.boolean().default(false),
     order: z.number().int().optional(),
@@ -36,7 +38,7 @@ const projects = defineCollection({
 });
 
 const snippets = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/snippets" }),
   schema: z.object({
     title: z.string(),
     description: z.string().max(160),

@@ -13,7 +13,6 @@ export default defineConfig({
   adapter: node({ mode: "standalone" }),
   integrations: [react(), mdx(), sitemap()],
   vite: {
-    // @ts-expect-error - Tailwind CSS plugin type incompatibility with Vite
     plugins: [tailwindcss()],
   },
 });

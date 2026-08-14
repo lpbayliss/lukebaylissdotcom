@@ -1,0 +1,1 @@
+Follow `/AGENTS.md` as the canonical coding-agent contract. Read `/DESIGN.md` before UI work and `/docs/CONTENT-GUIDE.md` before public-content changes. Preserve Astro-first rendering, selective React islands, semantic tokens, WCAG 2.2 AA, truthful public claims, route redirects, and the pnpm verification commands documented in `/docs/TESTING.md`.
