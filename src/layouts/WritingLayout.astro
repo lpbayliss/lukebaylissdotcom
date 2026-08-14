@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate, formatLabel } from "../lib/content";
+import { calculateReadingTime, formatReadingTime } from "../lib/reading-time";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"writing">;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+const readingTime = calculateReadingTime(entry.body ?? "");
+const ogImage = data.heroImage
+  ? new URL(data.heroImage, Astro.site || Astro.url.origin).toString()
+  : undefined;
+---
+
+<BaseLayout
+  title={data.title}
+  description={data.summary}
+  canonicalUrl={data.canonicalUrl}
+  ogImage={ogImage}
+  ogType="article"
+  publishedTime={data.publishedAt}
+  modifiedTime={data.updatedAt}
+  tags={data.topics}
+>
+  <article class="writing-page">
+    <header class="site-container writing-header">
+      <a class="writing-header__back" href="/writing/">← All writing</a>
+      <p class="eyebrow">{formatLabel(data.format)}</p>
+      <h1>{data.title}</h1>
+      <p class="writing-header__summary">{data.summary}</p>
+      <div class="writing-header__meta">
+        <time datetime={data.publishedAt.toISOString()}>{formatDate(data.publishedAt)}</time>
+        {data.updatedAt && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>Updated {formatDate(data.updatedAt)}</span>
+          </>
+        )}
+        <span aria-hidden="true">·</span>
+        <span>{formatReadingTime(readingTime)}</span>
+      </div>
+      {data.topics.length > 0 && (
+        <ul class="topic-list" aria-label="Topics">
+          {data.topics.map((topic) => <li>{topic}</li>)}
+        </ul>
+      )}
+    </header>
+
+    <div class="site-container writing-body">
+      <div class="reading-container prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .writing-header {
+    max-width: 62rem;
+    padding-block: clamp(3.8rem, 9vw, 7rem) clamp(2.8rem, 6vw, 4.5rem);
+  }
+
+  .writing-header__back {
+    display: inline-block;
+    margin-bottom: 2.2rem;
+    color: var(--site-foreground-muted);
+    font-size: 0.8rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .writing-header__back:hover {
+    color: var(--site-accent-strong);
+  }
+
+  .writing-header h1 {
+    max-width: 19ch;
+    margin-top: 0.85rem;
+    font-size: clamp(2.45rem, 6vw, 5rem);
+  }
+
+  .writing-header__summary {
+    max-width: 48rem;
+    margin-top: 1.4rem;
+    color: var(--site-foreground-muted);
+    font-size: clamp(1.05rem, 1rem + 0.3vw, 1.22rem);
+    line-height: 1.65;
+  }
+
+  .writing-header__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+    margin-top: 1.5rem;
+    color: var(--site-foreground-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .topic-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-top: 1rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topic-list li {
+    border: 1px solid var(--site-border);
+    border-radius: 999px;
+    color: var(--site-foreground-muted);
+    padding: 0.2rem 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+  }
+
+  .writing-body {
+    border-top: 1px solid var(--site-border);
+    padding-block: clamp(2.8rem, 7vw, 5.5rem) clamp(4rem, 10vw, 8rem);
+  }
+
+  .writing-body .reading-container {
+    margin-inline: auto;
+  }
+</style>

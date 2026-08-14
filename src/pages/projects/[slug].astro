@@ -1,22 +1,6 @@
 ---
-import { getEntry, render } from "astro:content";
-import ProjectLayout from "../../layouts/ProjectLayout.astro";
-
-const { slug } = Astro.params;
-
-if (!slug) {
-  return Astro.redirect("/projects");
-}
-
-const entry = await getEntry("projects", slug);
-
-if (!entry || entry.data.draft) {
-  return Astro.redirect("/projects");
-}
-
-const { Content } = await render(entry);
+return Astro.redirect(
+  Astro.params.slug === "personal-site" ? "/work/personal-site/" : "/work/",
+  301,
+);
 ---
-
-<ProjectLayout entry={entry}>
-  <Content />
-</ProjectLayout>

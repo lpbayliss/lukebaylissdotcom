@@ -1,0 +1,16 @@
+---
+import { getEntry, render } from "astro:content";
+import WritingLayout from "../../layouts/WritingLayout.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/writing/", 302);
+
+const entry = await getEntry("writing", slug);
+if (entry?.data.status !== "published") return Astro.redirect("/writing/", 302);
+
+const { Content } = await render(entry);
+---
+
+<WritingLayout entry={entry}>
+  <Content />
+</WritingLayout>

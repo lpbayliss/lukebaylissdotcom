@@ -1,0 +1,40 @@
+---
+title: "A tiny maintenance-pressure model"
+summary: "An interactive toy for exploring when a quick implementation starts deserving stronger boundaries and documentation."
+publishedAt: 2026-08-15
+format: "lab"
+topics:
+  - "architecture"
+  - "maintenance"
+  - "interactive"
+status: "published"
+featured: true
+---
+
+import MaintenancePressure from "../../components/interactive/MaintenancePressure";
+
+Architecture discussions often jump too quickly from “this works” to “this needs a platform.” The missing question is usually how much future change the code is expected to absorb.
+
+This small model turns three pressures into a rough recommendation:
+
+- how long the system is expected to live;
+- how many people are likely to change it;
+- how uncertain the surrounding requirements are.
+
+It is not a decision engine. The weights are intentionally visible and simple. Its job is to make the assumptions easier to discuss.
+
+<MaintenancePressure client:visible />
+
+## Reading the result
+
+Low pressure suggests keeping the implementation direct and easy to replace. A middle result points towards a small amount of structure: named boundaries, focused tests, and short decision notes. High pressure makes more deliberate ownership, contracts, observability, and migration paths easier to justify.
+
+The interesting part is not the score. It is noticing which input changed the recommendation.
+
+A one-person tool expected to last a month can tolerate shortcuts that would be expensive in a shared service expected to survive several years. Conversely, a long-lived system with stable requirements and one careful owner may need less ceremony than its age implies.
+
+## What the model leaves out
+
+Real decisions also depend on failure cost, regulatory obligations, data sensitivity, team familiarity, reversibility, and existing platform constraints. Those would make the model more accurate and much less useful as a quick explanation.
+
+The component stays deliberately small: three native range inputs, derived output, no API, and no client-side framework outside the island itself.

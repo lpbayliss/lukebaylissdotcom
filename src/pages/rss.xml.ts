@@ -1,27 +1,24 @@
 import { getCollection } from "astro:content";
 import rss from "@astrojs/rss";
 import type { APIContext } from "astro";
+import { isPublishedWriting, sortWritingNewestFirst } from "../lib/content";
 
-export async function GET(context: APIContext) {
-  const blog = await getCollection("blog", ({ data }) => !data.draft);
-  const sortedPosts = blog.sort(
-    (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-  );
+export const GET = async (context: APIContext) => {
+  const entries = (await getCollection("writing", isPublishedWriting)).sort(sortWritingNewestFirst);
 
   return rss({
-    title: "Luke Bayliss — Blog",
+    title: "Luke Bayliss — Writing",
     description:
-      "Software engineer, architect, and consultant. Thoughts on software development, architecture, and technology.",
+      "Technical notes, essays, build logs, case studies, and interactive labs by Luke Bayliss.",
     site: context.site || "https://lukebayliss.com",
-    items: sortedPosts.map((post) => ({
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: post.data.publishedAt,
-      link: `/blog/${post.id}/`,
-      categories: post.data.tags,
-      ...(post.data.canonicalUrl && { customData: `<link>${post.data.canonicalUrl}</link>` }),
+    items: entries.map((entry) => ({
+      title: entry.data.title,
+      description: entry.data.summary,
+      pubDate: entry.data.publishedAt,
+      link: `/writing/${entry.id}/`,
+      categories: [entry.data.format, ...entry.data.topics],
     })),
-    customData: `<language>en-us</language>`,
+    customData: "<language>en-AU</language>",
     stylesheet: "/rss-styles.xsl",
   });
-}
+};

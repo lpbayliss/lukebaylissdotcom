@@ -1,35 +1,163 @@
 ---
+import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import {
+  formatDate,
+  formatLabel,
+  isPublishedWriting,
+  sortWritingNewestFirst,
+} from "../../lib/content";
+
+const entries = (await getCollection("writing", isPublishedWriting)).sort(sortWritingNewestFirst);
 ---
 
-<BaseLayout title="Writing" description="Technical notes, essays, build logs, and interactive labs by Luke Bayliss.">
-  <section class="site-container page-intro">
+<BaseLayout title="Writing" description="Technical notes, essays, build logs, case studies, and interactive labs by Luke Bayliss.">
+  <section class="site-container writing-intro">
     <p class="eyebrow">Writing</p>
     <h1>Notes, explanations, and things still being figured out.</h1>
     <p>
-      This section is being reorganised around notes, essays, labs, build logs, and case studies. The
-      first pieces for the new format are on the way.
+      Software architecture, systems, delivery, experiments, and the occasional useful detour. Short
+      notes and deeper pieces live together here.
     </p>
     <a class="text-link" href="/rss.xml">Subscribe by RSS <span aria-hidden="true">→</span></a>
+  </section>
+
+  <section class="section-rule site-container writing-list" aria-label="Published writing">
+    {entries.length === 0 ? (
+      <p class="writing-list__empty">Nothing published yet.</p>
+    ) : (
+      <ol>
+        {entries.map((entry) => (
+          <li>
+            <article class="writing-row">
+              <div class="writing-row__meta">
+                <span>{formatLabel(entry.data.format)}</span>
+                <time datetime={entry.data.publishedAt.toISOString()}>{formatDate(entry.data.publishedAt)}</time>
+              </div>
+              <div>
+                <h2><a href={`/writing/${entry.id}/`}>{entry.data.title}</a></h2>
+                <p>{entry.data.summary}</p>
+                {entry.data.topics.length > 0 && (
+                  <ul aria-label="Topics">
+                    {entry.data.topics.map((topic) => <li>{topic}</li>)}
+                  </ul>
+                )}
+              </div>
+              <a class="writing-row__arrow" href={`/writing/${entry.id}/`} aria-label={`Read ${entry.data.title}`}>
+                <span aria-hidden="true">→</span>
+              </a>
+            </article>
+          </li>
+        ))}
+      </ol>
+    )}
   </section>
 </BaseLayout>
 
 <style>
-  .page-intro {
-    max-width: 58rem;
+  .writing-intro {
     padding-block: clamp(4rem, 10vw, 8rem);
   }
 
-  h1 {
-    max-width: 18ch;
+  .writing-intro h1 {
+    max-width: 19ch;
     margin-top: 1rem;
-    font-size: clamp(2.5rem, 6vw, 4.8rem);
+    font-size: clamp(2.55rem, 6vw, 5rem);
   }
 
-  p:not(.eyebrow) {
+  .writing-intro > p:not(.eyebrow) {
     max-width: 48rem;
-    margin-block: 1.5rem 2rem;
+    margin-block: 1.4rem 1.8rem;
     color: var(--site-foreground-muted);
-    font-size: 1.1rem;
+    font-size: 1.08rem;
+  }
+
+  .writing-list {
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(4rem, 10vw, 8rem);
+  }
+
+  .writing-list > ol {
+    padding: 0;
+    list-style: none;
+  }
+
+  .writing-row {
+    display: grid;
+    grid-template-columns: minmax(9rem, 0.35fr) minmax(0, 1fr) auto;
+    gap: 1.5rem 3rem;
+    align-items: start;
+    border-bottom: 1px solid var(--site-border);
+    padding-block: 2rem;
+  }
+
+  .writing-list > ol > li:first-child .writing-row {
+    padding-top: 0;
+  }
+
+  .writing-row__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    color: var(--site-foreground-muted);
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+  }
+
+  .writing-row h2 {
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+  }
+
+  .writing-row h2 a {
+    text-decoration: none;
+  }
+
+  .writing-row h2 a:hover {
+    color: var(--site-accent-strong);
+  }
+
+  .writing-row p {
+    max-width: 46rem;
+    margin-top: 0.5rem;
+    color: var(--site-foreground-muted);
+  }
+
+  .writing-row ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.65rem;
+    margin-top: 0.8rem;
+    padding: 0;
+    list-style: none;
+    color: var(--site-foreground-muted);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+  }
+
+  .writing-row ul li::before {
+    content: "#";
+    color: var(--site-accent);
+  }
+
+  .writing-row__arrow {
+    color: var(--site-accent);
+    font-size: 1.25rem;
+    text-decoration: none;
+  }
+
+  .writing-list__empty {
+    color: var(--site-foreground-muted);
+  }
+
+  @media (max-width: 42rem) {
+    .writing-row {
+      grid-template-columns: 1fr auto;
+      gap: 0.9rem 1rem;
+    }
+
+    .writing-row__meta {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      gap: 0.75rem;
+    }
   }
 </style>

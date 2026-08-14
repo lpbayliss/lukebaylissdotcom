@@ -1,0 +1,150 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formatDate, formatLabel } from "../lib/content";
+import BaseLayout from "./BaseLayout.astro";
+
+interface Props {
+  entry: CollectionEntry<"work">;
+}
+
+const { entry } = Astro.props as Props;
+const { data } = entry;
+---
+
+<BaseLayout title={data.title} description={data.summary} ogType="article" modifiedTime={data.updatedAt}>
+  <article class="work-page">
+    <header class="site-container work-header">
+      <a class="work-header__back" href="/work/">← All work</a>
+      <div class="work-header__meta">
+        <p class="eyebrow">{formatLabel(data.category)}</p>
+        <span>{formatLabel(data.status)}</span>
+      </div>
+      <h1>{data.title}</h1>
+      <p class="work-header__summary">{data.summary}</p>
+
+      <dl class="work-facts">
+        {data.role && (
+          <div>
+            <dt>Role</dt>
+            <dd>{data.role}</dd>
+          </div>
+        )}
+        <div>
+          <dt>Started</dt>
+          <dd>{formatDate(data.publishedAt)}</dd>
+        </div>
+        {data.updatedAt && (
+          <div>
+            <dt>Updated</dt>
+            <dd>{formatDate(data.updatedAt)}</dd>
+          </div>
+        )}
+        {data.technologies.length > 0 && (
+          <div>
+            <dt>Built with</dt>
+            <dd>{data.technologies.join(", ")}</dd>
+          </div>
+        )}
+      </dl>
+
+      {(data.sourceUrl || data.liveUrl) && (
+        <div class="work-header__actions">
+          {data.liveUrl && <a class="button-primary" href={data.liveUrl}>Visit project</a>}
+          {data.sourceUrl && <a class="button-secondary" href={data.sourceUrl}>View source</a>}
+        </div>
+      )}
+    </header>
+
+    <div class="site-container work-body">
+      <div class="reading-container prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .work-header {
+    max-width: 66rem;
+    padding-block: clamp(3.8rem, 9vw, 7rem) clamp(2.8rem, 6vw, 4.5rem);
+  }
+
+  .work-header__back {
+    display: inline-block;
+    margin-bottom: 2.2rem;
+    color: var(--site-foreground-muted);
+    font-size: 0.8rem;
+    font-weight: 650;
+    text-decoration: none;
+  }
+
+  .work-header__back:hover {
+    color: var(--site-accent-strong);
+  }
+
+  .work-header__meta {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .work-header__meta > span {
+    border-left: 1px solid var(--site-border);
+    color: var(--site-foreground-muted);
+    padding-left: 0.8rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+  }
+
+  .work-header h1 {
+    max-width: 18ch;
+    margin-top: 0.85rem;
+    font-size: clamp(2.6rem, 6vw, 5rem);
+  }
+
+  .work-header__summary {
+    max-width: 48rem;
+    margin-top: 1.35rem;
+    color: var(--site-foreground-muted);
+    font-size: 1.15rem;
+    line-height: 1.65;
+  }
+
+  .work-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 1rem 2rem;
+    max-width: 54rem;
+    margin-top: 2rem;
+    border-top: 1px solid var(--site-border);
+    padding-top: 1rem;
+  }
+
+  .work-facts dt {
+    color: var(--site-foreground-muted);
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    text-transform: uppercase;
+  }
+
+  .work-facts dd {
+    margin-top: 0.3rem;
+    font-size: 0.86rem;
+  }
+
+  .work-header__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+
+  .work-body {
+    border-top: 1px solid var(--site-border);
+    padding-block: clamp(2.8rem, 7vw, 5.5rem) clamp(4rem, 10vw, 8rem);
+  }
+
+  .work-body .reading-container {
+    margin-inline: auto;
+  }
+</style>

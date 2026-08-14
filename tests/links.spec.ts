@@ -1,6 +1,15 @@
 import { expect, test } from "@playwright/test";
 
-const entryRoutes = ["/", "/about/", "/writing/", "/work/", "/blog/", "/projects/", "/snippets/"];
+const entryRoutes = [
+  "/",
+  "/about/",
+  "/writing/",
+  "/writing/making-room-for-small-ideas/",
+  "/writing/maintenance-pressure-model/",
+  "/work/",
+  "/work/aeonmarked/",
+  "/work/personal-site/",
+];
 
 const normalizeInternalUrl = (href: string, baseURL: string) => {
   const url = new URL(href, baseURL);
