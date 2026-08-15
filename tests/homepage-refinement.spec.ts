@@ -7,7 +7,9 @@ test.describe("compact homepage refinement", () => {
     await page.goto("/");
 
     await expect(page.locator("#selected-writing article")).toHaveCount(2);
+    await expect(page.locator("#selected-writing .writing-feature p")).toHaveCount(0);
     await expect(page.locator("#selected-work article")).toHaveCount(2);
+    await expect(page.locator("#selected-work .work-row__summary")).toHaveCount(2);
     await expect(page.getByRole("heading", { name: "Current focus" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
   });

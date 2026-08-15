@@ -106,7 +106,10 @@ const featuredWork = (await getCollection("work", isPublishedWork))
               <span>{formatLabel(entry.data.category)}</span>
               <span>{formatLabel(entry.data.status)}</span>
             </div>
-            <h3><a href={`/work/${entry.id}/`}>{entry.data.title}</a></h3>
+            <div class="work-row__content">
+              <h3><a href={`/work/${entry.id}/`}>{entry.data.title}</a></h3>
+              <p class="work-row__summary">{entry.data.summary}</p>
+            </div>
             <a class="feature-arrow" href={`/work/${entry.id}/`} aria-label={`View ${entry.data.title}`}>
               <Icon name="arrow-right" />
             </a>
@@ -249,6 +252,14 @@ const featuredWork = (await getCollection("work", isPublishedWork))
   .work-row h3 a:hover,
   .feature-arrow:hover {
     color: var(--site-accent-strong);
+  }
+
+  .work-row__summary {
+    max-width: 48rem;
+    margin-top: 0.35rem;
+    color: var(--site-foreground-muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
   }
 
   .feature-arrow {
