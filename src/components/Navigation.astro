@@ -1,4 +1,5 @@
 ---
+import IconLink from "./IconLink.astro";
 import ThemeToggle from "./ThemeToggle.astro";
 
 interface Props {
@@ -37,17 +38,13 @@ const isActive = (href: string) =>
               </a>
             </li>
           ))}
-          <li class="site-nav__external">
-            <a class="site-nav__link" href="https://github.com/lpbayliss" rel="me noreferrer">
-              GitHub<span class="sr-only"> (external)</span>
-            </a>
-          </li>
-          <li class="site-nav__external">
-            <a class="site-nav__link" href="mailto:hello@lukebayliss.com">Email</a>
-          </li>
         </ul>
       </nav>
-      <ThemeToggle />
+      <div class="site-header__utility" aria-label="Contact and display options">
+        <IconLink href="https://github.com/lpbayliss" icon="github" label="GitHub" iconOnly me />
+        <IconLink href="mailto:hello@lukebayliss.com" icon="email" label="Email" iconOnly />
+        <ThemeToggle />
+      </div>
     </div>
   </div>
 </header>
@@ -60,11 +57,11 @@ const isActive = (href: string) =>
 
   .site-header__inner {
     display: flex;
-    min-height: 5rem;
+    min-height: 4rem;
     align-items: center;
     justify-content: space-between;
-    gap: 1.5rem;
-    padding-block: 0.9rem;
+    gap: 1.25rem;
+    padding-block: 0.55rem;
   }
 
   .site-mark {
@@ -83,14 +80,15 @@ const isActive = (href: string) =>
   }
 
   .site-mark__note {
-    margin-top: 0.22rem;
+    margin-top: 0.18rem;
     color: var(--site-foreground-muted);
     font-family: var(--font-mono);
-    font-size: 0.64rem;
-    letter-spacing: 0.02em;
+    font-size: 0.75rem;
+    letter-spacing: 0.01em;
   }
 
   .site-header__actions,
+  .site-header__utility,
   .site-nav {
     display: flex;
     align-items: center;
@@ -98,25 +96,29 @@ const isActive = (href: string) =>
 
   .site-header__actions {
     justify-content: flex-end;
-    gap: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .site-header__utility {
+    gap: 0.1rem;
   }
 
   .site-nav {
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: 0.25rem;
+    gap: 0.15rem;
     list-style: none;
   }
 
   .site-nav__link {
     display: inline-flex;
-    min-height: 2.5rem;
+    min-height: 2.75rem;
     align-items: center;
     border-radius: 0.35rem;
     color: var(--site-foreground-muted);
-    font-size: 0.82rem;
+    font-size: 0.875rem;
     font-weight: 650;
-    padding: 0.45rem 0.6rem;
+    padding: 0.45rem 0.65rem;
     text-decoration: none;
     transition: color 140ms ease, background-color 140ms ease;
   }
@@ -135,12 +137,14 @@ const isActive = (href: string) =>
     .site-header__inner {
       align-items: flex-start;
       flex-direction: column;
-      gap: 0.7rem;
+      gap: 0.35rem;
+      padding-block: 0.65rem;
     }
 
     .site-header__actions {
       width: 100%;
       justify-content: space-between;
+      gap: 0.75rem;
     }
 
     .site-nav {
@@ -148,9 +152,9 @@ const isActive = (href: string) =>
     }
   }
 
-  @media (max-width: 34rem) {
-    .site-nav__external {
-      display: none;
+  @media (max-width: 25rem) {
+    .site-nav__link {
+      padding-inline: 0.5rem;
     }
   }
 </style>

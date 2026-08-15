@@ -59,13 +59,9 @@ test.describe("redesigned shell", () => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("build software");
     await expect(page.getByRole("heading", { name: "Current focus" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Notes with room to grow" })).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "Things I’m making and maintaining" }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "Found something worth discussing?" }),
-    ).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Selected writing" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
     await expect(page.locator("body")).not.toContainText("┌─<");
   });
 });

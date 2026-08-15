@@ -1,0 +1,57 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+  href: string;
+  icon: "email" | "github" | "linkedin" | "rss";
+  label: string;
+  iconOnly?: boolean;
+  me?: boolean;
+}
+
+const { href, icon, label, iconOnly = false, me = false } = Astro.props as Props;
+const opensNewTab =
+  /^https?:\/\//.test(href) && !/^https?:\/\/(?:www\.)?lukebayliss\.com(?:\/|$)/.test(href);
+const rel = opensNewTab
+  ? [me ? "me" : undefined, "noopener", "noreferrer"].filter(Boolean).join(" ")
+  : undefined;
+---
+
+<a
+  class:list={["icon-link", { "icon-link--only": iconOnly }]}
+  href={href}
+  target={opensNewTab ? "_blank" : undefined}
+  rel={rel}
+  aria-label={iconOnly ? label : undefined}
+  title={iconOnly ? label : undefined}
+>
+  <Icon name={icon} />
+  <span class:list={{ "sr-only": iconOnly }}>{label}</span>
+</a>
+
+<style>
+  .icon-link {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 0.4rem;
+    color: var(--site-foreground-muted);
+    font-size: 0.9rem;
+    font-weight: 650;
+    padding: 0.5rem 0.65rem;
+    text-decoration: none;
+    transition: color 140ms ease, background-color 140ms ease;
+  }
+
+  .icon-link:hover {
+    color: var(--site-accent-strong);
+    background: var(--site-surface-muted);
+  }
+
+  .icon-link--only {
+    width: 2.75rem;
+    padding-inline: 0;
+  }
+</style>

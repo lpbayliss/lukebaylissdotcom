@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import Icon from "../components/Icon.astro";
 import { formatDate, formatLabel } from "../lib/content";
 import BaseLayout from "./BaseLayout.astro";
 
@@ -9,6 +10,9 @@ interface Props {
 
 const { entry } = Astro.props as Props;
 const { data } = entry;
+const liveUrlIsExternal = data.liveUrl
+  ? new URL(data.liveUrl).hostname !== "lukebayliss.com"
+  : false;
 ---
 
 <BaseLayout title={data.title} description={data.summary} ogType="article" modifiedTime={data.updatedAt}>
@@ -49,8 +53,23 @@ const { data } = entry;
 
       {(data.sourceUrl || data.liveUrl) && (
         <div class="work-header__actions">
-          {data.liveUrl && <a class="button-primary" href={data.liveUrl}>Visit project</a>}
-          {data.sourceUrl && <a class="button-secondary" href={data.sourceUrl}>View source</a>}
+          {data.liveUrl && (
+            <a
+              class="button-primary"
+              href={data.liveUrl}
+              target={liveUrlIsExternal ? "_blank" : undefined}
+              rel={liveUrlIsExternal ? "noopener noreferrer" : undefined}
+            >
+              Visit project
+              <Icon name="external" />
+            </a>
+          )}
+          {data.sourceUrl && (
+            <a class="button-secondary" href={data.sourceUrl} target="_blank" rel="noopener noreferrer">
+              View source
+              <Icon name="external" />
+            </a>
+          )}
         </div>
       )}
     </header>
@@ -93,7 +112,7 @@ const { data } = entry;
     color: var(--site-foreground-muted);
     padding-left: 0.8rem;
     font-family: var(--font-mono);
-    font-size: 0.68rem;
+    font-size: 0.75rem;
   }
 
   .work-header h1 {
@@ -123,7 +142,7 @@ const { data } = entry;
   .work-facts dt {
     color: var(--site-foreground-muted);
     font-family: var(--font-mono);
-    font-size: 0.64rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
   }
 
