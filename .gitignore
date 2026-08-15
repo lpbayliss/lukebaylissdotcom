@@ -8,9 +8,10 @@ playwright-report/
 test-results/
 .lighthouseci/
 
-# Editor files
+# Editor and agent worktree files
 .DS_Store
 .idea/
+.worktrees/
 
 # Logs
 npm-debug.log*
