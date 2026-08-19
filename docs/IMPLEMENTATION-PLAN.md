@@ -48,7 +48,7 @@ Governing specification: [`REDESIGN-SPEC.md`](./REDESIGN-SPEC.md)
 2. Replace terminal frame with responsive editorial shell.
 3. Add accessible navigation and persisted theme control.
 4. Rebuild footer/contact links.
-5. Rebuild homepage with identity, current focus, selected writing/work, contact.
+5. Rebuild homepage with identity, current focus, selected writing, contact.
 6. Replace terminal OG image and favicon.
 7. Add Person JSON-LD and metadata.
 8. Verify build, typecheck, screenshots, keyboard path, overflow, axe.
@@ -57,15 +57,15 @@ Governing specification: [`REDESIGN-SPEC.md`](./REDESIGN-SPEC.md)
 
 **Pass:** FR-001–013, FR-060–063, DR-001–007, focused QR checks.
 
-## Slice 4 — writing, work, about, interactive lab
+## Slice 4 — writing, about, interactive lab
 
-**Owns:** content schemas/content, writing/work/about routes/layouts, redirects, RSS/search, interactive components.
+**Owns:** content schemas/content, writing/about routes/layouts, redirects, RSS/search, interactive components.
 
-1. Replace blog/snippets/projects with writing/work schemas.
+1. Replace blog/snippets with the writing schema.
 2. Remove unsupported placeholder content.
-3. Add truthful introductory writing, personal-site work entry, and one interactive lab.
+3. Add truthful introductory writing and one interactive lab.
 4. Add reusable selectively hydrated React component and static explanation.
-5. Build Writing and Work indexes/details.
+5. Build Writing indexes/details.
 6. Rebuild About with direct contact region and no unsupported claims.
 7. Add redirects for removed routes.
 8. Update RSS, sitemap behaviour, search index or remove search if unjustified.

@@ -21,23 +21,4 @@ const writing = defineCollection({
   }),
 });
 
-const work = defineCollection({
-  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/work" }),
-  schema: z.object({
-    title: z.string().min(1),
-    summary: shortText,
-    publishedAt: dateField,
-    updatedAt: dateField.optional(),
-    category: z.enum(["professional", "open-source", "independent", "experiment"]),
-    status: z.enum(["planning", "active", "maintenance", "archived"]),
-    featured: z.boolean().default(false),
-    order: z.number().int().nonnegative(),
-    draft: z.boolean().default(false),
-    role: z.string().optional(),
-    technologies: z.array(z.string().min(1)).default([]),
-    sourceUrl: z.url().optional(),
-    liveUrl: z.url().optional(),
-  }),
-});
-
-export const collections = { writing, work };
+export const collections = { writing };

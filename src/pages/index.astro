@@ -6,20 +6,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import {
   formatDate,
   formatLabel,
-  isPublishedWork,
   isPublishedWriting,
-  sortWork,
   sortWritingNewestFirst,
 } from "../lib/content";
 
 const featuredWriting = (await getCollection("writing", isPublishedWriting))
   .filter(({ data }) => data.featured)
   .sort(sortWritingNewestFirst)
-  .slice(0, 2);
-
-const featuredWork = (await getCollection("work", isPublishedWork))
-  .filter(({ data }) => data.featured)
-  .sort(sortWork)
   .slice(0, 2);
 ---
 
@@ -84,40 +77,6 @@ const featuredWork = (await getCollection("work", isPublishedWork))
     )}
   </section>
 
-  <section id="selected-work" class="section-rule home-section site-container" aria-labelledby="work-title">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">Work</p>
-        <h2 id="work-title">Selected work</h2>
-      </div>
-      <a class="text-link" href="/work/">All work <span aria-hidden="true">→</span></a>
-    </div>
-
-    {featuredWork.length === 0 ? (
-      <div class="empty-feature">
-        <p>No featured work yet.</p>
-        <a class="text-link" href="/work/">Visit Work <span aria-hidden="true">→</span></a>
-      </div>
-    ) : (
-      <div class="feature-list">
-        {featuredWork.map((entry) => (
-          <article class="work-row">
-            <div class="work-row__meta">
-              <span>{formatLabel(entry.data.category)}</span>
-              <span>{formatLabel(entry.data.status)}</span>
-            </div>
-            <div class="work-row__content">
-              <h3><a href={`/work/${entry.id}/`}>{entry.data.title}</a></h3>
-              <p class="work-row__summary">{entry.data.summary}</p>
-            </div>
-            <a class="feature-arrow" href={`/work/${entry.id}/`} aria-label={`View ${entry.data.title}`}>
-              <Icon name="arrow-right" />
-            </a>
-          </article>
-        ))}
-      </div>
-    )}
-  </section>
 
   <section id="contact" class="section-rule contact-row site-container" aria-labelledby="contact-title">
     <div>
@@ -217,8 +176,7 @@ const featuredWork = (await getCollection("work", isPublishedWork))
     border-top: 1px solid var(--site-border);
   }
 
-  .writing-feature,
-  .work-row {
+  .writing-feature {
     display: grid;
     grid-template-columns: minmax(8rem, 0.34fr) minmax(0, 1fr) auto;
     gap: 1rem 2.5rem;
@@ -227,8 +185,7 @@ const featuredWork = (await getCollection("work", isPublishedWork))
     padding-block: 1.25rem;
   }
 
-  .writing-feature__meta,
-  .work-row__meta {
+  .writing-feature__meta {
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
@@ -237,30 +194,20 @@ const featuredWork = (await getCollection("work", isPublishedWork))
     font-size: 0.8125rem;
   }
 
-  .writing-feature h3,
-  .work-row h3 {
+  .writing-feature h3 {
     font-size: clamp(1.15rem, 1rem + 0.55vw, 1.45rem);
   }
 
   .writing-feature h3 a,
-  .work-row h3 a,
   .feature-arrow {
     text-decoration: none;
   }
 
   .writing-feature h3 a:hover,
-  .work-row h3 a:hover,
   .feature-arrow:hover {
     color: var(--site-accent-strong);
   }
 
-  .work-row__summary {
-    max-width: 48rem;
-    margin-top: 0.35rem;
-    color: var(--site-foreground-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-  }
 
   .feature-arrow {
     display: inline-flex;
@@ -313,14 +260,12 @@ const featuredWork = (await getCollection("work", isPublishedWork))
       gap: 1rem;
     }
 
-    .writing-feature,
-    .work-row {
+    .writing-feature {
       grid-template-columns: 1fr auto;
       gap: 0.5rem 1rem;
     }
 
-    .writing-feature__meta,
-    .work-row__meta {
+    .writing-feature__meta {
       grid-column: 1 / -1;
       flex-direction: row;
       gap: 0.75rem;

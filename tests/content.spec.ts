@@ -81,30 +81,15 @@ test.describe("publishing system", () => {
   });
 });
 
-test.describe("work and compatibility routes", () => {
-  test("work index presents only real curated entries", async ({ page }) => {
-    await page.goto("/work/");
-    await expect(page.getByRole("link", { name: "Aeonmarked", exact: true })).toBeVisible();
-    await expect(page.getByRole("link", { name: "lukebayliss.com", exact: true })).toBeVisible();
-    await expect(page.locator("body")).not.toContainText("Somewhere Tech");
-  });
-
-  test("work actions render only when the artefact exists", async ({ page }) => {
-    await page.goto("/work/aeonmarked/");
-    await expect(page.getByRole("link", { name: "View source" })).toHaveCount(0);
-    await page.goto("/work/personal-site/");
-    await expect(page.getByRole("link", { name: "View source" })).toHaveAttribute(
-      "href",
-      "https://github.com/lpbayliss/lukebaylissdotcom",
-    );
-  });
-
+test.describe("compatibility routes", () => {
   for (const [route, target] of [
     ["/blog/", "/writing/"],
     ["/blog/welcome/", "/writing/"],
     ["/snippets/terminal-tricks/", "/writing/"],
-    ["/projects/", "/work/"],
-    ["/projects/personal-site/", "/work/personal-site/"],
+    ["/work/", "/"],
+    ["/work/aeonmarked/", "/"],
+    ["/projects/", "/"],
+    ["/projects/personal-site/", "/"],
     ["/contact/", "/about/#contact"],
   ]) {
     test(`${route} redirects permanently`, async ({ request }) => {

@@ -8,7 +8,6 @@ interface Props {
 
 const links = [
   { href: "/writing/", label: "Writing" },
-  { href: "/work/", label: "Work" },
   { href: "/about/", label: "About" },
 ];
 
@@ -41,8 +40,10 @@ const isActive = (href: string) =>
         </ul>
       </nav>
       <div class="site-header__utility" aria-label="Contact and display options">
-        <IconLink href="https://github.com/lpbayliss" icon="github" label="GitHub" iconOnly me />
-        <IconLink href="mailto:hello@lukebayliss.com" icon="email" label="Email" iconOnly />
+        <div class="site-header__contact-links">
+          <IconLink href="https://github.com/lpbayliss" icon="github" label="GitHub" iconOnly me />
+          <IconLink href="mailto:hello@lukebayliss.com" icon="email" label="Email" iconOnly />
+        </div>
         <ThemeToggle />
       </div>
     </div>
@@ -89,6 +90,7 @@ const isActive = (href: string) =>
 
   .site-header__actions,
   .site-header__utility,
+  .site-header__contact-links,
   .site-nav {
     display: flex;
     align-items: center;
@@ -100,6 +102,10 @@ const isActive = (href: string) =>
   }
 
   .site-header__utility {
+    gap: 0.5rem;
+  }
+
+  .site-header__contact-links {
     gap: 0.1rem;
   }
 

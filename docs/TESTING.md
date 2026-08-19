@@ -23,8 +23,6 @@ Required pages:
 - `/writing/`
 - one normal writing entry
 - one interactive lab, when any are published
-- `/work/`
-- one work entry
 - `/about/`
 - `/404`
 
@@ -68,7 +66,6 @@ docker build -t lukebaylissdotcom:verify .
 docker run --rm -d --name lukebayliss-verify -p 18080:8080 lukebaylissdotcom:verify
 curl --fail http://127.0.0.1:18080/
 curl --fail http://127.0.0.1:18080/writing/
-curl --fail http://127.0.0.1:18080/work/
 curl --fail http://127.0.0.1:18080/about/
 curl --fail http://127.0.0.1:18080/rss.xml
 docker stop lukebayliss-verify

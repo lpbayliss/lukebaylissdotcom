@@ -27,23 +27,6 @@ canonicalUrl: https://example.com/original # optional
 heroImage: /images/example.webp # optional
 ```
 
-## Work frontmatter
-
-```yaml
-title: Project name
-summary: Factual description under 160 characters
-publishedAt: 2026-08-14
-updatedAt: 2026-08-14 # optional
-category: open-source # professional | open-source | independent | experiment
-status: active # planning | active | maintenance | archived
-featured: true
-order: 1
-role: Engineering and design # optional
-technologies: [Astro, React] # optional
-sourceUrl: https://github.com/lpbayliss/example # optional
-liveUrl: https://example.com # optional
-```
-
 ## Authenticity gate
 
 Before publishing, verify every employer, role, project, metric, outcome, date, quotation, and attribution. Never invent missing evidence. Team outcomes must be labelled as team outcomes. Confidential work may be sanitised, but not fictionalised. If uncertain, keep `status: draft`.

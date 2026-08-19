@@ -6,9 +6,6 @@ const routes = [
   "/writing/",
   "/writing/parse-json-string-with-zod/",
   "/writing/typescript-discriminated-unions/",
-  "/work/",
-  "/work/aeonmarked/",
-  "/work/personal-site/",
   "/about/",
   "/definitely-not-a-real-page",
 ];
@@ -65,12 +62,48 @@ test.describe("redesigned shell", () => {
     ).toHaveAttribute("aria-current", "page");
   });
 
+  test("header and footer omit Work navigation", async ({ page }) => {
+    await page.goto("/");
+
+    const header = page.locator(".site-header");
+    await expect(header.getByRole("link", { name: "Work", exact: true })).toHaveCount(0);
+    await expect(
+      page.getByRole("navigation", { name: "Footer navigation" }).getByRole("link", {
+        name: "Work",
+        exact: true,
+      }),
+    ).toHaveCount(0);
+  });
+
+  test("theme control is icon-only and separated from contact icons", async ({ page }) => {
+    await page.goto("/");
+
+    const header = page.locator(".site-header");
+    const themeToggle = header.getByRole("button", { name: "Switch to dark theme" });
+    const email = header.getByRole("link", { name: "Email", exact: true });
+
+    await expect(themeToggle).toHaveText("");
+    await expect(themeToggle.locator("svg[aria-hidden='true']")).toHaveCount(2);
+
+    const [emailBox, toggleBox] = await Promise.all([
+      email.boundingBox(),
+      themeToggle.boundingBox(),
+    ]);
+    expect(emailBox).not.toBeNull();
+    expect(toggleBox).not.toBeNull();
+    expect(
+      (toggleBox?.x ?? 0) - ((emailBox?.x ?? 0) + (emailBox?.width ?? 0)),
+    ).toBeGreaterThanOrEqual(8);
+    expect(toggleBox?.width).toBeGreaterThanOrEqual(44);
+    expect(toggleBox?.height).toBeGreaterThanOrEqual(44);
+  });
+
   test("homepage presents the accepted product regions", async ({ page }) => {
     await page.goto("/");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("build software");
     await expect(page.getByRole("heading", { name: "Current focus" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Selected writing" })).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Selected work" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Selected work" })).toHaveCount(0);
     await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
     await expect(page.locator("body")).not.toContainText("┌─<");
   });

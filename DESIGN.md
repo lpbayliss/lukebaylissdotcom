@@ -62,7 +62,6 @@ Token changes require contrast verification in both themes.
 - Identity and purpose first.
 - Current focus as a concise annotation, not a dashboard widget.
 - Selected writing as editorial rows.
-- Selected work uses larger evidence-led summaries, not identical cards.
 - Contact is direct and low-friction.
 
 ### Writing
@@ -70,11 +69,6 @@ Token changes require contrast verification in both themes.
 - Index: date/format, title, summary, topics; scan-friendly rows.
 - Detail: readable column, optional wider breakout for figures/labs.
 - Metadata is useful but subordinate.
-
-### Work
-
-- Index: curated entries with category/status and available artefact links.
-- Detail: context, decisions, implementation, outcome/limitations, evidence.
 
 ## Component patterns
 
@@ -129,4 +123,4 @@ Verify at 390×844, 768×1024, and 1440×900.
 
 ## Visual verification
 
-Every substantial UI change requires real browser inspection in both themes and target viewports. Capture Home, Writing, article/lab, Work, About, and 404. Check computed overflow, focus, contrast, reduced motion, console errors, and populated states.
+Every substantial UI change requires real browser inspection in both themes and target viewports. Capture Home, Writing, article/lab, About, and 404. Check computed overflow, focus, contrast, reduced motion, console errors, and populated states.

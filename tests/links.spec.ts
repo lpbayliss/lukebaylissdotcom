@@ -6,9 +6,6 @@ const entryRoutes = [
   "/writing/",
   "/writing/parse-json-string-with-zod/",
   "/writing/typescript-discriminated-unions/",
-  "/work/",
-  "/work/aeonmarked/",
-  "/work/personal-site/",
 ];
 
 const normalizeInternalUrl = (href: string, baseURL: string) => {

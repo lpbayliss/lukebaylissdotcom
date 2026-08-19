@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 
-const externalLinkRoutes = ["/", "/about/", "/work/personal-site/"];
+const externalLinkRoutes = ["/", "/about/"];
 
 test.describe("compact homepage refinement", () => {
   test("homepage keeps featured content intentionally brief", async ({ page }) => {
@@ -8,8 +8,7 @@ test.describe("compact homepage refinement", () => {
 
     await expect(page.locator("#selected-writing article")).toHaveCount(2);
     await expect(page.locator("#selected-writing .writing-feature p")).toHaveCount(0);
-    await expect(page.locator("#selected-work article")).toHaveCount(2);
-    await expect(page.locator("#selected-work .work-row__summary")).toHaveCount(2);
+    await expect(page.locator("#selected-work")).toHaveCount(0);
     await expect(page.getByRole("heading", { name: "Current focus" })).toBeVisible();
     await expect(page.getByRole("heading", { name: "Contact" })).toBeVisible();
   });
@@ -65,14 +64,6 @@ test.describe("compact homepage refinement", () => {
     {
       route: "/writing/parse-json-string-with-zod/",
       selectors: [".writing-header__meta", ".topic-list li"],
-    },
-    {
-      route: "/work/",
-      selectors: [".work-entry__meta", ".work-entry li"],
-    },
-    {
-      route: "/work/personal-site/",
-      selectors: [".work-header__meta > span", ".work-facts dt"],
     },
   ]) {
     test(`${surface.route} keeps metadata at a readable size`, async ({ page }) => {

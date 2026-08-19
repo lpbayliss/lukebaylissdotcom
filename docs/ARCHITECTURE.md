@@ -23,13 +23,12 @@ No database, CMS, account system, or runtime content API exists.
 ## Content
 
 - `writing`: notes, essays, labs, build logs, case studies.
-- `work`: professional, open-source, independent, experiments.
 - `draft` and `archived` content never appears as published.
 - Featured homepage content is explicit frontmatter, then ordered deterministically.
 
 ## Routing
 
-Canonical routes are `/writing/`, `/work/`, and `/about/`. Old `/blog`, `/snippets`, `/projects`, and `/contact` routes remain redirects. New route changes must preserve compatibility or document intentional removal.
+Canonical routes are `/writing/` and `/about/`. Old `/blog`, `/snippets`, `/work`, `/projects`, and `/contact` routes remain redirects. New route changes must preserve compatibility or document intentional removal.
 
 ## React island rule
 

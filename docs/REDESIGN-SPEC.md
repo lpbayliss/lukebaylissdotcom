@@ -7,19 +7,19 @@
 
 ## Decision summary
 
-Rebuild lukebayliss.com as Luke's durable personal technical space: clean, readable, approachable, modern, and visibly developer-crafted. It must support low-friction notes, essays, labs, build logs, case studies, curated work, personal context, and embedded React explanations without becoming a white-paper platform, terminal simulation, generic portfolio, or JavaScript-heavy app.
+Rebuild lukebayliss.com as Luke's durable personal technical space: clean, readable, approachable, modern, and visibly developer-crafted. It must support low-friction notes, essays, labs, build logs, case studies, personal context, and embedded React explanations without becoming a white-paper platform, terminal simulation, generic portfolio, or JavaScript-heavy app.
 
 The existing Astro 5 + MDX + React + Tailwind foundation stays. The redesign changes information architecture, content schemas, visual system, page composition, publishing guidance, agent metadata, and verification.
 
 ## Audiences
 
 1. Luke, publishing and revisiting ideas.
-2. Technical peers and collaborators exploring Luke's work and thinking.
+2. Technical peers and collaborators exploring Luke's thinking.
 3. Hiring or professional contacts seeking credible evidence and contact routes.
 
 ## Goals
 
-- **G1 — Durable home:** identity, current interests, work, writing, and contact remain discoverable outside social platforms.
+- **G1 — Durable home:** identity, current interests, writing, and contact remain discoverable outside social platforms.
 - **G2 — Easy publishing:** short notes and substantial pieces share one understandable workflow.
 - **G3 — Interactive explanation:** MDX may embed reusable React islands where interaction improves an idea.
 - **G4 — Approachable craft:** visual polish, accessibility, performance, and useful interaction signal development capability.
@@ -41,8 +41,6 @@ The existing Astro 5 + MDX + React + Tailwind foundation stays. The redesign cha
 /
 /writing/
 /writing/[slug]/
-/work/
-/work/[slug]/
 /about/
 /rss.xml
 ```
@@ -51,14 +49,14 @@ Compatibility redirects:
 
 - `/blog/*` → equivalent `/writing/*` where content exists; otherwise `/writing/`.
 - `/snippets/*` → equivalent `/writing/*` where content exists; otherwise `/writing/`.
-- `/projects/*` → equivalent `/work/*` where content exists; otherwise `/work/`.
+- `/work/*` and `/projects/*` → `/`.
 - `/contact/` → `/about/#contact`.
 
 ## Functional requirements
 
 ### Navigation and shell
 
-- **FR-001:** Every public page must expose Home, Writing, Work, About, GitHub, and Email within header or footer navigation.
+- **FR-001:** Every public page must expose Home, Writing, About, GitHub, and Email within header or footer navigation.
 - **FR-002:** The active internal navigation item must expose `aria-current="page"`.
 - **FR-003:** Every page must include a keyboard-visible skip link targeting the main landmark.
 - **FR-004:** The shell must contain no terminal window, prompt, command-line navigation marker, hacker-green identity, or all-monospace body treatment.
@@ -67,9 +65,9 @@ Compatibility redirects:
 ### Homepage
 
 - **FR-010:** The homepage must identify Luke, location, primary technical territory, and site purpose within the first viewport at 390×844 and 1440×900.
-- **FR-011:** The homepage must contain Current focus, Selected writing, Selected work, and Contact regions.
-- **FR-012:** Selected writing and work must be curated via frontmatter, not automatically selected only by recency.
-- **FR-013:** The homepage must remain useful when either writing or work collections contain no featured entries.
+- **FR-011:** The homepage must contain Current focus, Selected writing, and Contact regions.
+- **FR-012:** Selected writing must be curated via frontmatter, not automatically selected only by recency.
+- **FR-013:** The homepage must remain useful when writing contains no featured entries.
 
 ### Writing
 
@@ -88,14 +86,6 @@ Compatibility redirects:
 - **FR-032:** Ordinary writing without islands must ship no page-specific React client bundle.
 - **FR-033:** Interactive components must define useful labels, focus styles, reduced-motion behaviour, mobile layout, and a no-JavaScript fallback or explanatory static context.
 - **FR-034:** Failure of an interactive island must not prevent article prose from rendering.
-
-### Work
-
-- **FR-040:** One `work` collection must support `professional`, `open-source`, `independent`, and `experiment` categories.
-- **FR-041:** Required work metadata must include title, summary, published date, category, status, featured state, and order. Role, technologies, source URL, live URL, and update date are optional.
-- **FR-042:** `/work/` must clearly label category and status and present only honest, real entries.
-- **FR-043:** Work detail pages must provide contextual links to available source/live artefacts without rendering missing actions.
-- **FR-044:** Existing fictional employers, projects, metrics, and unsupported outcome claims must not remain public.
 
 ### About and contact
 
@@ -134,12 +124,12 @@ Compatibility redirects:
 - **QR-001:** `pnpm check`, Astro type checking, production build, and browser tests must pass from a frozen install.
 - **QR-002:** Core pages at 390×844, 768×1024, and 1440×900 must have no page-level horizontal overflow.
 - **QR-003:** All navigation, theme controls, links, and lab controls must be keyboard operable with visible focus.
-- **QR-004:** Automated axe checks must report no serious or critical violations on Home, Writing, one writing detail, Work, one work detail, About, and 404 in both themes where applicable.
+- **QR-004:** Automated axe checks must report no serious or critical violations on Home, Writing, one writing detail, About, and 404 in both themes where applicable.
 - **QR-005:** Normal text must meet WCAG 2.2 AA contrast; non-text controls and focus indicators must meet 3:1.
 - **QR-006:** Motion must respect `prefers-reduced-motion`.
 - **QR-007:** Production Lighthouse mobile runs for Home and one writing detail must score at least 90 for Performance, Accessibility, Best Practices, and SEO in the controlled local test environment.
 - **QR-008:** Built output must contain no broken internal links in generated HTML.
-- **QR-009:** A fresh Docker image must build and serve `/`, `/writing/`, `/work/`, `/about/`, and `/rss.xml` successfully.
+- **QR-009:** A fresh Docker image must build and serve `/`, `/writing/`, `/about/`, and `/rss.xml` successfully.
 - **QR-010:** No committed secret, generated build output, or stale alternate lockfile may be introduced.
 
 ## Content authenticity rules
@@ -157,7 +147,6 @@ Compatibility redirects:
 | FR-010–013 | Responsive screenshots + content assertions | Required regions visible and resilient |
 | FR-020–026 | Schema/build/RSS tests | Formats validate; drafts excluded; writing renders |
 | FR-030–034 | MDX build + ordinary-article bundle inspection | React islands remain supported; static articles have no island bundle |
-| FR-040–044 | Schema/build/content scan | Only real work public; metadata rendered |
 | FR-050–052 | About/contact assertions + content review | Required content and links present; unsupported claims absent |
 | FR-060–064 | Built HTML/API/redirect checks | Metadata, JSON-LD, OG, RSS, sitemap, redirects valid |
 | FR-070–074 | Docs checker + human review | Agent sources exist, agree, and name real commands |
@@ -169,7 +158,7 @@ Compatibility redirects:
 1. **Specification baseline** — this specification plus implementation plan.
 2. **Agent and repository foundation** — governing agent docs, design contract, architecture/content/testing docs, package-manager consistency, quality scripts.
 3. **Design system and shell** — tokens, themes, navigation, footer, metadata, homepage, responsive base.
-4. **Publishing and work system** — new collections/routes/layouts, redirects, and truthful content with optional interactive labs.
+4. **Publishing system** — writing collections/routes/layouts, redirects, and truthful content with optional interactive labs.
 5. **Release verification** — browser/accessibility tests, Lighthouse, link checks, Docker smoke, final polish.
 
 Each slice is complete only after focused verification, review, commit, push, and confirmation that `origin/master` contains the commit.

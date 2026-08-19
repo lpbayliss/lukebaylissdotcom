@@ -1,6 +1,6 @@
 # lukebayliss.com
 
-Luke Bayliss' personal technical space: writing, interactive labs, curated work, and contact context.
+Luke Bayliss' personal technical space: writing, interactive labs, and contact context.
 
 Built with Astro 7, MDX, selectively hydrated React 19 islands, Tailwind CSS 4, and TypeScript.
 
@@ -29,7 +29,6 @@ Run all release checks with `corepack pnpm verify`.
 
 ```text
 src/content/writing/        Notes, essays, labs, build logs, case studies
-src/content/work/           Curated professional/open-source/independent work
 src/components/             Shared Astro components
 src/components/interactive/ Selectively hydrated React islands
 src/layouts/                Site and entry composition

@@ -19,7 +19,7 @@ Build a clean, approachable, modern personal technical space. Reading, real work
 
 - Astro renders structure, content, routes, and metadata.
 - React islands live under `src/components/interactive/` and require a real interaction need.
-- Public writing/work comes from typed content collections.
+- Public writing comes from a typed content collection.
 - Draft/archived entries remain unpublished.
 - Route changes preserve compatibility redirects.
 - Visual changes follow [`DESIGN.md`](./DESIGN.md).
