@@ -1,0 +1,39 @@
+---
+title: "Using Zod to Parse a JSON String"
+summary: "Parse a JSON string and validate the resulting data shape in one composable Zod schema."
+publishedAt: 2024-05-15
+updatedAt: 2024-11-19
+format: "note"
+topics:
+  - "typescript"
+  - "zod"
+  - "validation"
+status: "published"
+featured: true
+---
+
+I recently needed to parse a JSON string in TypeScript and validate the shape of the resulting data. I found a [small utility from zod_utilz](https://github.com/JacobWeisenburger/zod_utilz/blob/4093595e5a6d95770872598ba3bc405d4e9c963b/src/stringToJSON.ts#L4-L12) that handles both steps in one schema pipeline.
+
+```ts
+import { z } from "zod";
+
+const stringToJSONSchema = z.string().transform((value, context) => {
+  try {
+    return JSON.parse(value);
+  } catch {
+    context.addIssue({ code: "custom", message: "Invalid JSON" });
+    return z.NEVER;
+  }
+});
+
+const MyDataSchema = z.object({
+  foo: z.string(),
+  bar: z.number(),
+});
+
+const jsonString = '{"foo": "hello", "bar": 42}';
+
+const result = stringToJSONSchema.pipe(MyDataSchema).safeParse(jsonString);
+```
+
+The transform handles JSON syntax errors. Piping its output into `MyDataSchema` then validates the parsed value before the caller can use it.

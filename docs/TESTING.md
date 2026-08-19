@@ -22,7 +22,7 @@ Required pages:
 - `/`
 - `/writing/`
 - one normal writing entry
-- one interactive lab
+- one interactive lab, when any are published
 - `/work/`
 - one work entry
 - `/about/`

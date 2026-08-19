@@ -83,8 +83,8 @@ Compatibility redirects:
 
 ### Interactive writing
 
-- **FR-030:** MDX must be able to import React components from a documented interactive-component library.
-- **FR-031:** At least one published lab must demonstrate a selectively hydrated React component with keyboard-operable controls and useful non-interactive surrounding content.
+- **FR-030:** MDX must support selectively hydrated React components when an explanation benefits from interaction.
+- **FR-031:** Published labs that use React must provide keyboard-operable controls and useful non-interactive surrounding content; a published lab is not required at all times.
 - **FR-032:** Ordinary writing without islands must ship no page-specific React client bundle.
 - **FR-033:** Interactive components must define useful labels, focus styles, reduced-motion behaviour, mobile layout, and a no-JavaScript fallback or explanatory static context.
 - **FR-034:** Failure of an interactive island must not prevent article prose from rendering.
@@ -156,7 +156,7 @@ Compatibility redirects:
 | FR-001–005 | Browser tests + DOM inspection | Links, active state, skip link, themes work; terminal patterns absent |
 | FR-010–013 | Responsive screenshots + content assertions | Required regions visible and resilient |
 | FR-020–026 | Schema/build/RSS tests | Formats validate; drafts excluded; writing renders |
-| FR-030–034 | Lab browser test + JS bundle inspection | Island works; static article has no island bundle |
+| FR-030–034 | MDX build + ordinary-article bundle inspection | React islands remain supported; static articles have no island bundle |
 | FR-040–044 | Schema/build/content scan | Only real work public; metadata rendered |
 | FR-050–052 | About/contact assertions + content review | Required content and links present; unsupported claims absent |
 | FR-060–064 | Built HTML/API/redirect checks | Metadata, JSON-LD, OG, RSS, sitemap, redirects valid |
@@ -169,7 +169,7 @@ Compatibility redirects:
 1. **Specification baseline** — this specification plus implementation plan.
 2. **Agent and repository foundation** — governing agent docs, design contract, architecture/content/testing docs, package-manager consistency, quality scripts.
 3. **Design system and shell** — tokens, themes, navigation, footer, metadata, homepage, responsive base.
-4. **Publishing and work system** — new collections/routes/layouts, redirects, truthful content, interactive lab.
+4. **Publishing and work system** — new collections/routes/layouts, redirects, and truthful content with optional interactive labs.
 5. **Release verification** — browser/accessibility tests, Lighthouse, link checks, Docker smoke, final polish.
 
 Each slice is complete only after focused verification, review, commit, push, and confirmation that `origin/master` contains the commit.

@@ -1,68 +1,69 @@
 import { expect, test } from "@playwright/test";
 
-const noteRoute = "/writing/making-room-for-small-ideas/";
-const labRoute = "/writing/maintenance-pressure-model/";
+const noteRoute = "/writing/parse-json-string-with-zod/";
+
+const restoredWriting = [
+  ["Discriminated Unions in TypeScript", "/writing/typescript-discriminated-unions/"],
+  ["Using Zod to Parse a JSON String", noteRoute],
+] as const;
+
+const removedWritingTitles = [
+  "My Tips for Starting at a New Job",
+  "How and Why I Used Emotion with Tailwind",
+];
 
 test.describe("publishing system", () => {
-  test("writing index lists every published format used by the site", async ({ page }) => {
+  test("writing index lists restored first-hand posts instead of redesign placeholders", async ({
+    page,
+  }) => {
     await page.goto("/writing/");
-    await expect(
-      page.getByRole("link", { name: "Making room for small ideas", exact: true }),
-    ).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "A tiny maintenance-pressure model", exact: true }),
-    ).toBeVisible();
-    await expect(page.getByText("Note", { exact: true })).toBeVisible();
-    await expect(page.getByText("Lab", { exact: true })).toBeVisible();
+
+    for (const [title] of restoredWriting) {
+      await expect(page.getByRole("link", { name: title, exact: true })).toBeVisible();
+    }
+
+    for (const title of removedWritingTitles) {
+      await expect(page.getByRole("link", { name: title, exact: true })).toHaveCount(0);
+    }
+
+    await expect(page.locator("body")).not.toContainText("Making room for small ideas");
+    await expect(page.locator("body")).not.toContainText("A tiny maintenance-pressure model");
   });
 
   test("ordinary writing renders without a React island", async ({ page }) => {
     await page.goto(noteRoute);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Making room for small ideas");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+      "Using Zod to Parse a JSON String",
+    );
     await expect(page.locator("astro-island")).toHaveCount(0);
   });
 
-  test("interactive lab responds to keyboard input", async ({ page }) => {
-    await page.goto(labRoute);
-    await expect(
-      page.getByRole("heading", { name: "Maintenance pressure", exact: true }),
-    ).toBeVisible();
-    await expect(page.getByRole("heading", { name: "Add lightweight structure" })).toBeVisible();
+  test("RSS reflects the published writing collection", async ({ page, request }) => {
+    await page.goto("/writing/");
+    const publishedWriting = await page
+      .locator('[aria-label="Published writing"] h2 a')
+      .evaluateAll((links) =>
+        links.map((link) => ({
+          title: link.textContent?.trim() ?? "",
+          route: link.getAttribute("href") ?? "",
+        })),
+      );
 
-    const model = page.locator(".maintenance-model");
-    await model.scrollIntoViewIfNeeded();
-    await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
-
-    await page.getByLabel("Expected lifespan").press("End");
-    await page.getByLabel("Regular contributors").press("End");
-    await page.getByLabel("Requirement uncertainty").press("End");
-
-    await expect(page.getByRole("heading", { name: "Design for sustained change" })).toBeVisible();
-    await expect(page.getByRole("meter", { name: "Maintenance pressure score" })).toHaveAttribute(
-      "value",
-      "10",
-    );
-  });
-
-  test("lab prose and initial model remain useful without JavaScript", async ({ browser }) => {
-    const context = await browser.newContext({ javaScriptEnabled: false });
-    const page = await context.newPage();
-    await page.goto(labRoute);
-    await expect(page.getByText("It is not a decision engine.")).toBeVisible();
-    await expect(
-      page.getByRole("heading", { name: "Maintenance pressure", exact: true }),
-    ).toBeVisible();
-    await context.close();
-  });
-
-  test("RSS contains all published writing and canonical writing links", async ({ request }) => {
     const response = await request.get("/rss.xml");
     expect(response.status()).toBe(200);
     const body = await response.text();
-    expect(body).toContain("Making room for small ideas");
-    expect(body).toContain("A tiny maintenance-pressure model");
-    expect(body).toContain("/writing/making-room-for-small-ideas/");
-    expect(body).toContain("/writing/maintenance-pressure-model/");
+
+    for (const { title, route } of publishedWriting) {
+      expect(body).toContain(title);
+      expect(body).toContain(route);
+    }
+
+    for (const title of removedWritingTitles) {
+      expect(body).not.toContain(title);
+    }
+
+    expect(body).not.toContain("Making room for small ideas");
+    expect(body).not.toContain("A tiny maintenance-pressure model");
   });
 
   test("article metadata is canonical and complete", async ({ page }) => {
@@ -100,7 +101,7 @@ test.describe("work and compatibility routes", () => {
 
   for (const [route, target] of [
     ["/blog/", "/writing/"],
-    ["/blog/welcome/", "/writing/making-room-for-small-ideas/"],
+    ["/blog/welcome/", "/writing/"],
     ["/snippets/terminal-tricks/", "/writing/"],
     ["/projects/", "/work/"],
     ["/projects/personal-site/", "/work/personal-site/"],

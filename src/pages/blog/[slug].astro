@@ -1,6 +1,3 @@
 ---
-return Astro.redirect(
-  Astro.params.slug === "welcome" ? "/writing/making-room-for-small-ideas/" : "/writing/",
-  301,
-);
+return Astro.redirect("/writing/", 301);
 ---

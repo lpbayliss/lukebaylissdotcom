@@ -1,0 +1,133 @@
+---
+title: "Discriminated Unions in TypeScript"
+summary: "A brief introduction to discriminated unions, type narrowing, and validating tagged data with Zod."
+publishedAt: 2024-05-15
+updatedAt: 2026-08-20
+format: "note"
+topics:
+  - "typescript"
+  - "zod"
+  - "type-safety"
+status: "published"
+featured: true
+---
+
+Discriminated unions are a useful TypeScript feature, also known as tagged unions.
+
+A discriminated union is made from several related types that share one property with a unique literal value. TypeScript can use that property to determine exactly which member of the union it is dealing with.
+
+## A contrived example
+
+Suppose we have a function that calculates the area of a shape:
+
+```ts
+const calculateShapeArea = (shape: unknown): number => 0;
+```
+
+The formula for a circle is not the same as the formula for a rectangle or square. We can start with a few types:
+
+```ts
+type Circle = {
+  radius: number;
+};
+
+type Rectangle = {
+  width: number;
+  height: number;
+};
+
+type Square = {
+  size: number;
+};
+
+type Shape = Circle | Rectangle | Square;
+```
+
+We can inspect which properties exist, but this becomes cumbersome:
+
+```ts
+const calculateShapeArea = (shape: Shape): number => {
+  if ("radius" in shape) {
+    return Math.PI * shape.radius ** 2;
+  }
+
+  if ("width" in shape) {
+    return shape.width * shape.height;
+  }
+
+  return shape.size ** 2;
+};
+```
+
+A discriminated union makes the cases explicit. Add a shared `type` property with a unique literal value to every shape:
+
+```ts
+type Circle = {
+  type: "circle";
+  radius: number;
+};
+
+type Rectangle = {
+  type: "rectangle";
+  width: number;
+  height: number;
+};
+
+type Square = {
+  type: "square";
+  size: number;
+};
+
+type Shape = Circle | Rectangle | Square;
+```
+
+Now TypeScript narrows the union from the `type` property:
+
+```ts
+const calculateShapeArea = (shape: Shape): number => {
+  switch (shape.type) {
+    case "circle":
+      return Math.PI * shape.radius ** 2;
+    case "rectangle":
+      return shape.width * shape.height;
+    case "square":
+      return shape.size ** 2;
+  }
+};
+```
+
+The function is not doing much more than the property-checking version, but its accepted cases are easier to see. The editor also knows the exact shape in every branch and can provide accurate completion and errors.
+
+## Using Zod
+
+Zod can validate the same discriminator at runtime:
+
+```ts
+import { z } from "zod";
+
+const CircleSchema = z.object({
+  type: z.literal("circle"),
+  radius: z.number(),
+});
+
+const RectangleSchema = z.object({
+  type: z.literal("rectangle"),
+  width: z.number(),
+  height: z.number(),
+});
+
+const SquareSchema = z.object({
+  type: z.literal("square"),
+  size: z.number(),
+});
+
+const ShapeSchema = z.discriminatedUnion("type", [
+  CircleSchema,
+  RectangleSchema,
+  SquareSchema,
+]);
+
+type Shape = z.infer<typeof ShapeSchema>;
+```
+
+That leaves one source of truth for runtime validation and the inferred TypeScript type, while retaining the same narrowing behaviour after parsing.

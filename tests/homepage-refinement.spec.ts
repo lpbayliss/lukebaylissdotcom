@@ -63,7 +63,7 @@ test.describe("compact homepage refinement", () => {
       selectors: [".writing-row__meta", ".writing-row ul"],
     },
     {
-      route: "/writing/making-room-for-small-ideas/",
+      route: "/writing/parse-json-string-with-zod/",
       selectors: [".writing-header__meta", ".topic-list li"],
     },
     {
